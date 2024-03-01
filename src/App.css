@@ -83,3 +83,13 @@ a{
 }
 
 /*Header part end here*/
+
+/*Footer part start*/
+
+footer {
+  background-color: var(--color-232f3e);
+}
+footer:not(:first-child){
+  border-top: 1px solid var(--color-3b4149);
+}
+/*Footer part end*/
