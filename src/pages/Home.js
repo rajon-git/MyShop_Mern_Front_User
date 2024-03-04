@@ -222,6 +222,11 @@ function Home() {
      <section className='blog-wrapper py-5 home-wrapper-2'>
       <div className='container-xxl'>
         <div className='row'>
+          <div className='col-12'>
+            <h3 className='section-heading'>
+              Our latest blogs
+            </h3>
+          </div>
           <BlogCard/>
           <BlogCard/>
           <BlogCard/>
