@@ -30,6 +30,11 @@ function ProductCard(props) {
                         edit={false}
                         activeColor="#ffd700"
                     />
+                    <p className={`description ${grid === 12 ? "d-block" : "d-none" }`}>
+                        Get started with Bootstrap, the world's most popular 
+                        framework for building responsive, mobile-first sites, 
+                        with jsDelivr and a template starter page.
+                    </p>
                     <p className='price'>$100.00</p>
                 </div>
                 <div className='action-bar position-absolute'>
@@ -71,6 +76,11 @@ function ProductCard(props) {
                         edit={false}
                         activeColor="#ffd700"
                     />
+                    <p className={`description ${grid === 12 ? "d-block" : "d-none" }`}>
+                        Get started with Bootstrap, the world's most popular 
+                        framework for building responsive, mobile-first sites, 
+                        with jsDelivr and a template starter page.
+                    </p>
                     <p className='price'>$100.00</p>
                 </div>
                 <div className='action-bar position-absolute'>
