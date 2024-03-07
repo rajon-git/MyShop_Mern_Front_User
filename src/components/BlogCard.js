@@ -19,7 +19,7 @@ function BlogCard() {
             It is a long established fact that a reader 
             will be distracted by the readable  
             </p>
-            <Link to="/" className='button'>Read More</Link>
+            <Link to="/blog/:id" className='button'>Read More</Link>
         </div>
       </div>
    
