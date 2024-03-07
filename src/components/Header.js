@@ -50,7 +50,7 @@ function Header() {
                   </Link>
                 </div>
                 <div>
-                  <Link className='d-flex align-items-center gap-10 text-white'>
+                  <Link to='/wishlist' className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/wishlist.svg' alt='wishlist' />
                     <p className='mb-0'>Fabourite <br /> Wishlist</p>
                   </Link>
