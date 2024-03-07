@@ -556,3 +556,25 @@ footer .input-group-text{
 }
 
 /*Compare Product end*/
+
+/*Auth Card start*/
+
+.auth-card{
+  padding: 20px;
+  background-color: white;
+  width: 500px;
+  margin: 100px auto;
+  border-radius: 10px;
+}
+
+.auth-card h3{
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--color-777777);
+}
+.auth-card .form-control{
+  height: 50px;
+  background-color: var(--color-f5f5f7);
+  color: var(--color-131921);
+}
+/*Auth Card end*/
