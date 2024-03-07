@@ -22,7 +22,7 @@ function Login() {
                       </div>
                       <div>
                         <Link to='/forgot-password'>Forgot Password</Link>
-                        <div className='mt-3 d-flex justify-content-center align-items-center gap-20'>
+                        <div className='mt-3 d-flex justify-content-center align-items-center gap-15'>
                           <button className='button border-0'>Login</button>
                           <Link className='button signup'>Signup</Link>
                         </div>
