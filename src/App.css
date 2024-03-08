@@ -612,3 +612,10 @@ footer .input-group-text{
   color: white;
 }
 /*Auth Card end*/
+
+/*policy start*/
+.policy{
+  background-color: white;
+  padding: 30px;
+}
+/*policy end*/
