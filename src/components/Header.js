@@ -46,13 +46,13 @@ function Header() {
                 <div>
                   <Link to='/compare-product' className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/compare.svg' alt='compare' />
-                    <p className='mb-0'>Comapare <br /> Products</p>
+                    <p className='mb-0'>Compare <br /> Products</p>
                   </Link>
                 </div>
                 <div>
                   <Link to='/wishlist' className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/wishlist.svg' alt='wishlist' />
-                    <p className='mb-0'>Fabourite <br /> Wishlist</p>
+                    <p className='mb-0'>Favorite <br /> Wishlist</p>
                   </Link>
                 </div>
                 <div>
@@ -97,7 +97,7 @@ function Header() {
                 <div className='menu-links'>
                   <div className='d-flex align-items-center gap-15'>
                     <NavLink to="/">Home</NavLink>
-                    <NavLink to="/store">Our Store</NavLink>
+                    <NavLink to="/product">Our Store</NavLink>
                     <NavLink to="/blogs">Blogs</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
                   </div>
