@@ -6,12 +6,12 @@ import ReactStars from "react-rating-stars-component";
 import ReactImageZoom from "react-image-zoom";
 
 function SingleProduct() {
-    const props = {
-        width: 400,
-        height: 500, 
-        zoomWidth: 500,
-        img: "https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg",
-      };
+  const props = {
+    width: 400,
+    height: 500,
+    zoomWidth: 500,
+    img: "https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg",
+  };
   const [orderedProduct, setOrderedProduct] = useState(true);
   return (
     <>
@@ -28,20 +28,56 @@ function SingleProduct() {
               </div>
               <div className="other-product-images d-flex flex-wrap gap-15">
                 <div>
-                    <img src="https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg" className="img-fluid" alt=""/>
+                  <img
+                    src="https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg"
+                    className="img-fluid"
+                    alt=""
+                  />
                 </div>
                 <div>
-                   <img src="https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg" className="img-fluid" alt=""/>
+                  <img
+                    src="https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg"
+                    className="img-fluid"
+                    alt=""
+                  />
                 </div>
                 <div>
-                   <img src="https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg" className="img-fluid" alt=""/>
+                  <img
+                    src="https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg"
+                    className="img-fluid"
+                    alt=""
+                  />
                 </div>
                 <div>
-                   <img src="https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg" className="img-fluid" alt=""/>
+                  <img
+                    src="https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg"
+                    className="img-fluid"
+                    alt=""
+                  />
                 </div>
               </div>
             </div>
-            <div className="col-6"></div>
+            <div className="col-6">
+                <div className="main-product-details">
+                    <div  className="border-bottom">
+                        <h3 className="title">Kids Headphone bult 10 pack multi colored student</h3>
+                    </div>
+                    <div className="border-bottom py-3">
+                        <p className="price">$ 100</p>
+                        <div className="d-flex align-items-center gap-10">
+                        <ReactStars
+                        count={5}
+                        size={24}
+                        value={4}
+                        edit={false}
+                        activeColor="#ffd700"
+                      />
+                      <p className="mb-0">(2 reviews)</p>
+                        </div>
+                        <a href="#review">Write a Review</a>
+                    </div>
+                </div>
+            </div>
           </div>
         </div>
       </div>
@@ -68,11 +104,11 @@ function SingleProduct() {
           </div>
         </div>
       </section>
-      <section className="reviews-wrapper home-wrapper-2">
+      <section  className="reviews-wrapper home-wrapper-2">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <h3>Reviews</h3>
+              <h3 id="review">Reviews</h3>
               <div className="review-inner-wrapper">
                 <div className="review-head d-flex justify-content-between align-items-end">
                   <div>
