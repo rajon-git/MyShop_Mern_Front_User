@@ -3,6 +3,7 @@ import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import { Link } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import blog from "../images/blog-1.jpg"
 
 function SingleBlog() {
   return (
@@ -21,7 +22,7 @@ function SingleBlog() {
                   A beautiful Friday Morning Renaissance
                 </h3>
                 <img
-                  src="images/blog-3.webp"
+                   src={blog}
                   className="w-100 img-fluid my-4"
                   alt="blog"
                 />

@@ -1,6 +1,13 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation } from "react-router-dom";
+import prodcompare from "../images/prodcompare.svg"
+import wish from "../images/wish.svg"
+import wishlist from "../images/wishlist.svg"
+import watch from"../images/watch.jpg"
+import tab1 from "../images/tab1.jpg"
+import addcart from "../images/add-cart.svg"
+import view from "../images/view.svg"
 
 function ProductCard(props) {
   const { grid } = props;
@@ -13,17 +20,17 @@ function ProductCard(props) {
         <Link to=":id" className="product-card position-relative">
           <div className="wishlist-icon position-absolute">
             <Link>
-              <img src="images/wish.svg" alt="wishlist" />
+              <img src={wish} alt="wish" />
             </Link>
           </div>
           <div className="product-image">
             <img
-              src="images/watch.jpg"
+              src={watch}
               alt="product image"
               className="img-fluid"
             />
             <img
-              src="images/tab1.jpg"
+              src={tab1}
               alt="product image"
               className="img-fluid"
             />
@@ -50,13 +57,13 @@ function ProductCard(props) {
           <div className="action-bar position-absolute">
             <div className="d-flex flex-column gap-15">
               <Link>
-                <img src="images/prodcompare.svg" alt="prodcompare" />
+                <img src={prodcompare} alt="prodcompare" />
               </Link>
               <Link>
-                <img src="images/view.svg" alt="view" />
+                <img src={view} alt="view" />
               </Link>
               <Link>
-                <img src="images/add-cart.svg" alt="add-cart" />
+                <img src={addcart} alt="add-cart" />
               </Link>
             </div>
           </div>
@@ -70,17 +77,17 @@ function ProductCard(props) {
         <Link className="product-card position-relative">
           <div className="wishlist-icon position-absolute">
             <Link>
-              <img src="images/wish.svg" alt="wishlist" />
+              <img src={wish} alt="wishlist" />
             </Link>
           </div>
           <div className="product-image">
             <img
-              src="images/watch.jpg"
+              src={watch}
               alt="product image"
               className="img-fluid"
             />
             <img
-              src="images/tab1.jpg"
+              src={tab1}
               alt="product image"
               className="img-fluid"
             />
@@ -107,13 +114,13 @@ function ProductCard(props) {
           <div className="action-bar position-absolute">
             <div className="d-flex flex-column gap-15">
               <Link>
-                <img src="images/prodcompare.svg" alt="prodcompare" />
+                <img src={prodcompare} alt="prodcompare" />
               </Link>
               <Link>
-                <img src="images/view.svg" alt="view" />
+                <img src={view} alt="view" />
               </Link>
               <Link>
-                <img src="images/add-cart.svg" alt="add-cart" />
+                <img src={addcart} alt="add-cart" />
               </Link>
             </div>
           </div>
