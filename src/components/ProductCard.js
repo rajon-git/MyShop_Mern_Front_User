@@ -19,9 +19,9 @@ function ProductCard(props) {
       >
         <Link to=":id" className="product-card position-relative">
           <div className="wishlist-icon position-absolute">
-            <Link>
+            <button className="border-0 bg-transparent">
               <img src={wish} alt="wish" />
-            </Link>
+            </button>
           </div>
           <div className="product-image">
             <img
@@ -56,15 +56,15 @@ function ProductCard(props) {
           </div>
           <div className="action-bar position-absolute">
             <div className="d-flex flex-column gap-15">
-              <Link>
+              <button className="border-0 bg-transparent">
                 <img src={prodcompare} alt="prodcompare" />
-              </Link>
-              <Link>
+              </button >
+              <button className="border-0 bg-transparent">
                 <img src={view} alt="view" />
-              </Link>
-              <Link>
+              </button >
+              <button className="border-0 bg-transparent">
                 <img src={addcart} alt="add-cart" />
-              </Link>
+              </button >
             </div>
           </div>
         </Link>
@@ -76,9 +76,9 @@ function ProductCard(props) {
       >
         <Link className="product-card position-relative">
           <div className="wishlist-icon position-absolute">
-            <Link>
+            <button className="border-0 bg-transparent">
               <img src={wish} alt="wishlist" />
-            </Link>
+            </button>
           </div>
           <div className="product-image">
             <img
@@ -113,15 +113,15 @@ function ProductCard(props) {
           </div>
           <div className="action-bar position-absolute">
             <div className="d-flex flex-column gap-15">
-              <Link>
+              <button className="border-0 bg-transparent">
                 <img src={prodcompare} alt="prodcompare" />
-              </Link>
-              <Link>
+              </button>
+              <button className="border-0 bg-transparent">
                 <img src={view} alt="view" />
-              </Link>
-              <Link>
+              </button>
+              <button className="border-0 bg-transparent">
                 <img src={addcart} alt="add-cart" />
-              </Link>
+              </button>
             </div>
           </div>
         </Link>
