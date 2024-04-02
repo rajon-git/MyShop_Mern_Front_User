@@ -774,3 +774,7 @@ footer .input-group-text{
   color: var(--color-777777);
 }
 /*shipping page end*/
+
+.error {
+  color: #bf4800;
+}
