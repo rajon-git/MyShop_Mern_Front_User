@@ -46,7 +46,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isError === true) {
-          toast.info(action.error);
+          toast.info("action.error");
         }
       });
   },
