@@ -37,7 +37,7 @@ function Header() {
                   aria-label="Search Product Here"
                   aria-describedby="basic-addon2" />
                 <span className="input-group-text p-3" id="basic-addon2">
-                  <IoIosSearch className='fs-6' />
+                  <IoIosSearch className='fs-6 search-icon' />
                 </span>
               </div>
             </div>
@@ -46,19 +46,19 @@ function Header() {
                 <div>
                   <Link to='/compare-product' className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/compare.svg' alt='compare' />
-                    <p className='mb-0'>Compare <br /> Products</p>
+                    <p className='mb-0'>Compare</p>
                   </Link>
                 </div>
                 <div>
                   <Link to='/wishlist' className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/wishlist.svg' alt='wishlist' />
-                    <p className='mb-0'>Favorite <br /> Wishlist</p>
+                    <p className='mb-0'>Wishlist</p>
                   </Link>
                 </div>
                 <div>
                   <Link to='/login' className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/user.svg' alt='user' />
-                    <p className='mb-0'>Login <br />My Account</p>
+                    <p className='mb-0'>Login</p>
                   </Link>
                 </div>
                 <div>
