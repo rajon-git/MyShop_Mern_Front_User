@@ -70,6 +70,7 @@ export const authSlice = createSlice({
         state.user = action.payload;
         state.message = "success";
         if (state.isSuccess === true) {
+          localStorage.setItem("token",action.payload.token);
           toast.info("User logged in");
         }
       })
