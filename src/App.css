@@ -135,6 +135,14 @@ footer .input-group-text{
   color: white;
   padding: 8px 17px;
 }
+
+
+
+.text-muted:hover {
+  color: rgba(255, 255, 255, 0.75) !important;
+  letter-spacing: 1px;
+  transition: .3s;
+}
 /*Footer part end*/
 
 /*Homepage start*/
