@@ -10,7 +10,7 @@ import { services } from "../utils/Data";
 function Home() {
   return (
     <>
-      <Container class1='home-wrapper-1 py-5'>
+      {/* <Container class1='home-wrapper-1 py-5'>
         <div className='row'>
           <div className='col-6'>
             <div className='main-banner position-relative'>
@@ -61,7 +61,60 @@ function Home() {
             </div>
           </div>
         </div>
+      </Container> */}
+
+      <Container className='home-wrapper-1 py-5'>
+        <div className='row'>
+          <div className='col-lg-6 mt-4 mb-0 mb-lg-4'>
+            <div className='main-banner position-relative'>
+              <img src='images/main-banner-1.jpg' className='img-fluid rounded-3' alt='main banner' />
+              <div className='main-banner-content position-absolute'>
+                <h4>Super chraged for pros</h4>
+                <h5>ipad s13+ pro</h5>
+                <p>From $999.0o or $41.62/mo.</p>
+                <Link className='button'>Buy now</Link>
+              </div>
+            </div>
+          </div>
+          <div className='col-lg-6 mt-4 mb-4 mb-lg-4'>
+            <div className='d-flex flex-wrap justify-content-between align-items-center gap-10'>
+              <div className='small-banner position-relative'>
+                <img src='images/catbanner-01.jpg' className='img-fluid rounded-3' alt='main banner' />
+                <div className='small-banner-content position-absolute'>
+                  <h4>Best</h4>
+                  <h5>ipad s13+ pro</h5>
+                  <p>From $999.0o <br /> or $41.62/mo.</p>
+                </div>
+              </div>
+              <div className='small-banner position-relative'>
+                <img src='images/catbanner-02.jpg' className='img-fluid rounded-3' alt='main banner' />
+                <div className='small-banner-content position-absolute'>
+                  <h4>New Arrival</h4>
+                  <h5>ipad air</h5>
+                  <p>From $999.0o <br /> or $41.62/mo.</p>
+                </div>
+              </div>
+              <div className='small-banner position-relative'>
+                <img src='images/catbanner-03.jpg' className='img-fluid rounded-3' alt='main banner' />
+                <div className='small-banner-content position-absolute'>
+                  <h4>New Arrival</h4>
+                  <h5>ipad air</h5>
+                  <p>From $999.0o <br /> or $41.62/mo.</p>
+                </div>
+              </div>
+              <div className='small-banner position-relative'>
+                <img src='images/catbanner-04.jpg' className='img-fluid rounded-3' alt='main banner' />
+                <div className='small-banner-content position-absolute'>
+                  <h4>New Arrival</h4>
+                  <h5>ipad air</h5>
+                  <p>From $999.0o <br /> or $41.62/mo.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </Container>
+
 
       <Container class1='home-wrapper-2 py-5'>
         <div className='row'>
