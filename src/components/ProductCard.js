@@ -13,6 +13,9 @@ function ProductCard(props) {
   const { grid, data } = props;
   let location = useLocation();
   console.log(data);
+  if (!Array.isArray(data) || data.length === 0) {
+    return null; // or return a loading indicator or an error message
+  }
   return (
     <>
       {data?.map((item, i) => {
