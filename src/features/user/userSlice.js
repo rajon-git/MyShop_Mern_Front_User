@@ -24,8 +24,12 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+const token = localStorage.getItem("customer")
+  ? JSON.parse(localStorage.getItem("customer"))
+  : null;
+
 const initialState = {
-  user: "",
+  user: token,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -80,7 +84,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isError === true) {
-          toast.error(action.error);
+          toast.error(state.message);
         }
       });
   },
