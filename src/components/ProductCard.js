@@ -8,11 +8,16 @@ import watch from "../images/watch.jpg";
 import tab1 from "../images/tab1.jpg";
 import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { addToWishlist } from "../features/products/productSlice";
 
 function ProductCard(props) {
+  const dispatch = useDispatch;
   const { grid, data } = props;
   let location = useLocation();
-  console.log(data);
+  const addtowish = (id)=>{
+    dispatch(addToWishlist(id))
+  }
   if (!Array.isArray(data) || data.length === 0) {
     return null; // or return a loading indicator or an error message
   }
@@ -36,7 +41,7 @@ function ProductCard(props) {
               className="product-card position-relative"
             >
               <div className="wishlist-icon position-absolute">
-                <button className="border-0 bg-transparent">
+                <button className="border-0 bg-transparent" onClick={(e)=>{addtowish(item?._id)}}>
                   <img src={wish} alt="wish" />
                 </button>
               </div>
