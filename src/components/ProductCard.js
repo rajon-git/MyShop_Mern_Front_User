@@ -67,7 +67,7 @@ function ProductCard(props) {
                   size={24}
                   value={item?.totalrating.toString()}
                   edit={false}
-                  activeColor=
+                  activeColor="#ffd700"
                 />
                 <p
                   className={`description ${
