@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
 import { productService } from "./productService";
 
 export const getAllProducts = createAsyncThunk(
@@ -15,9 +14,9 @@ export const getAllProducts = createAsyncThunk(
 
 export const addToWishlist = createAsyncThunk(
   "product/wishlist",
-  async (id,thunkAPI) => {
+  async (prodId,thunkAPI) => {
     try {
-      return await productService.addToWishlist(id);
+      return await productService.addToWishlists(prodId);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

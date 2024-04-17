@@ -12,7 +12,6 @@ function OurStore() {
   const [grid, setGrid] = useState(4);
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.product.product);
-  console.log(productState);
   useEffect(() => {
     getProducts();
   }, []);

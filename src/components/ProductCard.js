@@ -12,11 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist } from "../features/products/productSlice";
 
 function ProductCard(props) {
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
   const { grid, data } = props;
   let location = useLocation();
   const addtowish = (id)=>{
-    dispatch(addToWishlist(id))
+    alert(id);
+    dispatch(addToWishlist(id));
   }
   if (!Array.isArray(data) || data.length === 0) {
     return null; // or return a loading indicator or an error message
@@ -26,6 +27,7 @@ function ProductCard(props) {
       {data?.map((item, i) => {
         return (
           <div
+          key={i}
             className={`${
               location.pathname === "/product" ? `gr-${grid}` : "col-3"
             }`}
