@@ -61,7 +61,6 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.createdUser = action.payload;
-        state.message = "success";
         if (state.isSuccess === true) {
           toast.info("User created successfully");
         }
@@ -72,7 +71,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isError === true) {
-          toast.error(action.error);
+          toast.error("An error occurred during registration.");
         }
       })
       .addCase(loginUser.pending, (state) => {
@@ -95,7 +94,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isError === true) {
-          toast.error(state.message);
+          toast.error("An error occurred during login!!");
         }
       })
       .addCase(getUserProductWishlist.pending, (state) => {

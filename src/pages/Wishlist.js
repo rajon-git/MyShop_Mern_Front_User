@@ -8,12 +8,12 @@ import { getUserProductWishlist } from "../features/user/userSlice";
 function Wishlist() {
   const dispatch = useDispatch();
   useEffect(() => {
-    getWislistfromdb();
+    getWishlistfromdb();
   }, []);
-  const getWislistfromdb = () => {
+  const getWishlistfromdb = () => {
     dispatch(getUserProductWishlist());
   };
-  const wishlistState = useSelector((state) => state.auth.wishlist);
+  const wishlistState = useSelector(state => state.auth.wishlist);
   return (
     <>
       <Meta title={"Wishlist"} />

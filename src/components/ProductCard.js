@@ -1,49 +1,49 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import prodcompare from "../images/prodcompare.svg";
 import wish from "../images/wish.svg";
-import wishlist from "../images/wishlist.svg";
-import watch from "../images/watch.jpg";
 import tab1 from "../images/tab1.jpg";
 import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToWishlist } from "../features/products/productSlice";
 
 function ProductCard(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { grid, data } = props;
   let location = useLocation();
-  const addtowish = (id)=>{
-    alert(id);
+  const addtowish = (id) => {
     dispatch(addToWishlist(id));
-  }
-  if (!Array.isArray(data) || data.length === 0) {
-    return null; // or return a loading indicator or an error message
-  }
+  };
   return (
     <>
       {data?.map((item, i) => {
         return (
           <div
-          key={i}
+            key={i}
             className={`${
               location.pathname === "/product" ? `gr-${grid}` : "col-3"
             }`}
           >
             <Link
-              to={`${
-                location.pathname === "/"
-                  ? "/product/:id"
-                  : location.pathname === "/product/:id"
-                  ? "/product/1"
-                  : ":id"
-              }`}
+              // to={`${
+              //   location.pathname === "/"
+              //     ? "/product/:id"
+              //     : location.pathname === "/product/:id"
+              //     ? "/product/1"
+              //     : ":id"
+              // }`}
               className="product-card position-relative"
             >
               <div className="wishlist-icon position-absolute">
-                <button className="border-0 bg-transparent" onClick={(e)=>{addtowish(item?._id)}}>
+                <button
+                  className="border-0 bg-transparent"
+                  onClick={(e) => {
+                    addtowish(item?._id);
+                  }}
+                >
                   <img src={wish} alt="wish" />
                 </button>
               </div>
@@ -75,10 +75,8 @@ function ProductCard(props) {
                   className={`description ${
                     grid === 12 ? "d-block" : "d-none"
                   }`}
-                >
-                  {item?.description}
-                  {/* dangerouslySetInnerHTML={{__html: item?.description}} */}
-                </p>
+                  dangerouslySetInnerHTML={{ __html: item?.description }}
+                ></p>
                 <p className="price">{item?.price}</p>
               </div>
               <div className="action-bar position-absolute">

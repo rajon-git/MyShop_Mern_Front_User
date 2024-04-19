@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from "react-redux";
 import { registerUser } from "../features/user/userSlice";
+import { toast } from "react-toastify";
 
 const signupSchema = yup.object({
   firstName: yup.string().required("First name is required"),
@@ -29,9 +30,13 @@ function Signup() {
       password:''
     },
     validationSchema: signupSchema,
-    onSubmit: values => {
-      dispatch(registerUser(values));
-      navigate("/login");
+    onSubmit: async (values) => {
+      try {
+        await dispatch(registerUser(values));
+        navigate('/login')
+      } catch (error) {
+        toast.error("An error occurred during registration.");
+      }
     },
   });
   return (
