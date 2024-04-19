@@ -17,9 +17,8 @@ function BlogCard(props) {
                 {title}
             </h5>
             <p className='desc' dangerouslySetInnerHTML={{ __html:description}}>
-             
             </p>
-            <Link to="/blog/:id" className='button'>Read More</Link>
+            <Link to={"/blog/" + id} className='button'>Read More</Link>
         </div>
       </div>
    

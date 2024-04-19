@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import blog from "../images/blog-1.jpg"
 import Container from "../components/Container";
+import { useDispatch, useSelector } from "react-redux";
+import { getABlog } from "../features/blogs/blogSlice";
 
 function SingleBlog() {
+  const dispatch = useDispatch();
+
+  const blogState = useSelector((state) => state?.blog?.singleBlog);
+  const location = useLocation();
+  const getBlogId = location.pathname.split("/")[2];
+  console.log(getBlogId)
+  useEffect(() => {
+    getBlog();
+  }, []);
+
+  const getBlog = () => {
+    dispatch(getABlog(getBlogId));
+  };
   return (
     <>
-      <Meta title={"Dynamic Blog Name"} />
-      <BreadCrumb title="Dynamic Blog Name" />
+      <Meta title={blogState?.title} />
+      <BreadCrumb title={blogState?.title} />
       <Container class1="blog-wrapper home-wrapper-2 py-5">
        
           <div className="row">
@@ -20,21 +35,14 @@ function SingleBlog() {
                   <IoIosArrowRoundBack className="fs-4"/> Go back to blogs
                 </Link>
                 <h3 className="title">
-                  A beautiful Friday Morning Renaissance
+                {blogState?.title}
                 </h3>
                 <img
-                   src={blog}
+                   src={blogState?.images[0]?.url ? blogState?.images[0]?.url: blog}
                   className="w-100 img-fluid my-4"
                   alt="blog"
                 />
-                <p>
-                  But if you don't know Handlebars, learning it can be a long
-                  and difficult process. If you are already a Next.js developer
-                  and you don't know Handlebars, creating a new theme for your
-                  Ghost-based site can be tough.In the article, I will teach you
-                  how to use Ghost CMS as a backend and Next.js as a frontend. I
-                  will guide you through everything related to Nextjs 13 app
-                  directory and the Ghost CMS API.
+                <p  dangerouslySetInnerHTML={{ __html:blogState?.description}}>
                 </p>
               </div>
             </div>
