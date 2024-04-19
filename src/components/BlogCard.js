@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function BlogCard() {
+function BlogCard(props) {
+    const {id,title,description,date,image}= props;
   return (
    
       <div className='blog-card'>
@@ -10,14 +11,13 @@ function BlogCard() {
         </div>
         <div className='blog-content'>
             <p className='date'>
-                3 March, 2024
+                {date}
             </p>
             <h5 className='title'>
-                A beautiful Friday Morning Renaissance
+                {title}
             </h5>
-            <p className='desc'>
-            It is a long established fact that a reader 
-            will be distracted by the readable  
+            <p className='desc' dangerouslySetInnerHTML={{ __html:description}}>
+             
             </p>
             <Link to="/blog/:id" className='button'>Read More</Link>
         </div>
