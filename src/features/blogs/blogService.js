@@ -10,6 +10,6 @@ const getBlogs = async()=>{
 }
 
 
-export const productService = {
+export const blogService = {
     getBlogs
 }
