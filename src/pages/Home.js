@@ -9,17 +9,25 @@ import { services } from "../utils/Data";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBlogs } from "../features/blogs/blogSlice";
 import moment from "moment";
+import { getAllProducts } from "../features/products/productSlice";
 
 function Home() {
   const dispatch = useDispatch();
 
   const blogState = useSelector((state) => state?.blog?.blog);
+  const productState = useSelector((state) => state?.product?.product);
+
   useEffect(() => {
     getBlogs();
+    getProducts();
   }, []);
 
   const getBlogs = () => {
     dispatch(getAllBlogs());
+  };
+
+  const getProducts = () => {
+    dispatch(getAllProducts());
   };
   return (
     <>
@@ -333,10 +341,23 @@ function Home() {
             <h3 className="section-heading">Special Products</h3>
           </div>
           <div className="row">
-            <SpecialProduct />
-            <SpecialProduct />
-            <SpecialProduct />
-            <SpecialProduct />
+            {productState &&
+              productState?.map((item, index) => {
+                if (item.tags === "special") {
+                  return (
+                    <SpecialProduct
+                      key={index}
+                      brand={item?.brand}
+                      title={item?.title}
+                      totalrating={item?.totalrating.toString()}
+                      price={item?.price}
+                      quantity={item?.quantity}
+                      sold={item?.sold}
+                      
+                    />
+                  );
+                }
+              })}
           </div>
         </div>
       </Container>
@@ -397,24 +418,24 @@ function Home() {
           </div>
         </div>
         <div className="row">
-        {blogState && blogState?.map((item, index) => {
-                if(index < 3)
-                {
-                  return (
-                    <div className="col-3" key={index}>
-                      <BlogCard
-                        id={item?._id}
-                        title={item?.title}
-                        description={item?.description}
-                        image={item?.images[0]?.url}
-                        date={moment(item?.createdAt).format(
-                          "MMMM Do YYYY, h:mm a"
-                        )}
-                      />
-                    </div>
-                  );
-                }
-              })}
+          {blogState &&
+            blogState?.map((item, index) => {
+              if (index < 3) {
+                return (
+                  <div className="col-3" key={index}>
+                    <BlogCard
+                      id={item?._id}
+                      title={item?.title}
+                      description={item?.description}
+                      image={item?.images[0]?.url}
+                      date={moment(item?.createdAt).format(
+                        "MMMM Do YYYY, h:mm a"
+                      )}
+                    />
+                  </div>
+                );
+              }
+            })}
         </div>
       </Container>
     </>
