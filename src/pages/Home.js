@@ -10,9 +10,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllBlogs } from "../features/blogs/blogSlice";
 import moment from "moment";
 import { getAllProducts } from "../features/products/productSlice";
+import ReactStars from "react-rating-stars-component";
+import {useLocation, useNavigate } from "react-router-dom";
+import prodcompare from "../images/prodcompare.svg";
+import wish from "../images/wish.svg";
+import tab1 from "../images/tab1.jpg";
+import addcart from "../images/add-cart.svg";
+import view from "../images/view.svg";
+import { addToWishlist } from "../features/products/productSlice";
 
 function Home() {
   const dispatch = useDispatch();
+  let location = useLocation();
+  const addtowish = (id) => {
+    dispatch(addToWishlist(id));
+  };
 
   const blogState = useSelector((state) => state?.blog?.blog);
   const productState = useSelector((state) => state?.product?.product);
@@ -369,10 +381,79 @@ function Home() {
           </div>
         </div>
         <div className="row">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+        {productState &&
+              productState?.map((item, index) => {
+                if (item.tags === "popular") {
+                  return (
+                    <div
+            key={index}
+            className={`${"col-3"}`}
+          >
+            <Link
+              // to={`${
+              //   location.pathname === "/"
+              //     ? "/product/:id"
+              //     : location.pathname === "/product/:id"
+              //     ? "/product/1"
+              //     : ":id"
+              // }`}
+              className="product-card position-relative"
+            >
+              <div className="wishlist-icon position-absolute">
+                <button
+                  className="border-0 bg-transparent"
+                  onClick={(e) => {
+                    addtowish(item?._id);
+                  }}
+                >
+                  <img src={wish} alt="wish" />
+                </button>
+              </div>
+              <div className="product-image">
+                <img
+                  src={item?.images[0].url}
+                  alt="product image"
+                  className="img-fluid  mx-auto"
+                  width={160}
+                />
+                <img
+                  src={tab1}
+                  alt="product image"
+                  className="img-fluid  mx-auto"
+                  width={160}
+                />
+              </div>
+              <div className="product-details">
+                <h6 className="brand">{item?.brand}</h6>
+                <h5 className="product-title">{item?.title}</h5>
+                <ReactStars
+                  count={5}
+                  size={24}
+                  value={item?.totalrating.toString()}
+                  edit={false}
+                  activeColor="#ffd700"
+                />
+                
+                <p className="price">{item?.price}</p>
+              </div>
+              <div className="action-bar position-absolute">
+                <div className="d-flex flex-column gap-15">
+                  <button className="border-0 bg-transparent">
+                    <img src={prodcompare} alt="prodcompare" />
+                  </button>
+                  <button className="border-0 bg-transparent">
+                    <img src={view} alt="view" />
+                  </button>
+                  <button className="border-0 bg-transparent">
+                    <img src={addcart} alt="add-cart" />
+                  </button>
+                </div>
+              </div>
+            </Link>
+          </div>
+                  );
+                }
+              })}
         </div>
       </Container>
 
