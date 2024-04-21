@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { contactService } from "./contactService";
+import { toast } from "react-toastify";
 
 export const createQuery = createAsyncThunk(
-  "contact/post",
+  "enquiry/post",
   async (contactData,thunkAPI) => {
     try {
       return await contactService.postQuery(contactData);
@@ -34,12 +35,20 @@ export const contactSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.contact = action.payload;
+        if(state.isSuccess === true)
+        {
+            toast.success("Contact submitted successfully")
+        }
       })
       .addCase(createQuery.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
+        if(state.isError === true)
+        {
+            toast.success("Something went wrong")
+        }
       })
   },
 });
