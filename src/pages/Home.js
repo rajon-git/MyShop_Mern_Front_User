@@ -418,6 +418,7 @@ function Home() {
                   return (
                     <SpecialProduct
                       key={index}
+                      id={item?._id}
                       brand={item?.brand}
                       title={item?.title}
                       totalrating={item?.totalrating.toString()}
