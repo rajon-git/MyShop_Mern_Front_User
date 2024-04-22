@@ -5,12 +5,15 @@ import ProductCard from "../components/ProductCard";
 import ReactStars from "react-rating-stars-component";
 import ReactImageZoom from "react-image-zoom";
 import Color from "../components/Color";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { TbGitCompare } from "react-icons/tb";
 import { CiHeart } from "react-icons/ci";
 import Container from "../components/Container";
 
 function SingleProduct() {
+  const location = useLocation();
+  const getproductId = location.pathname.split("/")[2];
+  console.log(getproductId);
   const props = {
     width: 400,
     height: 600,
