@@ -9,7 +9,7 @@ import { services } from "../utils/Data";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBlogs } from "../features/blogs/blogSlice";
 import moment from "moment";
-import { getAllProducts } from "../features/products/productSlice";
+import { addWishlist, getAllProducts } from "../features/products/productSlice";
 import ReactStars from "react-rating-stars-component";
 import { useLocation, useNavigate } from "react-router-dom";
 import prodcompare from "../images/prodcompare.svg";
@@ -17,14 +17,13 @@ import wish from "../images/wish.svg";
 import tab1 from "../images/tab1.jpg";
 import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
-import { addToWishlist } from "../features/products/productSlice";
 
 function Home() {
   const dispatch = useDispatch();
   let location = useLocation();
   const navigate = useNavigate();
   const addtowish = (id) => {
-    dispatch(addToWishlist(id));
+    dispatch(addWishlist(id));
   };
 
   const blogState = useSelector((state) => state?.blog?.blog);

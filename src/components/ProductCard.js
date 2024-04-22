@@ -7,16 +7,18 @@ import tab1 from "../images/tab1.jpg";
 import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
 import { useDispatch } from "react-redux";
-import { addToWishlist } from "../features/products/productSlice";
+import {addWishlist } from "../features/products/productSlice";
 
 function ProductCard(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { grid, data } = props;
   let location = useLocation();
+  
   const addtowish = (id) => {
-    dispatch(addToWishlist(id));
+    dispatch(addWishlist(id));
   };
+  console.log(addtowish);
   return (
     <>
       {data?.map((item, i) => {
