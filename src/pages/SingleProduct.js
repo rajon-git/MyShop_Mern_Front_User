@@ -11,21 +11,39 @@ import { CiHeart } from "react-icons/ci";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAProduct } from "../features/products/productSlice";
+import { toast } from "react-toastify";
+import { addProdToCart } from "../features/user/userSlice";
 
 function SingleProduct() {
+  const [color, setColor] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const location = useLocation();
   const getproductId = location.pathname.split("/")[2];
   const productState = useSelector((state) => state.product.singleProduct);
-  console.log(productState);
   useEffect(() => {
     dispatch(getAProduct(getproductId));
   }, []);
+
+  const uploadCart = () => {
+    if(color == null)
+    {
+      toast("Please choose the color");
+      return false;
+    }
+    else
+    {
+      dispatch(addProdToCart({productId: productState?._id,quantity,color,price:productState?.price}));
+      toast("Product Added to Cart")
+    }
+  };
   const props = {
     width: 400,
     height: 600,
     zoomWidth: 600,
-    img: productState?.images[0]?.url ? productState?.images[0]?.url : "https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg"
+    img: productState?.images[0]?.url
+      ? productState?.images[0]?.url
+      : "https://ph-live-01.slatic.net/p/b06c1fbd4b655af3fce96b10ff66026d.jpg",
   };
   const [orderedProduct, setOrderedProduct] = useState(true);
   const copyToClipboard = (text) => {
@@ -50,25 +68,23 @@ function SingleProduct() {
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
-              {productState?.images.map((item,index)=>{
-                return(
+              {productState?.images.map((item, index) => {
+                return (
                   <div>
-                <img
-                  src={item?.url}
-                  className="img-fluid"
-                  alt={item?.name}
-                />
-              </div>
-                )
+                    <img
+                      src={item?.url}
+                      className="img-fluid"
+                      alt={item?.name}
+                    />
+                  </div>
+                );
               })}
             </div>
           </div>
           <div className="col-6">
             <div className="main-product-details">
               <div className="border-bottom">
-                <h3 className="title">
-                  {productState?.title}
-                </h3>
+                <h3 className="title">{productState?.title}</h3>
               </div>
               <div className="border-bottom py-3">
                 <p className="price">$ {productState?.price}</p>
@@ -126,7 +142,7 @@ function SingleProduct() {
                 </div>
                 <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Color: </h3>
-                  <Color />
+                  <Color setColor={setColor} colorData={productState?.color} />
                 </div>
                 <div className="d-flex gap-15 flex-row align-items-center mt-2 mb-3">
                   <h3 className="product-heading">Quantity: </h3>
@@ -139,11 +155,21 @@ function SingleProduct() {
                       style={{ width: "70px" }}
                       name=""
                       id=""
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
                     />
                   </div>
 
                   <div className="d-flex align-items-center gap-30 ms-5">
-                    <button className="button border-0" type="submit">
+                    <button
+                      className="button border-0"
+                      // data-bs-toggle="modal"
+                      // data-bs-target="#staticBackdrop"
+                      type="button"
+                      onClick={() => {
+                        uploadCart();
+                      }}
+                    >
                       Add To Cart
                     </button>
                     <button to="/sign-up" className="button signup">
@@ -193,9 +219,7 @@ function SingleProduct() {
                   <a
                     href="javascript:void(0);"
                     onClick={() => {
-                      copyToClipboard(
-                        window.location.href
-                      )
+                      copyToClipboard(window.location.href);
                     }}
                   >
                     Copy Product Link
@@ -211,9 +235,9 @@ function SingleProduct() {
           <div className="col-12">
             <h4>Description</h4>
             <div className="bg-white p-3">
-              <p dangerouslySetInnerHTML={{ __html:productState?.description}}>
-               
-              </p>
+              <p
+                dangerouslySetInnerHTML={{ __html: productState?.description }}
+              ></p>
             </div>
           </div>
         </div>
