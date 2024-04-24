@@ -183,12 +183,20 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.deleteProduct = action.payload;
+        if(state.isSuccess)
+        {
+          toast("Product Deleted From Cart")
+        }
       })
       .addCase(deleteCartProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
+        if(state.isSuccess === false)
+        {
+          toast("Product Don't Deleted From Cart")
+        }
       });
   },
 });

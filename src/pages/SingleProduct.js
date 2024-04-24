@@ -50,6 +50,9 @@ function SingleProduct() {
     else
     {
       dispatch(addProdToCart({productId: productState?._id,quantity,color,price:productState?.price}));
+      setTimeout(()=>{
+        dispatch(getUserCart())
+      },200);
       toast("Product Added to Cart");
       navigate("/cart")
     }

@@ -6,7 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserCart } from "../features/user/userSlice";
+import { deleteCartProduct, getUserCart } from "../features/user/userSlice";
 
 function Cart() {
   const dispatch = useDispatch();
@@ -15,6 +15,13 @@ function Cart() {
   useEffect(() => {
     dispatch(getUserCart());
   }, []);
+
+  const deleteACartProduct= (id)=>{
+    dispatch(deleteCartProduct(id));
+    setTimeout(()=>{
+      dispatch(getUserCart())
+    },200);
+  }
   return (
     <>
       <Meta title={"Cart"} />
@@ -66,7 +73,7 @@ function Cart() {
                         />
                       </div>
                       <div>
-                        <MdDelete className="text-danger fs-5" />
+                        <MdDelete onClick={()=>{deleteACartProduct(item?._id)}} className="text-danger fs-5" />
                       </div>
                     </div>
                     <div className="cart-col-4">
