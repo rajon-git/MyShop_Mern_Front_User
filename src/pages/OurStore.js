@@ -252,7 +252,7 @@ function OurStore() {
             <div className="products-list pb-5">
               <div className="d-flex flex-wrap gap-10">
                 <ProductCard
-                  data={productState ? productState : []}
+                  data={ productState && productState ? productState : []}
                   grid={grid}
                 />
               </div>

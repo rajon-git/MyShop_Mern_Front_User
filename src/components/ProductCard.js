@@ -17,14 +17,14 @@ function ProductCard(props) {
   
   const addtowish = (id) => {
     dispatch(addWishlist(id));
+    navigate("/wishlist");
   };
-  console.log(addtowish);
   return (
     <>
-      {data?.map((item, i) => {
+      {data?.map((item, index) => {
         return (
           <div
-            key={i}
+            key={index}
             className={`${
               location.pathname === "/product" ? `gr-${grid}` : "col-3"
             }`}

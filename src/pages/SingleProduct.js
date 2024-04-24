@@ -5,25 +5,41 @@ import ProductCard from "../components/ProductCard";
 import ReactStars from "react-rating-stars-component";
 import ReactImageZoom from "react-image-zoom";
 import Color from "../components/Color";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { TbGitCompare } from "react-icons/tb";
 import { CiHeart } from "react-icons/ci";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAProduct } from "../features/products/productSlice";
 import { toast } from "react-toastify";
-import { addProdToCart } from "../features/user/userSlice";
+import { addProdToCart, getUserCart } from "../features/user/userSlice";
 
 function SingleProduct() {
   const [color, setColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [alreadyAdded, setAlreadyAdded] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
+
   const getproductId = location.pathname.split("/")[2];
   const productState = useSelector((state) => state.product.singleProduct);
+  const cartState = useSelector((state)=>state?.auth?.cartProducts);
   useEffect(() => {
     dispatch(getAProduct(getproductId));
+    dispatch(getUserCart());
   }, []);
+  
+
+  useEffect(()=>{
+    for(let index=0;index<cartState.length;index++)
+    {
+      if(getproductId === cartState[index]?.productId?._id)
+      {
+        setAlreadyAdded(true);
+      }
+    }
+  },[])
 
   const uploadCart = () => {
     if(color == null)
@@ -34,7 +50,8 @@ function SingleProduct() {
     else
     {
       dispatch(addProdToCart({productId: productState?._id,quantity,color,price:productState?.price}));
-      toast("Product Added to Cart")
+      toast("Product Added to Cart");
+      navigate("/cart")
     }
   };
   const props = {
@@ -140,12 +157,19 @@ function SingleProduct() {
                     </span>
                   </div>
                 </div>
-                <div className="d-flex gap-10 flex-column mt-2 mb-3">
+                {
+                  alreadyAdded === false && <>
+                  <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Color: </h3>
                   <Color setColor={setColor} colorData={productState?.color} />
                 </div>
+                  </>
+                }
                 <div className="d-flex gap-15 flex-row align-items-center mt-2 mb-3">
-                  <h3 className="product-heading">Quantity: </h3>
+                  
+                  {
+                    alreadyAdded === false && <>
+                    <h3 className="product-heading">Quantity: </h3>
                   <div className="">
                     <input
                       type="number"
@@ -159,6 +183,8 @@ function SingleProduct() {
                       onChange={(e) => setQuantity(e.target.value)}
                     />
                   </div>
+                    </>
+                  }
 
                   <div className="d-flex align-items-center gap-30 ms-5">
                     <button
@@ -167,10 +193,12 @@ function SingleProduct() {
                       // data-bs-target="#staticBackdrop"
                       type="button"
                       onClick={() => {
-                        uploadCart();
+                        alreadyAdded ? navigate("/cart") : uploadCart()
                       }}
                     >
-                      Add To Cart
+                     {
+                      alreadyAdded ? "Go To Cart":" Add To Cart"
+                     }
                     </button>
                     <button to="/sign-up" className="button signup">
                       Buy It Now
