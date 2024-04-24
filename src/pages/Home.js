@@ -419,6 +419,7 @@ function Home() {
                       key={index}
                       id={item?._id}
                       brand={item?.brand}
+                      image={item?.images[0]?.url}
                       title={item?.title}
                       totalrating={item?.totalrating.toString()}
                       price={item?.price}
