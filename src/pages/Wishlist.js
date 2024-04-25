@@ -11,6 +11,7 @@ function Wishlist() {
   useEffect(() => {
     getWishlistfromdb();
   }, []);
+  
   const getWishlistfromdb = () => {
     dispatch(getUserProductWishlist());
   };

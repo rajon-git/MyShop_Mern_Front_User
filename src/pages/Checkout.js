@@ -1,15 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { IoMdArrowRoundBack } from "react-icons/io";
 import watch from "../images/watch.jpg"
 import Container from '../components/Container';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Checkout() {
+    const dispatch = useDispatch();
+    const [totalAmount, setTotalAmount] = useState(null);
+    const cartState = useSelector((state)=>state?.auth?.cartProducts);
+    useEffect(() => {
+        let sum = 0;
+        if (cartState) { // Check if cartState is defined
+          for (let index = 0; index < cartState?.length; index++) {
+            sum = sum + (Number(cartState[index].quantity) * Number(cartState[index].price));
+            setTotalAmount(sum);
+          }
+        }
+        else {
+          setTotalAmount(0); 
+        }
+      }, [cartState]);
     return (
         <>
-
             <Container class1='checkout-wrapper py-5 home-wrapper-2'>
-
                 <div className='row'>
                     <div className='col-7'>
                         <div className='checkout-left-data'>
@@ -70,37 +84,46 @@ function Checkout() {
                     </div>
                     <div className='col-5'>
                         <div className='border-bottom py-4'>
-                            <div className='d-flex gap-10 mb-2 align-items-center'>
+                            {
+                                cartState && cartState?.map((item,index)=>{
+                                    return (
+                                        <div key={index} className='d-flex gap-10 mb-2 align-items-center'>
                                 <div className='w-75 d-flex gap-10'>
                                     <div className='w-25 position-relative'>
-                                        <span style={{ "top": "-10px", "right": "2px" }} className='badge bg-secondary text-white rounded-circle p-2 position-absolute'>1</span>
-                                        <img className='img-fluid' src={watch} alt='watch' />
+                                        <span style={{ "top": "-10px", "right": "2px" }} className='badge bg-secondary text-white rounded-circle p-2 position-absolute'>
+                                            {item?.quantity}
+                                        </span>
+                                        <img width={100} height={100} src={item?.productId?.images[0]?.url ? item?.productId?.images[0]?.url: watch} alt='watch' />
                                     </div>
                                     <div className='title'>
-                                        <h5 className='total-price'>hddg</h5>
-                                        <p className='total-price'>S/ #jjs7ssh</p>
+                                        <h5 className='total-price'> {item?.productId?.title}</h5>
+                                        <p className='total-price'>{item?.color?.title}</p>
                                     </div>
                                 </div>
                                 <div className='flex-grow-1'>
                                     <h5 className='total'>
-                                        $ 100
+                                        $ {item?.price * item?.quantity}
                                     </h5>
                                 </div>
                             </div>
+                                    )
+                                })
+                            }
+                            
                         </div>
                         <div className='border-bottom py-4'>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className='total'>Subtotal</p>
-                                <p className='total-price'>$ 1000</p>
+                                <p className='total-price'>$ {totalAmount ? totalAmount : 0}</p>
                             </div>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className='mb-0 total'>Shipping</p>
-                                <p className='mb-0 total-price'>$ 100</p>
+                                <p className='mb-0 total-price'>$ 80</p>
                             </div>
                         </div>
                         <div className='d-flex justify-content-between align-items-center order-bottom py-4'>
                             <h4 className='total'>Total</h4>
-                            <h5 className='total-price'>$ 1000</h5>
+                            <h5 className='total-price'>$ {totalAmount ? totalAmount+80 : 0}</h5>
                         </div>
                     </div>
                 </div>

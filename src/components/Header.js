@@ -6,15 +6,21 @@ import { useDispatch, useSelector } from 'react-redux';
 function Header() {
   const dispatch = useDispatch();
   const [total,setTotal] = useState(null);
-  const userCartState = useSelector((state) => state?.auth?.cartProducts);
-  useEffect(()=>{
-    let sum =0;
-    for(let index=0;index<userCartState?.length;index++)
-    {
-      sum = sum+(Number(userCartState[index].quantity)*Number(userCartState[index].price));
+  const userCartState = useSelector((state) => state?.auth?.cartProducts ?? []);
+
+ useEffect(() => {
+  let sum = 0;
+  if (userCartState) { // Check if userCartState is defined
+    for (let index = 0; index < userCartState?.length; index++) {
+      sum = sum + (Number(userCartState[index].quantity) * Number(userCartState[index].price));
       setTotal(sum);
     }
-  },[userCartState])
+  }
+  else {
+    setTotal(0); 
+  }
+}, [userCartState]);
+
   return (
     <>
       <header className='header-top-strip py-3'>
@@ -133,8 +139,8 @@ function Header() {
                   <Link to="/cart" className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/cart.svg' alt='cart' />
                     <div className='d-flex flex-column gap-10'>
-                      <span className='badge bg-white text-dark'>{userCartState?.length ? userCartState?.length : 0}</span>
-                      <p className='mb-0'>$ {total ? total : 0}</p>
+                      <span className='badge bg-white text-dark'>{userCartState && userCartState?.length ? userCartState?.length : 0}</span>
+                      <p className='mb-0'>$ {total && total ? total : 0}</p>
                     </div>
                   </Link>
                 </div>

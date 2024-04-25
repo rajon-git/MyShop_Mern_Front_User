@@ -17,11 +17,11 @@ function ProductCard(props) {
   
   const addtowish = (id) => {
     dispatch(addWishlist(id));
-    navigate("/wishlist");
+    navigate('/wishlist')
   };
   return (
     <>
-      {data?.map((item, index) => {
+      {data && data?.map((item, index) => {
         return (
           <div
             key={index}
@@ -78,7 +78,7 @@ function ProductCard(props) {
                   <button className="border-0 bg-transparent">
                     <img src={prodcompare} alt="prodcompare" />
                   </button>
-                  <Link to={'/product/'+item?._id} className="border-0 bg-transparent">
+                  <Link to={item && '/product/'+item?._id} className="border-0 bg-transparent">
                     <img src={view} alt="view" />
                   </Link>
                   <button className="border-0 bg-transparent">

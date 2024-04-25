@@ -20,8 +20,9 @@ import view from "../images/view.svg";
 
 function Home() {
   const dispatch = useDispatch();
-  let location = useLocation();
   const navigate = useNavigate();
+
+  
   const addtowish = (id) => {
     dispatch(addWishlist(id));
   };
@@ -275,7 +276,7 @@ function Home() {
           </div>
           {productState &&
             productState?.map((item, index) => {
-              if (item.tags === "featured") {
+              if (item?.tags === "featured") {
                 return (
                   <div key={index} className={`${"col-3"}`}>
                     <div className="product-card position-relative"
@@ -413,7 +414,7 @@ function Home() {
           <div className="row">
             {productState &&
               productState?.map((item, index) => {
-                if (item.tags === "special") {
+                if (item?.tags === "special") {
                   return (
                     <SpecialProduct
                       key={index}
