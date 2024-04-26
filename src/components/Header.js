@@ -7,6 +7,7 @@ function Header() {
   const dispatch = useDispatch();
   const [total,setTotal] = useState(null);
   const userCartState = useSelector((state) => state?.auth?.cartProducts ?? []);
+  const authState = useSelector((state)=>state?.auth);
 
  useEffect(() => {
   let sum = 0;
@@ -130,9 +131,11 @@ function Header() {
                   </Link>
                 </div>
                 <div>
-                  <Link to='/login' className='d-flex align-items-center gap-10 text-white'>
+                  <Link to={authState?.user === null ? '/login' : ""} className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/user.svg' alt='user' />
-                    <p className='mb-0'>Login</p>
+                    {
+                      authState?.user === null ? <p className='mb-0'>Login</p> : <p className='mb-0'>Wellcome {authState?.user?.firstName}</p>
+                    }
                   </Link>
                 </div>
                 <div>
