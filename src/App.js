@@ -23,6 +23,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import { PrivateRoutes } from './pages/routing/PrivateRoutes';
 import { OpenRoutes } from './pages/routing/OpenRoutes';
+import CartPage from './pages/CartPage ';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path='refund-policy' element={<RefundPolicy/>}/>
           <Route path='privacy-policy' element={<PrivacyPolicy/>}/>
           <Route path='terms-and-condition' element={<TermsandCondition/>}/>
+          <Route path='cartpage' element={<CartPage/>}/>
          </Route>
        </Routes>
      </BrowserRouter>

@@ -793,3 +793,12 @@ footer .input-group-text{
 .error {
   color: #bf4800;
 }
+
+/* cart_card  */
+.cartCard {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
