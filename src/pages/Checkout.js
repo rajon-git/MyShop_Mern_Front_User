@@ -6,6 +6,8 @@ import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import axios from "axios";
+import { config } from "../utils/axiosConfig";
 
 const shippingSchema = yup.object({
   firstName: yup.string().required("FirstName  is required"),
@@ -22,6 +24,7 @@ function Checkout() {
   const dispatch = useDispatch();
   const [totalAmount, setTotalAmount] = useState(null);
   const [shippingInfo,setShippingInfo] = useState(null);
+  const [paymentInfo,setPaymentInfo] = useState({razorpayPaymentId: "", razorpayOrderId: ""})
 
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   useEffect(() => {
@@ -52,9 +55,75 @@ function Checkout() {
     },
     validationSchema: shippingSchema,
     onSubmit: (values) => {
-      shippingInfo(values)
+        shippingInfo(values);
+        checkoutHandler();
     },
   });
+
+  const loadScript = (src)=>{
+    return new Promise((resolve)=>{
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = () =>{
+            resolve(true);
+        }
+        script.onerror = () =>{
+            resolve(false);
+        }
+        document.body.appendChild(script);
+    })
+  }
+
+  const checkoutHandler = async () => {
+    const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js")
+    if (!res)
+    {
+        alert("Razor load failed");
+        return;
+    }
+    const result = await axios.post("http://localhost:4000/api/user/order/checkout","",config);
+    if(!result)
+    {
+        alert("Something went wrong");
+        return ;
+    }
+    const {amount,id:order_id,currency} = result.data.order;
+    const options = {
+        key: "rzp_test_6ETWefW4U9ymSd", // Enter the Key ID generated from the Dashboard
+        amount: amount,
+        currency: currency,
+        name: "Rajon",
+        description: "Test Transaction",
+        order_id: order_id,
+        handler: async function (response) {
+            const data = {
+                orderCreationId: order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpayOrderId: response.razorpay_order_id,
+            };
+
+            const result = await axios.post("http://localhost:4000/api/user/order/paymentVerification", data,config);
+
+            setPaymentInfo({
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpayOrderId: response.razorpay_order_id,
+            })
+        },
+        prefill: {
+            name: "Rajon",
+            email: "rajon@example.com",
+            contact: "9999999999",
+        },
+        notes: {
+            address: "Rajon Corporate Office",
+        },
+        theme: {
+            color: "#61dafb",
+        },
+    };
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
   return (
     <>
       <Container class1="checkout-wrapper py-5 home-wrapper-2">
