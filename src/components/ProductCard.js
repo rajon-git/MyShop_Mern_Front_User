@@ -17,7 +17,10 @@ function ProductCard(props) {
   
   const addtowish = (id) => {
     dispatch(addWishlist(id));
-    navigate('/wishlist')
+    setTimeout(()=>{
+      navigate('/wishlist');
+    },300)
+    
   };
   return (
     <>

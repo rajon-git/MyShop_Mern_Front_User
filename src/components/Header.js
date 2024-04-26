@@ -11,15 +11,10 @@ function Header() {
 
  useEffect(() => {
   let sum = 0;
-  if (userCartState) { // Check if userCartState is defined
     for (let index = 0; index < userCartState?.length; index++) {
       sum = sum + (Number(userCartState[index].quantity) * Number(userCartState[index].price));
       setTotal(sum);
     }
-  }
-  else {
-    setTotal(0); 
-  }
 }, [userCartState]);
 
   return (

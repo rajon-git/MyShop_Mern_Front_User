@@ -16,7 +16,7 @@ function Cart() {
   const [productUpdateDetail, setProductUpdateDetail] = useState(null);
   const [totalAmount, setTotalAmount] = useState(null);
   const dispatch = useDispatch();
-  const userCartState = useSelector((state) => state?.auth?.cartProducts ?? []);
+  const userCartState = useSelector((state) => state?.auth?.cartProducts);
 
   useEffect(() => {
     dispatch(getUserCart());
@@ -32,9 +32,9 @@ function Cart() {
       );
       setTimeout(() => {
         dispatch(getUserCart());
-      }, 200);
+      }, 300);
     }
-  }, [productUpdateDetail]);
+  }, [dispatch,productUpdateDetail]);
 
   const deleteACartProduct = (id) => {
     dispatch(deleteCartProduct(id));
@@ -45,18 +45,12 @@ function Cart() {
 
   useEffect(() => {
     let sum = 0;
-    if (userCartState) { // Check if userCartState is defined
       for (let index = 0; index < userCartState?.length; index++) {
         sum = sum + (Number(userCartState[index].quantity) * Number(userCartState[index].price));
         setTotalAmount(sum);
       }
-    }
-    else {
-      setTotalAmount(0); 
-    }
   }, [userCartState]);
   
-
   return (
     <>
       <Meta title={"Cart"} />

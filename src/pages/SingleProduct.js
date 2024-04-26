@@ -23,16 +23,16 @@ function SingleProduct() {
   const navigate = useNavigate();
 
   const getproductId = location.pathname.split("/")[2];
-  const productState = useSelector((state) => state.product.singleProduct);
+  const productState = useSelector((state) => state?.product?.singleProduct);
   const cartState = useSelector((state)=>state?.auth?.cartProducts);
   useEffect(() => {
     dispatch(getAProduct(getproductId));
     dispatch(getUserCart());
-  }, []);
+  }, [dispatch,getproductId]);
   
 
   useEffect(()=>{
-    for(let index=0;index<cartState.length;index++)
+    for(let index=0;index<cartState?.length;index++)
     {
       if(getproductId === cartState[index]?.productId?._id)
       {
@@ -51,10 +51,11 @@ function SingleProduct() {
     {
       dispatch(addProdToCart({productId: productState?._id,quantity,color,price:productState?.price}));
       setTimeout(()=>{
-        dispatch(getUserCart())
-      },200);
-      toast("Product Added to Cart");
-      navigate("/cart")
+        dispatch(getUserCart());
+        navigate("/cart");
+      },500);
+      
+      
     }
   };
   const props = {
