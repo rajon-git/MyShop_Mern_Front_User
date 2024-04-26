@@ -8,6 +8,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import { config } from "../utils/axiosConfig";
+import { createAnOrder } from "../features/user/userSlice";
 
 const shippingSchema = yup.object({
   firstName: yup.string().required("FirstName  is required"),
@@ -24,7 +25,8 @@ function Checkout() {
   const dispatch = useDispatch();
   const [totalAmount, setTotalAmount] = useState(null);
   const [shippingInfo,setShippingInfo] = useState(null);
-  const [paymentInfo,setPaymentInfo] = useState({razorpayPaymentId: "", razorpayOrderId: ""})
+  const [paymentInfo,setPaymentInfo] = useState({razorpayPaymentId: "", razorpayOrderId: ""});
+  const [cartProductState,setCartProductState] = useState([])
 
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   useEffect(() => {
@@ -73,7 +75,14 @@ function Checkout() {
         document.body.appendChild(script);
     })
   }
-
+   useEffect(()=>{
+    let items =[]
+    for (let index = 0; index < cartState?.length; index++) {
+      items.push({product:cartState[index].productId._id,quantity:cartState[index].productId.quantity,color:cartState[index].color._id,price:cartState[index].productId.price})
+      
+    }
+    setCartProductState(items);
+   },[])
   const checkoutHandler = async () => {
     const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js")
     if (!res)
@@ -81,7 +90,7 @@ function Checkout() {
         alert("Razor load failed");
         return;
     }
-    const result = await axios.post("http://localhost:4000/api/user/order/checkout","",config);
+    const result = await axios.post("http://localhost:4000/api/user/order/checkout",totalAmount,config);
     if(!result)
     {
         alert("Something went wrong");
@@ -108,6 +117,8 @@ function Checkout() {
                 razorpayPaymentId: response.razorpay_payment_id,
                 razorpayOrderId: response.razorpay_order_id,
             })
+           
+            dispatch(createAnOrder({totalPrice:totalAmount,totalPriceAfterDiscount:totalAmount,orderItems:cartProductState,paymentInfo,shippingInfo}))
         },
         prefill: {
             name: "Rajon",

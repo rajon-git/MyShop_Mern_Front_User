@@ -6,7 +6,7 @@ import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/user/userSlice";
 
 const loginSchema = yup.object({
@@ -18,6 +18,7 @@ const loginSchema = yup.object({
 });
 
 function Login() {
+  const authState = useSelector((state)=>state?.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -28,7 +29,12 @@ function Login() {
     validationSchema: loginSchema,
     onSubmit: (values) => {
       dispatch(loginUser(values));
-      navigate("/");
+      setTimeout(()=>{
+        if(authState.isSuccess)
+        {
+          navigate("/");
+        }
+      },300);
     },
   });
   return (
