@@ -79,8 +79,6 @@ function CartPage() {
 
   useEffect(() => {
     let sum = 0;
-    if (userCartState) {
-      // Check if userCartState is defined
       for (let index = 0; index < userCartState?.length; index++) {
         sum =
           sum +
@@ -88,9 +86,6 @@ function CartPage() {
             Number(userCartState[index].price);
         setTotalAmount(sum);
       }
-    } else {
-      setTotalAmount(0);
-    }
   }, [userCartState]);
 
   const deleteACartProduct = (id) => {

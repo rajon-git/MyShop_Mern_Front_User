@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BreadCrumb from '../components/BreadCrumb'
 import Container from '../components/Container'
+import { useDispatch, useSelector } from 'react-redux'
+import { getOrders } from '../features/user/userSlice';
 
 
 function Orders() {
+    const dispatch = useDispatch();
+    const orderState = useSelector((state)=> state?.auth?.getOrderedProduct);
+
+    useEffect(()=>{
+        dispatch(getOrders());
+    },[])
   return (
     <>
     <BreadCrumb title='My Orders'/>
