@@ -101,6 +101,17 @@ export const createAnOrder = createAsyncThunk(
   }
 );
 
+export const updateAUser = createAsyncThunk(
+  "user/update",
+  async (data,thunkAPI) => {
+    try {
+      return await authService.updateUser(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const token = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
   : null;
@@ -295,7 +306,30 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
-      });
+      })
+      .addCase(updateAUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateAUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updateUser = action.payload;
+        if(state.isSuccess)
+        {
+          toast("Update Successfully")
+        }
+      })
+      .addCase(updateAUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if(state.isSuccess === false)
+        {
+          toast("Something went wrong")
+        }
+      })
   },
 });
 
