@@ -126,7 +126,7 @@ function Header() {
                   </Link>
                 </div>
                 <div>
-                  <Link to={authState?.user === null ? '/login' : ""} className='d-flex align-items-center gap-10 text-white'>
+                  <Link to={authState?.user === null ? '/login' : "/my-profile"} className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/user.svg' alt='user' />
                     {
                       authState?.user === null ? <p className='mb-0'>Login</p> : <p className='mb-0'>Wellcome {authState?.user?.firstName}</p>

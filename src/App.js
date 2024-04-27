@@ -25,6 +25,7 @@ import { PrivateRoutes } from './pages/routing/PrivateRoutes';
 import { OpenRoutes } from './pages/routing/OpenRoutes';
 import CartPage from './pages/CartPage ';
 import Orders from './pages/Orders';
+import Profile from './pages/Profile';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
           <Route path='blog/:id' element={<SingleBlog/>}/>
           <Route path='cart' element={<Cart/>}/>
           <Route path='my-orders' element={<PrivateRoutes><Orders/></PrivateRoutes>}/>
+          <Route path='my-profile' element={<PrivateRoutes><Profile/></PrivateRoutes>}/>
           <Route path='checkout' element={<Checkout/>}/>
           <Route path='compare-product' element={<CompareProduct/>}/>
           <Route path='wishlist' element={<Wishlist/>}/>
