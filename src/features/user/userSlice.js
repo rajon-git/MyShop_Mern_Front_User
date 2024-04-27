@@ -102,7 +102,7 @@ export const createAnOrder = createAsyncThunk(
 );
 
 export const updateAUser = createAsyncThunk(
-  "user/update",
+  "user/profile/update",
   async (data,thunkAPI) => {
     try {
       return await authService.updateUser(data);
