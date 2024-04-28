@@ -139,7 +139,7 @@ const handleLogout = ()=>{
                   </Link>
                 </div>
                 <div>
-                  <Link to="/cart" className='d-flex align-items-center gap-10 text-white'>
+                  <Link to="/cartpage" className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/cart.svg' alt='cart' />
                     <div className='d-flex flex-column gap-10'>
                       <span className='badge bg-white text-dark'>{userCartState && userCartState?.length ? userCartState?.length : 0}</span>

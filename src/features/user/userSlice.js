@@ -112,12 +112,12 @@ export const updateAUser = createAsyncThunk(
   }
 );
 
-const token = localStorage.getItem("customer")
+const getTokenFromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
   : null;
 
 const initialState = {
-  user: token,
+  user: getTokenFromLocalStorage,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -287,6 +287,10 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
+        if(!state.isSuccess)
+        {
+          toast("Please fill required options");
+        }
       })
       .addCase(getOrders.pending, (state) => {
         state.isLoading = true;

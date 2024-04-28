@@ -19,6 +19,9 @@ function Orders() {
       <Container class1="cart-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
+          <div className="cartCard mb-4">
+              <h4>Total Order Items : {orderState?.length}</h4>
+            </div>
             <div className="row">
               <div className="col-3">
                 <h5>Order Id</h5>
@@ -52,31 +55,31 @@ function Orders() {
                       <p>{item?.orderStatus}</p>
                     </div>
                     <div className="col-12">
-                      <div className="row p-3" style={{backgroundClip: "#232f3e"}}>
+                      <div className="row py-3" style={{backgroundColor: "#232f3e"}}>
                         <div className="col-3">
-                          <h6>Product Name</h6>
+                          <h6 className="text-white">Product Name</h6>
                         </div>
                         <div className="col-3">
-                          <h6>Quantity</h6>
+                          <h6 className="text-white">Quantity</h6>
                         </div>
                         <div className="col-3">
-                          <h6>Price</h6>
+                          <h6 className="text-white">Price</h6>
                         </div>
                         <div className="col-3">
-                          <h6>Color</h6>
+                          <h6 className="text-white">Color</h6>
                         </div>
                         {item?.orderItems?.map((i, index) => {
                           return (
                             <div className="col-12">
-                              <div className="row bg-secondary p-3">
+                              <div className="row p-3">
                                 <div className="col-3">
-                                  <p>{i?.product?.title}</p>
+                                  <p className="text-white">{`${index + 1}. ${ i.product.title}`}</p>
                                 </div>
                                 <div className="col-3">
-                                  <p>{i?.quantity}</p>
+                                  <p className="text-white">{i?.quantity}</p>
                                 </div>
                                 <div className="col-3">
-                                  <p>{i?.price}</p>
+                                  <p className="text-white">{i?.price}</p>
                                 </div>
                                 <div className="col-3">
                                   <ul className="colors ps-0">

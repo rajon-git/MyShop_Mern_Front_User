@@ -36,9 +36,9 @@ function CartPage() {
   const [paymentMethod, setPaymentMethod] = useState("cash_on_delivery"); // State to track selected payment method
   const [showModal, setShowModal] = useState(false);
   const [confirmOrder, setConfirmOrder] = useState(false); // State to track confirmation of order
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const userCartState = useSelector((state) => state?.auth?.cartProducts);
   const authState = useSelector((state) => state?.auth?.user);
 
@@ -53,12 +53,8 @@ function CartPage() {
       other: "",
     },
     validationSchema: shippingSchema,
-    onSubmit: (values, { resetForm }) => {
-      // Update the shippingInfo state with the form values
+    onSubmit: (values) => {
       setShippingInfo(values);
-      resetForm();
-      // Alert the form values
-      alert(JSON.stringify(values));
     },
   });
   useEffect(() => {
@@ -85,7 +81,7 @@ function CartPage() {
       sum =
         sum +
         Number(userCartState[index].quantity) *
-        Number(userCartState[index].price);
+          Number(userCartState[index].price);
       setTotalAmount(sum);
     }
   }, [userCartState]);
@@ -113,13 +109,15 @@ function CartPage() {
   const confirmOrderAndDispatch = () => {
     dispatch(
       createAnOrder({
-        shippingInfo,
-        orderItems: userCartState && userCartState?.map((item) => ({
-          product: item?.productId?._id,
-          color: item?.color?._id,
-          quantity: item?.quantity,
-          price: item?.price,
-        })),
+        shippingInfo: shippingInfo,
+        orderItems:
+          userCartState &&
+          userCartState?.map((item) => ({
+            product: item?.productId?._id,
+            color: item?.color?._id,
+            quantity: item?.quantity,
+            price: item?.price,
+          })),
         totalPrice: totalAmount,
         totalPriceAfterDiscount: totalAmount, // You may adjust this as needed
         paymentInfo: {
@@ -128,20 +126,10 @@ function CartPage() {
         },
       })
     );
-    // Close the confirmation modal
-    // setConfirmOrder(false);
-    // Check if the action was successful
-    if (confirmOrderAndDispatch.payload && confirmOrderAndDispatch.payload.isSuccess) {
-      // Close the confirmation modal
-      setConfirmOrder(false);
-      navigate("/confirm-order");
-    } else {
-      // Handle the case where the action failed
-      toast("Please fill required options");
-      // You can optionally show an error message to the user
-    }
+    setConfirmOrder(false);
+    navigate("/confirm-order");
   };
-
+  
   return (
     <>
       <Meta title={"Cart"} />
@@ -151,8 +139,8 @@ function CartPage() {
           <div className="col-7">
             <div className="cartCard mb-2">
               Total Cart Items : {userCartState?.length} <br /> Please provide
-              your shipping address, If you have a Voucher then apply or do nothing,
-              also choose payment method
+              your shipping address, If you have a Voucher then apply or do
+              nothing, also choose payment method
             </div>
             {userCartState &&
               userCartState?.map((item, index) => {
@@ -256,7 +244,12 @@ function CartPage() {
                 </strong>
               </p>
               <p>Phone: {authState && authState ? authState.mobile : ""}</p>
-              <p>Address</p>
+              <p>
+                Address:{" "}
+                {shippingInfo
+                  ? `${shippingInfo.other}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.country}, ${shippingInfo.pincode}`
+                  : ""}
+              </p>
 
               {/* Modal */}
               <Modal show={showModal} onHide={handleCloseModal}>
