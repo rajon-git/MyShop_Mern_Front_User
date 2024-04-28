@@ -10,30 +10,35 @@ import Form from "react-bootstrap/Form";
 import { MdModeEditOutline } from "react-icons/md";
 import * as yup from "yup";
 import {
+  createAnOrder,
   deleteCartProduct,
   getUserCart,
   updateCartProduct,
 } from "../features/user/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
 
 const shippingSchema = yup.object({
-  firstName: yup.string().required("FirstName  is required"),
-  lastName: yup.string().required("LastName  is required"),
-  state: yup.string().required("State  is required"),
-  city: yup.string().required("city  is required"),
-  country: yup.string().required("Country  is required"),
+  firstName: yup.string().required("FirstName is required"),
+  lastName: yup.string().required("LastName is required"),
+  state: yup.string().required("State is required"),
+  city: yup.string().required("City is required"),
+  country: yup.string().required("Country is required"),
   other: yup.string().required("Others are required"),
-  pincode: yup.string().required("PinCode  is required"),
+  pincode: yup.string().required("PinCode is required"),
 });
 
 function CartPage() {
   const [productUpdateDetail, setProductUpdateDetail] = useState(null);
   const [shippingInfo, setShippingInfo] = useState(null);
   const [totalAmount, setTotalAmount] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cash_on_delivery"); // State to track selected payment method
   const [showModal, setShowModal] = useState(false);
-  const dispatch = useDispatch();
+  const [confirmOrder, setConfirmOrder] = useState(false); // State to track confirmation of order
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userCartState = useSelector((state) => state?.auth?.cartProducts);
   const authState = useSelector((state) => state?.auth?.user);
 
@@ -56,9 +61,6 @@ function CartPage() {
       alert(JSON.stringify(values));
     },
   });
-
-  console.log(shippingInfo);
-
   useEffect(() => {
     dispatch(getUserCart());
   }, []);
@@ -79,13 +81,13 @@ function CartPage() {
 
   useEffect(() => {
     let sum = 0;
-      for (let index = 0; index < userCartState?.length; index++) {
-        sum =
-          sum +
-          Number(userCartState[index].quantity) *
-            Number(userCartState[index].price);
-        setTotalAmount(sum);
-      }
+    for (let index = 0; index < userCartState?.length; index++) {
+      sum =
+        sum +
+        Number(userCartState[index].quantity) *
+        Number(userCartState[index].price);
+      setTotalAmount(sum);
+    }
   }, [userCartState]);
 
   const deleteACartProduct = (id) => {
@@ -103,6 +105,43 @@ function CartPage() {
     setShowModal(false);
   };
 
+  const handlePlaceOrder = () => {
+    // Set the state to open the confirmation modal
+    setConfirmOrder(true);
+  };
+
+  const confirmOrderAndDispatch = () => {
+    dispatch(
+      createAnOrder({
+        shippingInfo,
+        orderItems: userCartState && userCartState?.map((item) => ({
+          product: item?.productId?._id,
+          color: item?.color?._id,
+          quantity: item?.quantity,
+          price: item?.price,
+        })),
+        totalPrice: totalAmount,
+        totalPriceAfterDiscount: totalAmount, // You may adjust this as needed
+        paymentInfo: {
+          // Add payment details here if required
+          method: paymentMethod, // Include the selected payment method
+        },
+      })
+    );
+    // Close the confirmation modal
+    // setConfirmOrder(false);
+    // Check if the action was successful
+    if (confirmOrderAndDispatch.payload && confirmOrderAndDispatch.payload.isSuccess) {
+      // Close the confirmation modal
+      setConfirmOrder(false);
+      navigate("/confirm-order");
+    } else {
+      // Handle the case where the action failed
+      toast("Please fill required options");
+      // You can optionally show an error message to the user
+    }
+  };
+
   return (
     <>
       <Meta title={"Cart"} />
@@ -112,8 +151,8 @@ function CartPage() {
           <div className="col-7">
             <div className="cartCard mb-2">
               Total Cart Items : {userCartState?.length} <br /> Please provide
-              your shipping address, If have Voucher then apply or nothing to
-              do, also choose payment method
+              your shipping address, If you have a Voucher then apply or do nothing,
+              also choose payment method
             </div>
             {userCartState &&
               userCartState?.map((item, index) => {
@@ -191,12 +230,12 @@ function CartPage() {
               <Link to="/product" className="button">
                 Continue to shopping
               </Link>
-              <Link to="/product" className="button">
+              <button className="button" onClick={handlePlaceOrder}>
                 Place Order
-              </Link>
+              </button>
             </div>
           </div>
-          <div className="col-4  ms-4">
+          <div className="col-4 ms-4">
             <div className="cartCard">
               <h4>Shipping Address</h4>
               <hr />
@@ -220,13 +259,13 @@ function CartPage() {
               <p>Address</p>
 
               {/* Modal */}
-              <Modal show={showModal} onHide={() => setShowModal(false)}>
+              <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
                   <Modal.Title>Edit Address</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   {/* Your form or content for editing */}
-                  <form>
+                  <form onSubmit={formik.handleSubmit}>
                     <div className="mb-3">
                       <label htmlFor="countryInput" className="form-label">
                         Country
@@ -240,9 +279,11 @@ function CartPage() {
                         id="countryInput"
                       >
                         <option value="">Select Country</option>
-                        <option value="usa">USA</option>
+                        <option value="bangladesh">Bangladesh</option>
                         <option value="uk">UK</option>
                         <option value="canada">Canada</option>
+                        <option value="usa">USA</option>
+                        <option value="chaina">Chaina</option>
                         {/* Add more options for other countries */}
                       </select>
                       <div className="error ">
@@ -251,7 +292,7 @@ function CartPage() {
                     </div>
                     <div className="d-flex justify-content-between align-items-center mb-3">
                       <div className="mb-3">
-                        <label htmlFor="locationInput" className="form-label">
+                        <label htmlFor="firstNameInput" className="form-label">
                           First Name
                         </label>
                         <input
@@ -262,14 +303,14 @@ function CartPage() {
                           placeholder="First Name"
                           type="text"
                           className="form-control"
-                          id="locationInput"
+                          id="firstNameInput"
                         />
                         <div className="error">
                           {formik.touched.firstName && formik.errors.firstName}
                         </div>
                       </div>
                       <div className="mb-3">
-                        <label htmlFor="locationInput" className="form-label">
+                        <label htmlFor="lastNameInput" className="form-label">
                           Last Name
                         </label>
                         <input
@@ -280,7 +321,7 @@ function CartPage() {
                           placeholder="Last Name"
                           type="text"
                           className="form-control"
-                          id="locationInput"
+                          id="lastNameInput"
                         />
                         <div className="error">
                           {formik.touched.lastName && formik.errors.lastName}
@@ -289,7 +330,7 @@ function CartPage() {
                     </div>
                     <div className="d-flex justify-content-between align-items-center mb-3">
                       <div className="mb-3">
-                        <label htmlFor="locationInput" className="form-label">
+                        <label htmlFor="locationInput1" className="form-label">
                           Appartment, suite, etc
                         </label>
                         <input
@@ -300,7 +341,7 @@ function CartPage() {
                           placeholder="Appartment, suite, etc"
                           type="text"
                           className="form-control"
-                          id="locationInput"
+                          id="locationInput1"
                         />
                         <div className="error">
                           {formik.touched.other && formik.errors.other}
@@ -318,7 +359,7 @@ function CartPage() {
                           placeholder="City"
                           type="text"
                           className="form-control"
-                          id="locationInput"
+                          id="cityInput"
                         />
                         <div className="error">
                           {formik.touched.city && formik.errors.city}
@@ -338,14 +379,14 @@ function CartPage() {
                           placeholder="State"
                           type="text"
                           className="form-control"
-                          id="locationInput"
+                          id="stateInput"
                         />
                         <div className="error">
                           {formik.touched.state && formik.errors.state}
                         </div>
                       </div>
                       <div>
-                        <label htmlFor="locationInput" className="form-label">
+                        <label htmlFor="pincodeInput" className="form-label">
                           Zip Code
                         </label>
                         <input
@@ -356,31 +397,24 @@ function CartPage() {
                           placeholder="Zip Code"
                           type="text"
                           className="form-control"
-                          id="locationInput"
+                          id="pincodeInput"
                         />
                         <div className="error ">
                           {formik.touched.pincode && formik.errors.pincode}
                         </div>
                       </div>
                     </div>
-                    {/* Add more form fields if needed */}
+                    <hr />
+                    <div className="d-flex justify-content-between">
+                      <Button variant="secondary" onClick={handleCloseModal}>
+                        Close
+                      </Button>
+                      <Button type="submit" variant="primary">
+                        Save Changes
+                      </Button>
+                    </div>
                   </form>
                 </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    variant="secondary"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </Button>
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    onClick={formik.handleSubmit}
-                  >
-                    Save Changes
-                  </Button>
-                </Modal.Footer>
               </Modal>
             </div>
             <div className="cartCard mt-2">
@@ -411,12 +445,16 @@ function CartPage() {
                     id="custom-radio1"
                     label="Cash On Delivery"
                     name="paymentMethod" // Set the name attribute to "paymentMethod" for both Form.Check components
+                    checked={paymentMethod === "cash_on_delivery"} // Check if payment method is cash_on_delivery
+                    onChange={() => setPaymentMethod("cash_on_delivery")} // Set payment method to cash_on_delivery when selected
                   />
                   <Form.Check
                     type="radio"
                     id="custom-radio2"
-                    label="Online Payment"
+                    label="Bkash"
                     name="paymentMethod" // Set the name attribute to "paymentMethod" for both Form.Check components
+                    checked={paymentMethod === "bkash"} // Check if payment method is bkash
+                    onChange={() => setPaymentMethod("bkash")} // Set payment method to bkash when selected
                   />
                 </Form>
               </div>
@@ -424,6 +462,21 @@ function CartPage() {
           </div>
         </div>
       </Container>
+      {/* Confirmation Modal */}
+      <Modal show={confirmOrder} onHide={() => setConfirmOrder(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Order</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to place this order?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setConfirmOrder(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={confirmOrderAndDispatch}>
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

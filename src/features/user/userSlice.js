@@ -287,10 +287,6 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
-        if(state.isSuccess === false)
-        {
-          toast("Product Quantity Isn't Updated")
-        }
       })
       .addCase(getOrders.pending, (state) => {
         state.isLoading = true;

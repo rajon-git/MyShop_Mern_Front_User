@@ -26,6 +26,7 @@ import { OpenRoutes } from './pages/routing/OpenRoutes';
 import CartPage from './pages/CartPage ';
 import Orders from './pages/Orders';
 import Profile from './pages/Profile';
+import ConfirmPlaceOrder from './pages/ConfirmPlaceOrder';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
           <Route path='privacy-policy' element={<PrivacyPolicy/>}/>
           <Route path='terms-and-condition' element={<TermsandCondition/>}/>
           <Route path='cartpage' element={<CartPage/>}/>
+          <Route path='confirm-order' element={<ConfirmPlaceOrder/>}/>
          </Route>
        </Routes>
      </BrowserRouter>
