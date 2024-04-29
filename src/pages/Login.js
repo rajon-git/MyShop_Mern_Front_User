@@ -18,7 +18,7 @@ const loginSchema = yup.object({
 });
 
 function Login() {
-  const authState = useSelector((state)=>state?.auth);
+  const authState = useSelector((state) => state?.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -29,8 +29,8 @@ function Login() {
     validationSchema: loginSchema,
     onSubmit: (values) => {
       dispatch(loginUser(values));
-       navigate("/");
-    }
+      navigate("/");
+    },
   });
   return (
     <>
