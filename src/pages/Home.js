@@ -98,8 +98,8 @@ function Home() {
       </Container> */}
 
       <Container className="home-wrapper-1 py-5">
-        <div className="row">
-          <div className="col-lg-6 mt-4 mb-0 mb-lg-4">
+        <div className="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1">
+          <div className="col-lg-6 col-md-12 col-sm-12 mt-4 mb-0 mb-lg-4">
             <div className="main-banner position-relative">
               <img
                 src="images/main-banner-1.jpg"
@@ -114,7 +114,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="col-lg-6 mt-4 mb-4 mb-lg-4">
+          <div className="col-lg-6 col-md-12 col-sm-12 mt-4 mb-4 mb-lg-4">
             <div className="d-flex flex-wrap justify-content-between align-items-center gap-10">
               <div className="small-banner position-relative">
                 <img

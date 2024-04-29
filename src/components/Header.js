@@ -158,27 +158,25 @@ const handleLogout = ()=>{
         <div className='container-xxl'>
           <div className='row'>
             <div className='col-12'>
-              <div className='menu-bottom d-flex align-items-center gap-lg-30 gap-10'>
-                <div>
-                  <div className="dropdown">
-                    <button className="btn btn-secondary dropdown-toggle bg-transparent border-0 gap-lg-15 gap-25 d-flex align-items-center" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img src='images/menu.svg' alt='' />
-                      <span className='me-5 d-inline-block'>Shop Categories</span>
-                    </button>
-                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><Link className="dropdown-item text-white" to="#">Action</Link></li>
-                      <li><Link className="dropdown-item text-white" to="#">Another action</Link></li>
-                      <li><Link className="dropdown-item text-white" to="#">Something else here</Link></li>
-                    </ul>
-                  </div>
+              <div className='menu-bottom d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-lg-30 gap-10'>
+                <div className='dropdown'>
+                  <button className='btn btn-secondary dropdown-toggle bg-transparent border-0 gap-lg-15 gap-25 d-flex align-items-center' type='button' id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'>
+                    <img src='images/menu.svg' alt='' />
+                    <span className='me-5 d-inline-block'>Shop Categories</span>
+                  </button>
+                  <ul className='dropdown-menu' aria-labelledby='dropdownMenuButton1'>
+                    <li><Link className='dropdown-item text-white' to='#'>Action</Link></li>
+                    <li><Link className='dropdown-item text-white' to='#'>Another action</Link></li>
+                    <li><Link className='dropdown-item text-white' to='#'>Something else here</Link></li>
+                  </ul>
                 </div>
-                <div className='menu-links'>
-                  <div className='d-flex align-items-center gap-15'>
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/product">Our Store</NavLink>
-                    <NavLink to="/my-orders">My Orders</NavLink>
-                    <NavLink to="/blogs">Blogs</NavLink>
-                    <NavLink to="/contact">Contact</NavLink>
+                <div className='menu-links mt-3 mt-md-0'>
+                  <div className='d-flex flex-wrap align-items-center gap-15'>
+                    <NavLink to='/'>Home</NavLink>
+                    <NavLink to='/product'>Our Store</NavLink>
+                    <NavLink to='/my-orders'>My Orders</NavLink>
+                    <NavLink to='/blogs'>Blogs</NavLink>
+                    <NavLink to='/contact'>Contact</NavLink>
                     <button onClick={handleLogout} type='button' className='border border-0 bg-transparent text-white'>Logout</button>
                   </div>
                 </div>

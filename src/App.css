@@ -210,6 +210,63 @@ footer .input-group-text{
 .small-banner {
   width: 49%;
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-banner-content {
+    top: 10%;
+    left: 3%;
+  }
+
+  .small-banner-content {
+    top: 20%;
+    left: 5%;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .main-banner-content {
+    top: 5%;
+    left: 2%;
+  }
+  .main-banner-content h4{
+    font-size: 14px;
+    font-weight: 400;
+   
+    color: var(--color-bf4800);
+    
+    letter-spacing: .3px;
+    text-transform: uppercase;
+  }
+  .main-banner-content h5{
+    font-size: 30px;
+    font-weight: 500;
+   
+    padding: 0;
+    letter-spacing: -2px;
+    text-transform: none;
+  }
+  
+  .main-banner-content p{
+    font-size: 13px;
+   
+    letter-spacing: .4px;
+    color: var(--color-131921)
+  }
+  .main-banner {
+    width: 100%;
+  }
+
+  .small-banner-content {
+    top: 15%;
+    left: 3%;
+  }
+
+  .small-banner {
+    width: 100%;
+  }
+}
 /*Homewrapper-1 end*/
 
 /*Homewrapper-2 start*/
@@ -252,6 +309,8 @@ footer .input-group-text{
 .categories > div:nth-child(8){
   border-right: 1px solid var(--color-ededed);
 }
+
+
 /*categories section end*/
 /*Homepage end*/
 
@@ -301,6 +360,8 @@ footer .input-group-text{
   font-size: 14px;
   color: var(--color-777777);
 }
+
+
 /*Blog card end*/
 
 /*product card start*/
@@ -508,6 +569,8 @@ footer .input-group-text{
 .gr-12 .action-bar{
   top: 17%;
 }
+
+
 /*Our Store end*/
 
 /*Contact Page start*/
@@ -582,6 +645,25 @@ footer .input-group-text{
   align-items: center;
   padding: 20px 0px;
   border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  .compare-product-card .cross,
+  .wishlist-card .cross {
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    padding: 2px;
+  }
+  
+  .compare-product-details h5.title,
+  .wishlist-card h5.title,
+  .compare-product-details h6.price,
+  .wishlist-card h6.price {
+    font-size: 14px;
+    line-height: 20px;
+  }
 }
 
 /*Compare Product end*/

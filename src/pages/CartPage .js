@@ -107,27 +107,34 @@ function CartPage() {
   };
 
   const confirmOrderAndDispatch = () => {
-    dispatch(
-      createAnOrder({
-        shippingInfo: shippingInfo,
-        orderItems:
-          userCartState &&
-          userCartState?.map((item) => ({
-            product: item?.productId?._id,
-            color: item?.color?._id,
-            quantity: item?.quantity,
-            price: item?.price,
-          })),
-        totalPrice: totalAmount,
-        totalPriceAfterDiscount: totalAmount, // You may adjust this as needed
-        paymentInfo: {
-          // Add payment details here if required
-          method: paymentMethod, // Include the selected payment method
-        },
-      })
-    );
-    setConfirmOrder(false);
-    navigate("/confirm-order");
+    if(userCartState?.length > 0)
+    {
+      dispatch(
+        createAnOrder({
+          shippingInfo: shippingInfo,
+          orderItems:
+            userCartState &&
+            userCartState?.map((item) => ({
+              product: item?.productId?._id,
+              color: item?.color?._id,
+              quantity: item?.quantity,
+              price: item?.price,
+            })),
+          totalPrice: totalAmount,
+          totalPriceAfterDiscount: totalAmount, // You may adjust this as needed
+          paymentInfo: {
+            // Add payment details here if required
+            method: paymentMethod, // Include the selected payment method
+          },
+        })
+      );
+      setConfirmOrder(false);
+      navigate("/confirm-order");
+    }
+    else
+    {
+      navigate("/product");
+    }
   };
   
   return (
