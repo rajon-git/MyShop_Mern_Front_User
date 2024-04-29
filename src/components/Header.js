@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { IoIosSearch } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
+import { Typeahead } from 'react-bootstrap-typeahead'; // ES2015
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 function Header() {
+  const [paginate, setPaginate] = useState(true);
   const dispatch = useDispatch();
+  const navigate= useNavigate();
   const [total,setTotal] = useState(null);
+
   const userCartState = useSelector((state) => state?.auth?.cartProducts ?? []);
   const authState = useSelector((state)=>state?.auth);
+  const productState = useSelector((state)=>state?.product?.product);
+  const [product,setProduct] = useState([]);
 
  useEffect(() => {
   let sum = 0;
@@ -16,6 +23,16 @@ function Header() {
       setTotal(sum);
     }
 }, [userCartState]);
+
+useEffect(()=>{
+  let data= [];
+  for (let index = 0; index < productState?.length; index++) {
+    const element = productState[index];
+    data.push({id:index,prod:element?._id,name:element?.title})
+    
+  }
+  setProduct(data);
+},[productState]);
 
 const handleLogout = ()=>{
   localStorage.clear()
@@ -105,12 +122,18 @@ const handleLogout = ()=>{
             </div>
             <div className='col-lg-5 col-md-6 col-6 mt-3 mt-md-0'>
               <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control py-2"
-                  placeholder="Search Product Here"
-                  aria-label="Search Product Here"
-                  aria-describedby="basic-addon2" />
+              <Typeahead
+        id="pagination-example"
+        onPaginate={() => console.log('Results paginated')}
+        onChange={(selected)=>{
+          navigate(`/product/${selected[0].prod}`)
+        }}
+        options={product}
+        paginate={paginate}
+        labelKey={"name"}
+        minLength={2}
+        placeholder="Search for products here..."
+      />
                 <span className="input-group-text p-3" id="basic-addon2">
                   <IoIosSearch className='fs-6 search-icon' />
                 </span>
