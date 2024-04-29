@@ -1,11 +1,35 @@
 import React from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput"
+import { useDispatch } from "react-redux";
+
+
+const emailSchema = yup.object({
+  email: yup
+    .string()
+    .email("Email should be valid")
+    .required("Email address is required"),
+});
+
 
 function ForgotPassword() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: emailSchema,
+    onSubmit: (values) => {
+     
+       navigate("/");
+    }
+  });
   return (
     <>
       <Meta title={"Forgot Password"} />
@@ -19,11 +43,17 @@ function ForgotPassword() {
               <p className="text-center my-2 mt-2">
                 We will send you an email to reset your password
               </p>
-              <form action="" className="d-flex flex-column gap-15">
+              <form action="" onSubmit={formik.handleSubmit} className="d-flex flex-column gap-15">
                 <CustomInput type="email"
                     placeholder="email"
                     name="email"
-                    className="form-control"/>
+                    className="form-control"
+                    onChange={formik.handleChange("email")}
+                  onBlur={formik.handleBlur("email")}
+                  value={formik.values.email}/>
+                   <div className="error text-center">
+                  {formik.touched.email && formik.errors.email}
+                </div>
                 <div>
                   <div className="mt-3 d-flex flex-column justify-content-center align-items-center gap-15">
                     <button className="button border-0" type="submit">
