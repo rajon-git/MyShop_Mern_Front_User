@@ -7,6 +7,7 @@ import * as yup from "yup";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput"
 import { useDispatch } from "react-redux";
+import { forgotPasswordToken } from "../features/user/userSlice";
 
 
 const emailSchema = yup.object({
@@ -26,8 +27,8 @@ function ForgotPassword() {
     },
     validationSchema: emailSchema,
     onSubmit: (values) => {
-     
-       navigate("/");
+       dispatch(forgotPasswordToken(values));
+      
     }
   });
   return (
