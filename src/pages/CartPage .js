@@ -53,8 +53,10 @@ function CartPage() {
       other: "",
     },
     validationSchema: shippingSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       setShippingInfo(values);
+      setShowModal(false); // Close the modal after submitting shipping information
+      resetForm(); // Reset the form fields
     },
   });
   useEffect(() => {
@@ -109,27 +111,34 @@ function CartPage() {
   const confirmOrderAndDispatch = () => {
     if(userCartState?.length > 0)
     {
-      dispatch(
-        createAnOrder({
-          shippingInfo: shippingInfo,
-          orderItems:
-            userCartState &&
-            userCartState?.map((item) => ({
-              product: item?.productId?._id,
-              color: item?.color?._id,
-              quantity: item?.quantity,
-              price: item?.price,
-            })),
-          totalPrice: totalAmount,
-          totalPriceAfterDiscount: totalAmount, // You may adjust this as needed
-          paymentInfo: {
-            // Add payment details here if required
-            method: paymentMethod, // Include the selected payment method
-          },
-        })
-      );
-      setConfirmOrder(false);
-      navigate("/confirm-order");
+      if(shippingInfo)
+      {
+        dispatch(
+          createAnOrder({
+            shippingInfo: shippingInfo,
+            orderItems:
+              userCartState &&
+              userCartState?.map((item) => ({
+                product: item?.productId?._id,
+                color: item?.color?._id,
+                quantity: item?.quantity,
+                price: item?.price,
+              })),
+            totalPrice: totalAmount,
+            totalPriceAfterDiscount: totalAmount, // You may adjust this as needed
+            paymentInfo: {
+              // Add payment details here if required
+              method: paymentMethod, // Include the selected payment method
+            },
+          })
+        );
+        setConfirmOrder(false);
+        navigate("/confirm-order");
+      }
+      else
+      {
+        toast("Please add shipping info & payment method");
+      }
     }
     else
     {
