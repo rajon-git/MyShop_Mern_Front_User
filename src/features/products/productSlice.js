@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 
 export const getAllProducts = createAsyncThunk(
   "product/get",
-  async (thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
-      return await productService.getProducts();
+      return await productService.getProducts(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -15,7 +15,7 @@ export const getAllProducts = createAsyncThunk(
 
 export const getAProduct = createAsyncThunk(
   "product/getAProduct",
-  async (id,thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
       return await productService.getSingleProduct(id);
     } catch (error) {
@@ -77,14 +77,14 @@ export const productSlice = createSlice({
       })
       .addCase(addWishlist.pending, (state) => {
         state.isLoading = true;
-        state.message = "Pending added to wishlist"
+        state.message = "Pending added to wishlist";
       })
       .addCase(addWishlist.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.wishlist = action.payload;
-        state.message = "Product added to wishlist"
+        state.message = "Product added to wishlist";
       })
       .addCase(addWishlist.rejected, (state, action) => {
         state.isLoading = false;
@@ -100,7 +100,7 @@ export const productSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.singleProduct = action.payload;
-        state.message = "Product fetched successfully"
+        state.message = "Product fetched successfully";
       })
       .addCase(getAProduct.rejected, (state, action) => {
         state.isLoading = false;
@@ -117,8 +117,7 @@ export const productSlice = createSlice({
         state.isSuccess = true;
         state.rating = action.payload;
         state.message = "Rating Added Successfully";
-        if(state.isSuccess)
-        {
+        if (state.isSuccess) {
           toast("Rating Added Successfully");
         }
       })

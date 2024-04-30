@@ -22,7 +22,6 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  
   const addtowish = (id) => {
     dispatch(addWishlist(id));
   };
@@ -279,8 +278,7 @@ function Home() {
               if (item?.tags === "featured") {
                 return (
                   <div key={index} className={`${"col-3"}`}>
-                    <div className="product-card position-relative"
-                    >
+                    <div className="product-card position-relative">
                       <div className="wishlist-icon position-absolute">
                         <button
                           className="border-0 bg-transparent"
@@ -324,7 +322,11 @@ function Home() {
                             <img src={prodcompare} alt="prodcompare" />
                           </button>
                           <button className="border-0 bg-transparent">
-                            <img onClick={()=> navigate("/product/"+item?._id)} src={view} alt="view" />
+                            <img
+                              onClick={() => navigate("/product/" + item?._id)}
+                              src={view}
+                              alt="view"
+                            />
                           </button>
                           {/* <button className="border-0 bg-transparent">
                             <img src={addcart} alt="add-cart" />
@@ -446,8 +448,7 @@ function Home() {
               if (item.tags === "popular") {
                 return (
                   <div key={index} className={`${"col-3"}`}>
-                    <div className="product-card position-relative"
-                    >
+                    <div className="product-card position-relative">
                       <div className="wishlist-icon position-absolute">
                         <button
                           className="border-0 bg-transparent"
@@ -491,7 +492,11 @@ function Home() {
                             <img src={prodcompare} alt="prodcompare" />
                           </button>
                           <button className="border-0 bg-transparent">
-                            <img onClick={()=>navigate("/product/"+item?._id)} src={view} alt="view" />
+                            <img
+                              onClick={() => navigate("/product/" + item?._id)}
+                              src={view}
+                              alt="view"
+                            />
                           </button>
                           {/* <button className="border-0 bg-transparent">
                             <img src={addcart} alt="add-cart" />
