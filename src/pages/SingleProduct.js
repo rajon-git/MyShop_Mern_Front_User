@@ -10,7 +10,7 @@ import { TbGitCompare } from "react-icons/tb";
 import { CiHeart } from "react-icons/ci";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { getAProduct } from "../features/products/productSlice";
+import { addRating, getAProduct, getAllProducts } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
 
@@ -18,6 +18,30 @@ function SingleProduct() {
   const [color, setColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [alreadyAdded, setAlreadyAdded] = useState(false);
+  const [star,setStar] = useState(null);
+  const [comment,setComment] = useState(null);
+
+  const addRatingProduct = ()=>{
+    if(star === null)
+    {
+      toast("Please add star for rating");
+      return false;
+    }
+    else if (comment === null)
+    {
+      toast("Please write product review");
+      return false;
+    }
+    else
+    {
+      dispatch(addRating({star:star,comment:comment,prodId:getproductId}));
+      setTimeout(()=>{
+        dispatch(getAProduct(getproductId));
+      },300);
+    }
+    return false;
+  }
+
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -29,6 +53,7 @@ function SingleProduct() {
   useEffect(() => {
     dispatch(getAProduct(getproductId));
     dispatch(getUserCart());
+    dispatch(getAllProducts());
   }, [dispatch,getproductId]);
   
 
@@ -94,7 +119,7 @@ function SingleProduct() {
   return (
     <>
       <Meta title={"Product Name"} />
-      <BreadCrumb title="Product Name" />
+      <BreadCrumb title={productState?.title} />
       <Container class1="main-product-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-6">
@@ -318,14 +343,17 @@ function SingleProduct() {
               </div>
               <div className="review-form py-4">
                 <h4> Write a review</h4>
-                <form action="" className="d-flex flex-column gap-15">
+               
                   <div>
                     <ReactStars
                       count={5}
                       size={24}
-                      value={4}
+                      value={3}
                       edit={true}
                       activeColor="#ffd700"
+                      onChange={(e)=>{
+                        setStar(e);
+                      }}
                     />
                   </div>
                   <div>
@@ -336,32 +364,37 @@ function SingleProduct() {
                       cols="30"
                       rows="4"
                       placeholder="Comments"
+                      onChange={(e)=>{
+                        setComment(e.target.value);
+                      }}
                     ></textarea>
                   </div>
-                  <div className="d-flex justify-content-end">
-                    <button className="button border-0">Submit Review</button>
+                  <div className="d-flex justify-content-end mt-3">
+                    <button onClick={addRatingProduct} className="button border-0" type="button">Submit Review</button>
                   </div>
-                </form>
+               
               </div>
               <div className="reviews mt-4">
-                <div className="review">
+                {
+                  productState && productState?.ratings?.map((item,index)=>{
+                    return (
+                      <div key={index} className="review">
                   <div className="d-flex gap-10 align-items-center">
-                    <h6 className="mb-0">Rajon</h6>
                     <ReactStars
                       count={5}
                       size={24}
-                      value={4}
+                      value={item?.star}
                       edit={false}
                       activeColor="#ffd700"
                     />
                   </div>
                   <p className="mt-3">
-                    It was popularised in the 1960s with the release of Letraset
-                    sheets containing Lorem Ipsum passages, and more recently
-                    with desktop publishing software like Aldus PageMaker
-                    including versions of Lorem Ipsum.
+                    {item?.comment}
                   </p>
                 </div>
+                    )
+                  })
+                }
               </div>
             </div>
           </div>

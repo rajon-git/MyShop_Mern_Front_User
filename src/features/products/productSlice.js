@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { productService } from "./productService";
+import { toast } from "react-toastify";
 
 export const getAllProducts = createAsyncThunk(
   "product/get",
@@ -116,6 +117,10 @@ export const productSlice = createSlice({
         state.isSuccess = true;
         state.rating = action.payload;
         state.message = "Rating Added Successfully";
+        if(state.isSuccess)
+        {
+          toast("Rating Added Successfully");
+        }
       })
       .addCase(addRating.rejected, (state, action) => {
         state.isLoading = false;

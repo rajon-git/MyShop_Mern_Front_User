@@ -4,6 +4,7 @@ import { IoIosSearch } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { Typeahead } from "react-bootstrap-typeahead"; // ES2015
 import "react-bootstrap-typeahead/css/Typeahead.css";
+import { getAProduct } from "../features/products/productSlice";
 
 function Header() {
   const [paginate, setPaginate] = useState(true);
@@ -133,7 +134,8 @@ function Header() {
                   id="pagination-example"
                   onPaginate={() => console.log("Results paginated")}
                   onChange={(selected) => {
-                    navigate(`/product/${selected[0].prod}`);
+                    navigate(`/product/${selected[0]?.prod}`);
+                    dispatch(getAProduct(selected[0]?.prod));
                   }}
                   options={product}
                   paginate={paginate}
