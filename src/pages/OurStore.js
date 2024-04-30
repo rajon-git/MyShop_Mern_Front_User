@@ -10,6 +10,7 @@ import { getAllProducts } from "../features/products/productSlice";
 
 function OurStore() {
   const [grid, setGrid] = useState(4);
+  const [randomProducts, setRandomProducts] = useState([]);
 
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -55,6 +56,26 @@ function OurStore() {
       getAllProducts({ sort, maxPrice, minPrice, brand, category, tags })
     );
   };
+
+  useEffect(() => {
+    const getRandomIndexes = (max, count) => {
+      const indexes = [];
+      while (indexes.length < count) {
+        const randomIndex = Math.floor(Math.random() * max);
+        if (!indexes.includes(randomIndex)) {
+          indexes.push(randomIndex);
+        }
+      }
+      return indexes;
+    };
+
+    // Assuming your product state is named productState
+    const products = productState; // Update this line with your actual product state
+
+    const randomIndexes = getRandomIndexes(products.length, 2);
+    const randomProducts = randomIndexes.map(index => products[index]);
+    setRandomProducts(randomProducts);
+  }, [productState]); // Dependency on productState
 
   return (
     <>
@@ -197,7 +218,7 @@ function OurStore() {
               </div>
             </div>
 
-            <div className="filter-card mb-3">
+            {/* <div className="filter-card mb-3">
               <h3 className="filter-title">Random Product</h3>
               <div>
                 <div className="random-products d-flex mb-3">
@@ -245,7 +266,38 @@ function OurStore() {
                   </div>
                 </div>
               </div>
+            </div> */}
+
+<div className="filter-card mb-3">
+              <h3 className="filter-title">Random Product</h3>
+              <div>
+              {randomProducts.map((product, index) => (
+                <div className="random-products d-flex mb-3" key={index}>
+                <div className="w-50">
+                <img
+                src={product?.images[0]?.url}
+                className="img-fluid"
+                alt={product?.name}
+              />
+                </div>
+                <div className="w-50">
+                  <h5>
+                    {product?.title}
+                  </h5>
+                  <ReactStars
+                    count={5}
+                    size={24}
+                    value={product?.totalrating}
+                    edit={false}
+                    activeColor="#ffd700"
+                  />
+                  <b>$ {product?.price}</b>
+                </div>
+              </div>
+              ))}
+              </div>
             </div>
+
           </div>
           <div className="col-9">
             <div className="filter-sort-grid mb-4">
@@ -271,7 +323,7 @@ function OurStore() {
                   </select>
                 </div>
                 <div className="d-flex align-items-center gap-10">
-                  <p className="totalproducts mb-0">21 products</p>
+                  <p className="totalproducts mb-0">{productState?.length} Products</p>
                   <div className="d-flex gap-10 align-items-center grid">
                     <img
                       onClick={() => {
