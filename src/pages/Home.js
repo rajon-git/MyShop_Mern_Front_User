@@ -326,9 +326,9 @@ function Home() {
                           <button className="border-0 bg-transparent">
                             <img onClick={()=> navigate("/product/"+item?._id)} src={view} alt="view" />
                           </button>
-                          <button className="border-0 bg-transparent">
+                          {/* <button className="border-0 bg-transparent">
                             <img src={addcart} alt="add-cart" />
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </div>
@@ -493,9 +493,9 @@ function Home() {
                           <button className="border-0 bg-transparent">
                             <img onClick={()=>navigate("/product/"+item?._id)} src={view} alt="view" />
                           </button>
-                          <button className="border-0 bg-transparent">
+                          {/* <button className="border-0 bg-transparent">
                             <img src={addcart} alt="add-cart" />
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </div>

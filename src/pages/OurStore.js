@@ -10,10 +10,35 @@ import { getAllProducts } from "../features/products/productSlice";
 
 function OurStore() {
   const [grid, setGrid] = useState(4);
-  const [popularProduct, setPopularProduct] = useState([]);
-  
+  const [brand,setBrand] = useState([]);
+  const [categories,setCategories] = useState([]);
+  const [tags,setTags] = useState([]);
+
+  //filter states
+  const [tag,setTag] = useState([]);
+  const [category,setCategory] = useState([]);
+  const [brands,setBrands] = useState([]);
+
   const dispatch = useDispatch();
   const productState = useSelector((state) => state?.product?.product);
+
+  useEffect(()=>{
+    let newBrands=[]
+    let category=[]
+    let newTags = []
+    for (let index = 0; index < productState?.length; index++) {
+      const element = productState[index];
+      newBrands.push(element.brand);
+      category.push(element.category);
+      newTags.push(element.tags)
+    }
+    setBrand(newBrands);
+    setCategories(category);
+    setTags(newTags);
+  },[])
+
+  
+  
   useEffect(() => {
     getProducts();
   }, []);
@@ -21,6 +46,7 @@ function OurStore() {
   const getProducts = () => {
     dispatch(getAllProducts());
   };
+  
   return (
     <>
       <Meta title={"Our Shop"} />
@@ -32,10 +58,11 @@ function OurStore() {
               <h3 className="filter-title">Shop By Categories</h3>
               <div>
                 <ul className="ps-0">
-                  <li>Watch</li>
-                  <li>TV</li>
-                  <li>Camera</li>
-                  <li>Laptop</li>
+                  {
+                    categories && [...new Set(categories)].map((item,index)=>{
+                      return <li key={index} onClick={()=>setCategory(item)}>{item}</li>
+                    })
+                  }
                 </ul>
               </div>
             </div>
@@ -122,18 +149,33 @@ function OurStore() {
             <div className="filter-card mb-3">
               <h3 className="filter-title">Product Tags</h3>
               <div className="product-tags d-flex flex-wrap align-items-center gap-10">
-                <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                  Headphone
-                </span>
-                <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                  laptop
-                </span>
-                <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                  Mobile
-                </span>
-                <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                  Wire
-                </span>
+              {
+                    tags && [...new Set(tags)].map((item,index)=>{
+                      return (
+                        <span onClick={()=>setTag(item)} key={index} className="text-capitalize badge bg-light text-secondary rounded-3 py-2 px-3">
+                      {item}
+                    </span>
+                      )
+                    })
+                  }
+                
+               
+              </div>
+            </div>
+            <div className="filter-card mb-3">
+              <h3 className="filter-title">Product Brands</h3>
+              <div className="product-tags d-flex flex-wrap align-items-center gap-10">
+              {
+                    brand && [...new Set(brand)].map((item,index)=>{
+                      return (
+                        <span onClick={()=>setBrands(item)} key={index} className="text-capitalize badge bg-light text-secondary rounded-3 py-2 px-3">
+                      {item}
+                    </span>
+                      )
+                    })
+                  }
+                
+               
               </div>
             </div>
             <div className="filter-card mb-3">
