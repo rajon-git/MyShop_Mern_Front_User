@@ -24,6 +24,7 @@ function SingleProduct() {
 
   const getproductId = location.pathname.split("/")[2];
   const productState = useSelector((state) => state?.product?.singleProduct);
+  const productsState = useSelector((state) => state?.product?.product);
   const cartState = useSelector((state)=>state?.auth?.cartProducts);
   useEffect(() => {
     dispatch(getAProduct(getproductId));
@@ -76,6 +77,20 @@ function SingleProduct() {
     document.execCommand("copy");
     textField.remove();
   };
+
+  const [popularProduct, setPopularProduct] = useState([]);
+  useEffect(()=>{
+    let data = []
+    for (let index = 0; index < productsState?.length; index++) {
+      const element = productsState[index];
+      if(element.tags === 'popular')
+      {
+        data.push(element);
+      }
+      setPopularProduct(data);
+      
+    }
+  },[])
   return (
     <>
       <Meta title={"Product Name"} />
@@ -359,7 +374,7 @@ function SingleProduct() {
           </div>
         </div>
         <div className="row">
-          <ProductCard />
+          <ProductCard data={popularProduct}/>
         </div>
       </Container>
     </>

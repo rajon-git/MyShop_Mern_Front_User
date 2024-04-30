@@ -5,10 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Container from "../components/Container";
-import CustomInput from "../components/CustomInput"
+import CustomInput from "../components/CustomInput";
 import { useDispatch } from "react-redux";
 import { forgotPasswordToken } from "../features/user/userSlice";
-
 
 const emailSchema = yup.object({
   email: yup
@@ -16,7 +15,6 @@ const emailSchema = yup.object({
     .email("Email should be valid")
     .required("Email address is required"),
 });
-
 
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -27,16 +25,14 @@ function ForgotPassword() {
     },
     validationSchema: emailSchema,
     onSubmit: (values) => {
-       dispatch(forgotPasswordToken(values));
-      
-    }
+      dispatch(forgotPasswordToken(values));
+    },
   });
   return (
     <>
       <Meta title={"Forgot Password"} />
       <BreadCrumb title="Forgot Password" />
       <Container class1="login-wrapper home-wrapper-2 py-5">
-
         <div className="row">
           <div className="col-12">
             <div className="auth-card">
@@ -44,15 +40,21 @@ function ForgotPassword() {
               <p className="text-center my-2 mt-2">
                 We will send you an email to reset your password
               </p>
-              <form action="" onSubmit={formik.handleSubmit} className="d-flex flex-column gap-15">
-                <CustomInput type="email"
-                    placeholder="email"
-                    name="email"
-                    className="form-control"
-                    onChange={formik.handleChange("email")}
+              <form
+                action=""
+                onSubmit={formik.handleSubmit}
+                className="d-flex flex-column gap-15"
+              >
+                <CustomInput
+                  type="email"
+                  placeholder="email"
+                  name="email"
+                  className="form-control"
+                  onChange={formik.handleChange("email")}
                   onBlur={formik.handleBlur("email")}
-                  value={formik.values.email}/>
-                   <div className="error text-center">
+                  value={formik.values.email}
+                />
+                <div className="error text-center">
                   {formik.touched.email && formik.errors.email}
                 </div>
                 <div>
@@ -68,7 +70,6 @@ function ForgotPassword() {
             </div>
           </div>
         </div>
-
       </Container>
     </>
   );
