@@ -78,7 +78,7 @@ function SingleProduct() {
       dispatch(addProdToCart({productId: productState?._id,quantity,color,price:productState?.price}));
       setTimeout(()=>{
         dispatch(getUserCart());
-        navigate("/cart");
+        navigate("/cartpage");
       },500);
       
       
@@ -153,11 +153,11 @@ function SingleProduct() {
                   <ReactStars
                     count={5}
                     size={24}
-                    value={productState?.totalrating.toString()}
+                    value={productState && productState?.totalrating}
                     edit={false}
                     activeColor="#ffd700"
                   />
-                  <p className="mb-0 t-review">(2 reviews)</p>
+                  <p className="mb-0 t-review">{productState?.ratings?.length} reviews</p>
                 </div>
                 <a className="review-btn" href="#review">
                   Write a Review
@@ -182,7 +182,7 @@ function SingleProduct() {
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Availibility: </h3>
-                  <p className="product-data">In Stock</p>
+                  <p className="product-data">{productsState && productsState?.length > 0 ? "In Stock" : "Out Of Stock"}</p>
                 </div>
                 <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Size: </h3>
@@ -244,9 +244,6 @@ function SingleProduct() {
                       alreadyAdded ? "Go To Cart":" Add To Cart"
                      }
                     </button>
-                    <button to="/sign-up" className="button signup">
-                      Buy It Now
-                    </button>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-10">
@@ -261,23 +258,7 @@ function SingleProduct() {
                     </a>
                   </div>
                 </div>
-                <div className="d-flex gap-10 flex-column mt-2 mb-3">
-                  <h3 className="product-heading">Size: </h3>
-                  <div className="d-flex flex-wrap gap-10">
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      S
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      M
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      XL
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      XXL
-                    </span>
-                  </div>
-                </div>
+                
                 <div className="d-flex gap-10 flex-column my-3">
                   <h3 className="product-heading">Shipping & Returns: </h3>
                   <p className="product-data">
