@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
-import { config } from "../utils/axiosConfig";
+import { getConfig } from "../utils/axiosConfig";
 import { createAnOrder } from "../features/user/userSlice";
 
 const shippingSchema = yup.object({
@@ -90,7 +90,7 @@ function Checkout() {
         alert("Razor load failed");
         return;
     }
-    const result = await axios.post("http://localhost:4000/api/user/order/checkout",totalAmount,config);
+    const result = await axios.post("http://localhost:4000/api/user/order/checkout",totalAmount,getConfig);
     if(!result)
     {
         alert("Something went wrong");
@@ -111,7 +111,7 @@ function Checkout() {
                 razorpayOrderId: response.razorpay_order_id,
             };
 
-            const result = await axios.post("http://localhost:4000/api/user/order/paymentVerification", data,config);
+            const result = await axios.post("http://localhost:4000/api/user/order/paymentVerification", data,getConfig);
 
             setPaymentInfo({
                 razorpayPaymentId: response.razorpay_payment_id,

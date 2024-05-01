@@ -1,5 +1,5 @@
 import axios from "axios"
-import { base_url, config } from "../../utils/axiosConfig";
+import { base_url, getConfig } from "../../utils/axiosConfig";
 
 const register = async(userData)=>{
     const response = await axios.post(`${base_url}user/register`, userData);
@@ -20,7 +20,7 @@ const login = async(userData)=>{
 }
 
 const getUserWishlist = async()=>{
-    const response = await axios.get(`${base_url}user/wishlist`, config)
+    const response = await axios.get(`${base_url}user/wishlist`, getConfig)
     if(response.data)
     {
         return response.data;
@@ -28,7 +28,7 @@ const getUserWishlist = async()=>{
 }
 
 const addToCart = async(cartData)=>{
-    const response = await axios.post(`${base_url}user/cart`,cartData, config)
+    const response = await axios.post(`${base_url}user/cart`,cartData, getConfig)
     if(response.data)
     {
         return response.data;
@@ -36,7 +36,7 @@ const addToCart = async(cartData)=>{
 }
 
 const getCart = async()=>{
-    const response = await axios.get(`${base_url}user/cart`, config)
+    const response = await axios.get(`${base_url}user/cart`, getConfig)
     if(response.data)
     {
         return response.data;
@@ -44,7 +44,7 @@ const getCart = async()=>{
 }
 
 const removeProductFromCart = async(cartItemId)=>{
-    const response = await axios.delete(`${base_url}user/delete-product-cart/${cartItemId}`, config)
+    const response = await axios.delete(`${base_url}user/delete-product-cart/${cartItemId}`, getConfig)
     if(response.data)
     {
         return response.data;
@@ -52,7 +52,7 @@ const removeProductFromCart = async(cartItemId)=>{
 }
 
 const updateProductFromCart = async(cartDetail)=>{
-    const response = await axios.delete(`${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`, config)
+    const response = await axios.delete(`${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`, getConfig)
     if(response.data)
     {
         return response.data;
@@ -60,7 +60,7 @@ const updateProductFromCart = async(cartDetail)=>{
 }
 
 const createOrder = async(orderDetail)=>{
-    const response = await axios.post(`${base_url}user/cart/cash-order`,orderDetail, config)
+    const response = await axios.post(`${base_url}user/cart/cash-order`,orderDetail, getConfig)
     if(response.data)
     {
         return response.data;
@@ -68,7 +68,7 @@ const createOrder = async(orderDetail)=>{
 }
 
 const getUserOrders = async()=>{
-    const response = await axios.get(`${base_url}user/getmyorders`, config)
+    const response = await axios.get(`${base_url}user/getmyorders`, getConfig)
     if(response.data)
     {
         return response.data;
@@ -76,7 +76,7 @@ const getUserOrders = async()=>{
 }
 
 const updateUser = async(data)=>{
-    const response = await axios.put(`${base_url}user/edit-user`,data, config)
+    const response = await axios.put(`${base_url}user/edit-user`,data, getConfig)
     if(response.data)
     {
         return response.data;
