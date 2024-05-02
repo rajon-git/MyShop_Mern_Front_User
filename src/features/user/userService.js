@@ -91,6 +91,14 @@ const forgotPassToken = async(data)=>{
     }
 }
 
+const applyCoupon = async(data)=>{
+    const response = await axios.post(`${base_url}user/cart/applycoupon`,data)
+    if(response.data)
+    {
+        return response.data;
+    }
+}
+
 export const authService = {
     register,
     login,
