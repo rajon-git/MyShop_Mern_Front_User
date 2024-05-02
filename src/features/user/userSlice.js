@@ -123,6 +123,17 @@ export const forgotPasswordToken = createAsyncThunk(
   }
 );
 
+export const couponApply = createAsyncThunk(
+  "user/cart/coupon",
+  async (data,thunkAPI) => {
+    try {
+      return await authService.applyCoupon(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const getTokenFromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
   : null;
@@ -355,6 +366,29 @@ export const authSlice = createSlice({
         }
       })
       .addCase(forgotPasswordToken.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if(state.isSuccess === false)
+        {
+          toast("Something went wrong")
+        }
+      })
+      .addCase(couponApply.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(couponApply.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.couponApplied = action.payload;
+        if(state.isSuccess)
+        {
+          toast("Coupon apply Successfully")
+        }
+      })
+      .addCase(couponApply.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

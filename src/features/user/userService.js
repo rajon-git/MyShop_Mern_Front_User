@@ -110,5 +110,6 @@ export const authService = {
     createOrder,
     getUserOrders,
     updateUser,
-    forgotPassToken
+    forgotPassToken,
+    applyCoupon
 }
