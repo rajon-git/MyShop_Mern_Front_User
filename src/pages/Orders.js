@@ -46,10 +46,10 @@ function Orders() {
                       <p>{item?._id}</p>
                     </div>
                     <div className="col-3">
-                      <p>{item?.totalPrice}</p>
+                      <p>{item?.totalPrice + 100}</p>
                     </div>
                     <div className="col-3">
-                      <p>{item?.totalPriceAfterDiscount}</p>
+                      <p>{item?.totalPriceAfterDiscount + 100}</p>
                     </div>
                     <div className="col-3">
                       <p>{item?.orderStatus}</p>

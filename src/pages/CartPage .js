@@ -10,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import { MdModeEditOutline } from "react-icons/md";
 import * as yup from "yup";
 import {
+  couponApply,
   createAnOrder,
   deleteCartProduct,
   getUserCart,
@@ -36,11 +37,13 @@ function CartPage() {
   const [paymentMethod, setPaymentMethod] = useState("cash_on_delivery"); // State to track selected payment method
   const [showModal, setShowModal] = useState(false);
   const [confirmOrder, setConfirmOrder] = useState(false); // State to track confirmation of order
+  const [couponCode, setCouponCode] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const userCartState = useSelector((state) => state?.auth?.cartProducts);
   const authState = useSelector((state) => state?.auth?.user);
+  const couponState= useSelector((state)=>state?.auth?.couponApplied);
 
   const formik = useFormik({
     initialValues: {
@@ -113,6 +116,7 @@ function CartPage() {
     {
       if(shippingInfo)
       {
+        const totalPriceAfterDiscount = couponState ? couponState.totalAfterDiscount : totalAmount + 100;
         dispatch(
           createAnOrder({
             shippingInfo: shippingInfo,
@@ -125,7 +129,7 @@ function CartPage() {
                 price: item?.price,
               })),
             totalPrice: totalAmount,
-            totalPriceAfterDiscount: totalAmount, // You may adjust this as needed
+            totalPriceAfterDiscount: totalPriceAfterDiscount, // You may adjust this as needed
             paymentInfo: {
               // Add payment details here if required
               method: paymentMethod, // Include the selected payment method
@@ -146,6 +150,13 @@ function CartPage() {
     }
   };
   
+
+  const handleApplyCoupon = () => {
+    // Dispatch an action to apply the coupon
+    dispatch(couponApply({ coupon: couponCode }));
+    // Clear the input field after applying the coupon
+    setCouponCode("");
+  };
   return (
     <>
       <Meta title={"Cart"} />
@@ -436,13 +447,33 @@ function CartPage() {
               <p style={{ color: "red", fontWeight: "bold" }}>
                 Total: {totalAmount && totalAmount ? totalAmount + 100 : 0}
               </p>
-              <div>
+
+              <p style={{ color: "red", fontWeight: "bold" }}>
+                Total After Discount: {couponState && couponState ? parseFloat(couponState.totalAfterDiscount) + 100 : totalAmount + 100 }
+              </p>
+              {/* <div>
                 <label htmlFor="voucherInput" className="form-label">
                   Apply Voucher or Promo Code:
                 </label>
                 <input type="text" className="form-control" id="voucherInput" />
               </div>
-              <Link className="button mt-2">Apply</Link>
+              <Link className="button mt-2">Apply</Link> */}
+               <div>
+      <label htmlFor="voucherInput" className="form-label">
+        Apply Voucher or Promo Code:
+      </label> 
+      <input
+        type="text"
+        className="form-control"
+        id="voucherInput"
+        value={couponCode}
+        onChange={(e) => setCouponCode(e.target.value)}
+      />
+      {/* Trigger the handleApplyCoupon function when the Apply button is clicked */}
+      <button className="button mt-2" onClick={handleApplyCoupon}>
+        Apply
+      </button>
+    </div>
             </div>
             <div className="mt-2 cartCard">
               <h4>Choose Payment Method</h4>
