@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,9 +29,14 @@ function Login() {
     validationSchema: loginSchema,
     onSubmit: (values) => {
       dispatch(loginUser(values));
-      navigate("/");
     },
   });
+  useEffect(()=>{
+    if(authState.user !== null && authState.isSuccess === true)
+      {
+        navigate("/");
+      }
+  },[authState,navigate]);
   return (
     <>
       <Meta title={"Login"} />
