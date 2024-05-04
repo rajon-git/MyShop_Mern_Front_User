@@ -337,10 +337,21 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.updateUser = action.payload;
-        if(state.isSuccess)
-        {
-          toast("Update Successfully")
-        }
+        if(state.isSuccess === false)
+          {
+            let currentUserData = localStorage.getItem("customer");
+            let newUserData = {
+              _id:currentUserData?._id,
+              token: currentUserData?.token,
+              firstName: action?.payload?.firstName,
+              lastName: action?.payload?.lastName,
+              email: action?.payload?.email,
+              mobile: action?.payload?.email,
+            } 
+            localStorage.setItem("customer",newUserData);
+            state.customer = newUserData;
+            toast("Update Successfully")
+          }
       })
       .addCase(updateAUser.rejected, (state, action) => {
         state.isLoading = false;

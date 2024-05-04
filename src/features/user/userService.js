@@ -99,6 +99,14 @@ const applyCoupon = async(data)=>{
     }
 }
 
+const emptyCart = async(data)=>{
+    const response = await axios.delete(`${base_url}user/empty`,getConfig)
+    if(response.data)
+    {
+        return response.data;
+    }
+}
+
 export const authService = {
     register,
     login,
@@ -111,5 +119,6 @@ export const authService = {
     getUserOrders,
     updateUser,
     forgotPassToken,
-    applyCoupon
+    applyCoupon,
+    emptyCart
 }

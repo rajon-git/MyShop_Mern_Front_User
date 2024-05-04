@@ -31,12 +31,11 @@ function Login() {
       dispatch(loginUser(values));
     },
   });
-  useEffect(()=>{
-    if(authState.user !== null && authState.isSuccess === true)
-      {
-        navigate("/");
-      }
-  },[authState,navigate]);
+  useEffect(() => {
+    if (authState.user !== null && authState.isSuccess === true) {
+      navigate("/");
+    }
+  }, [authState, navigate]);
   return (
     <>
       <Meta title={"Login"} />

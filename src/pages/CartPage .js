@@ -449,7 +449,7 @@ function CartPage() {
               </p>
 
               <p style={{ color: "red", fontWeight: "bold" }}>
-                Total After Discount: {couponState && couponState ? parseFloat(couponState.totalAfterDiscount) + 100 : totalAmount + 100 }
+                Total After Discount: {couponState && couponState ? couponState.totalAfterDiscount : totalAmount + 100 }
               </p>
               {/* <div>
                 <label htmlFor="voucherInput" className="form-label">
