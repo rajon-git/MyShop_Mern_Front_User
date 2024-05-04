@@ -39,12 +39,13 @@ function CartPage() {
   const [showModal, setShowModal] = useState(false);
   const [confirmOrder, setConfirmOrder] = useState(false); // State to track confirmation of order
   const [couponCode, setCouponCode] = useState("");
+  const [totalPriceAfterDiscount, setTotalPriceAfterDiscount] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const userCartState = useSelector((state) => state?.auth?.cartProducts);
   const authState = useSelector((state) => state?.auth?.user);
-  const couponState= useSelector((state)=>state?.auth?.couponApplied);
+  const couponState = useSelector((state) => state?.auth?.couponApplied);
 
   const formik = useFormik({
     initialValues: {
@@ -86,7 +87,7 @@ function CartPage() {
     for (let index = 0; index < userCartState?.length; index++) {
       sum +=
         Number(userCartState[index].quantity) *
-          Number(userCartState[index].price);
+        Number(userCartState[index].price);
       setTotalAmount(sum);
     }
   }, [userCartState]);
@@ -112,11 +113,11 @@ function CartPage() {
   };
 
   const confirmOrderAndDispatch = () => {
-    if(userCartState?.length > 0)
-    {
-      if(shippingInfo)
-      {
-        const totalPriceAfterDiscount = couponState ? couponState.totalAfterDiscount : totalAmount;
+    if (userCartState?.length > 0) {
+      if (shippingInfo) {
+        // const totalPriceAfterDiscount = couponState
+        //   ? couponState.totalAfterDiscount
+        //   : totalAmount;
         dispatch(
           createAnOrder({
             shippingInfo: shippingInfo,
@@ -143,25 +144,34 @@ function CartPage() {
         setTotalAmount(null);
         setPaymentMethod("cash_on_delivery");
         setCouponCode("");
-      }
-      else
-      {
+        setTotalPriceAfterDiscount(0);
+      } else {
         toast("Please add shipping info & payment method");
       }
-    }
-    else
-    {
+    } else {
       navigate("/product");
     }
   };
-  
 
   const handleApplyCoupon = () => {
     // Dispatch an action to apply the coupon
     dispatch(couponApply({ coupon: couponCode }));
     // Clear the input field after applying the coupon
     setCouponCode("");
+    console.log(couponApply)
   };
+
+  useEffect(() => {
+    // Check if couponState is available and if it has the totalAfterDiscount property
+    if (couponState && couponState.totalAfterDiscount) {
+      // Set totalPriceAfterDiscount to the totalAfterDiscount value from couponState
+      setTotalPriceAfterDiscount(couponState.totalAfterDiscount + 100);
+    } else {
+      // If couponState or totalAfterDiscount is not available, set totalPriceAfterDiscount to totalAmount
+      setTotalPriceAfterDiscount(totalAmount);
+    }
+  }, [couponState, totalAmount]);
+
   return (
     <>
       <Meta title={"Cart"} />
@@ -450,28 +460,33 @@ function CartPage() {
               </p>
               <p>Shipping: 100 </p>
               <p style={{ color: "red", fontWeight: "bold" }}>
-                Total: {totalAmount && totalAmount ? totalAmount+100 : 0}
+                Total: {totalAmount && totalAmount ? totalAmount + 100 : 0}
               </p>
 
-              <p style={{ color: "red", fontWeight: "bold" }}>
-                Total After Discount: {couponState && couponState ? couponState.totalAfterDiscount : totalAmount }
-              </p>
-               <div>
-      <label htmlFor="voucherInput" className="form-label">
-        Apply Voucher or Promo Code:
-      </label> 
-      <input
-        type="text"
-        className="form-control"
-        id="voucherInput"
-        value={couponCode}
-        onChange={(e) => setCouponCode(e.target.value)}
-      />
-      {/* Trigger the handleApplyCoupon function when the Apply button is clicked */}
-      <button className="button mt-2" onClick={handleApplyCoupon}>
-        Apply
-      </button>
-    </div>
+              {couponState && couponState ? (
+                <p style={{ color: "red", fontWeight: "bold" }}>
+                  Total After Discount:{" "}
+                  {totalPriceAfterDiscount}
+                </p>
+              ) : (
+                ""
+              )}
+              <div>
+                <label htmlFor="voucherInput" className="form-label">
+                  Apply Voucher or Promo Code:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="voucherInput"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                />
+                {/* Trigger the handleApplyCoupon function when the Apply button is clicked */}
+                <button className="button mt-2" onClick={handleApplyCoupon}>
+                  Apply
+                </button>
+              </div>
             </div>
             <div className="mt-2 cartCard">
               <h4>Choose Payment Method</h4>
