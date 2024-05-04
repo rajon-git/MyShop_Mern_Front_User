@@ -13,6 +13,7 @@ import {
   couponApply,
   createAnOrder,
   deleteCartProduct,
+  deleteUserCart,
   getUserCart,
   updateCartProduct,
 } from "../features/user/userSlice";
@@ -33,7 +34,7 @@ const shippingSchema = yup.object({
 function CartPage() {
   const [productUpdateDetail, setProductUpdateDetail] = useState(null);
   const [shippingInfo, setShippingInfo] = useState(null);
-  const [totalAmount, setTotalAmount] = useState(null);
+  const [totalAmount, setTotalAmount] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("cash_on_delivery"); // State to track selected payment method
   const [showModal, setShowModal] = useState(false);
   const [confirmOrder, setConfirmOrder] = useState(false); // State to track confirmation of order
@@ -83,8 +84,7 @@ function CartPage() {
   useEffect(() => {
     let sum = 0;
     for (let index = 0; index < userCartState?.length; index++) {
-      sum =
-        sum +
+      sum +=
         Number(userCartState[index].quantity) *
           Number(userCartState[index].price);
       setTotalAmount(sum);
@@ -116,7 +116,7 @@ function CartPage() {
     {
       if(shippingInfo)
       {
-        const totalPriceAfterDiscount = couponState ? couponState.totalAfterDiscount : totalAmount + 100;
+        const totalPriceAfterDiscount = couponState ? couponState.totalAfterDiscount : totalAmount;
         dispatch(
           createAnOrder({
             shippingInfo: shippingInfo,
@@ -137,7 +137,12 @@ function CartPage() {
           })
         );
         setConfirmOrder(false);
+        dispatch(deleteUserCart());
         navigate("/confirm-order");
+        setShippingInfo(null);
+        setTotalAmount(null);
+        setPaymentMethod("cash_on_delivery");
+        setCouponCode("");
       }
       else
       {
@@ -443,21 +448,14 @@ function CartPage() {
               <p style={{ color: "red", fontWeight: "bold" }}>
                 Sub Total: {totalAmount && totalAmount ? totalAmount : 0}
               </p>
-              <p>Shipping: 100 *changeable</p>
+              <p>Shipping: 100 </p>
               <p style={{ color: "red", fontWeight: "bold" }}>
-                Total: {totalAmount && totalAmount ? totalAmount + 100 : 0}
+                Total: {totalAmount && totalAmount ? totalAmount+100 : 0}
               </p>
 
               <p style={{ color: "red", fontWeight: "bold" }}>
-                Total After Discount: {couponState && couponState ? couponState.totalAfterDiscount : totalAmount + 100 }
+                Total After Discount: {couponState && couponState ? couponState.totalAfterDiscount : totalAmount }
               </p>
-              {/* <div>
-                <label htmlFor="voucherInput" className="form-label">
-                  Apply Voucher or Promo Code:
-                </label>
-                <input type="text" className="form-control" id="voucherInput" />
-              </div>
-              <Link className="button mt-2">Apply</Link> */}
                <div>
       <label htmlFor="voucherInput" className="form-label">
         Apply Voucher or Promo Code:
