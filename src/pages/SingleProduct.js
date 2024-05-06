@@ -10,37 +10,40 @@ import { TbGitCompare } from "react-icons/tb";
 import { CiHeart } from "react-icons/ci";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { addRating, getAProduct, getAllProducts } from "../features/products/productSlice";
+import {
+  addRating,
+  addWishlist,
+  getAProduct,
+  getAllProducts,
+} from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
+import { Button } from "react-bootstrap";
 
 function SingleProduct() {
   const [color, setColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [alreadyAdded, setAlreadyAdded] = useState(false);
-  const [star,setStar] = useState(null);
-  const [comment,setComment] = useState(null);
+  const [star, setStar] = useState(null);
+  const [comment, setComment] = useState(null);
 
-  const addRatingProduct = ()=>{
-    if(star === null)
-    {
+  const addRatingProduct = () => {
+    if (star === null) {
       toast("Please add star for rating");
       return false;
-    }
-    else if (comment === null)
-    {
+    } else if (comment === null) {
       toast("Please write product review");
       return false;
-    }
-    else
-    {
-      dispatch(addRating({star:star,comment:comment,prodId:getproductId}));
-      setTimeout(()=>{
+    } else {
+      dispatch(
+        addRating({ star: star, comment: comment, prodId: getproductId })
+      );
+      setTimeout(() => {
         dispatch(getAProduct(getproductId));
-      },300);
+      }, 300);
     }
     return false;
-  }
+  };
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -49,39 +52,39 @@ function SingleProduct() {
   const getproductId = location.pathname.split("/")[2];
   const productState = useSelector((state) => state?.product?.singleProduct);
   const productsState = useSelector((state) => state?.product?.product);
-  const cartState = useSelector((state)=>state?.auth?.cartProducts);
+  const cartState = useSelector((state) => state?.auth?.cartProducts);
+
   useEffect(() => {
     dispatch(getAProduct(getproductId));
     dispatch(getUserCart());
     dispatch(getAllProducts());
-  }, [dispatch,getproductId]);
-  
+  }, [dispatch, getproductId]);
 
-  useEffect(()=>{
-    for(let index=0;index<cartState?.length;index++)
-    {
-      if(getproductId === cartState[index]?.productId?._id)
-      {
+  useEffect(() => {
+    for (let index = 0; index < cartState?.length; index++) {
+      if (getproductId === cartState[index]?.productId?._id) {
         setAlreadyAdded(true);
       }
     }
-  },[])
+  }, []);
 
   const uploadCart = () => {
-    if(color == null)
-    {
+    if (color == null) {
       toast("Please choose the color");
       return false;
-    }
-    else
-    {
-      dispatch(addProdToCart({productId: productState?._id,quantity,color,price:productState?.price}));
-      setTimeout(()=>{
+    } else {
+      dispatch(
+        addProdToCart({
+          productId: productState?._id,
+          quantity,
+          color,
+          price: productState?.price,
+        })
+      );
+      setTimeout(() => {
         dispatch(getUserCart());
         navigate("/cartpage");
-      },500);
-      
-      
+      }, 500);
     }
   };
   const props = {
@@ -104,18 +107,23 @@ function SingleProduct() {
   };
 
   const [popularProduct, setPopularProduct] = useState([]);
-  useEffect(()=>{
-    let data = []
+  useEffect(() => {
+    let data = [];
     for (let index = 0; index < productsState?.length; index++) {
       const element = productsState[index];
-      if(element.tags === 'popular')
-      {
+      if (element.tags === "popular") {
         data.push(element);
       }
       setPopularProduct(data);
-      
     }
-  },[])
+  }, []);
+
+  const addtowish = (id) => {
+    dispatch(addWishlist(id));
+    setTimeout(()=>{
+      navigate("/wishlist")
+    },300);
+  };
   return (
     <>
       <Meta title={"Product Name"} />
@@ -157,17 +165,15 @@ function SingleProduct() {
                     edit={false}
                     activeColor="#ffd700"
                   />
-                  <p className="mb-0 t-review">{productState?.ratings?.length} reviews</p>
+                  <p className="mb-0 t-review">
+                    {productState?.ratings?.length} reviews
+                  </p>
                 </div>
                 <a className="review-btn" href="#review">
                   Write a Review
                 </a>
               </div>
               <div className="py-3">
-                <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Type: </h3>
-                  <p className="product-data">Watch</p>
-                </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Brand: </h3>
                   <p className="product-data">{productState?.brand}</p>
@@ -182,7 +188,11 @@ function SingleProduct() {
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Availibility: </h3>
-                  <p className="product-data">{productsState && productsState?.length > 0 ? "In Stock" : "Out Of Stock"}</p>
+                  <p className="product-data">
+                    {productsState && productsState?.length > 0
+                      ? `${productsState?.length} Products`
+                      : "Out Of Stock"}
+                  </p>
                 </div>
                 <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Size: </h3>
@@ -201,34 +211,36 @@ function SingleProduct() {
                     </span>
                   </div>
                 </div>
-                {
-                  alreadyAdded === false && <>
-                  <div className="d-flex gap-10 flex-column mt-2 mb-3">
-                  <h3 className="product-heading">Color: </h3>
-                  <Color setColor={setColor} colorData={productState?.color} />
-                </div>
+                {alreadyAdded === false && (
+                  <>
+                    <div className="d-flex gap-10 flex-column mt-2 mb-3">
+                      <h3 className="product-heading">Color: </h3>
+                      <Color
+                        setColor={setColor}
+                        colorData={productState?.color}
+                      />
+                    </div>
                   </>
-                }
+                )}
                 <div className="d-flex gap-15 flex-row align-items-center mt-2 mb-3">
-                  
-                  {
-                    alreadyAdded === false && <>
-                    <h3 className="product-heading">Quantity: </h3>
-                  <div className="">
-                    <input
-                      type="number"
-                      className="form-control"
-                      min={1}
-                      max={10}
-                      style={{ width: "70px" }}
-                      name=""
-                      id=""
-                      value={quantity}
-                      onChange={(e) => setQuantity(e.target.value)}
-                    />
-                  </div>
+                  {alreadyAdded === false && (
+                    <>
+                      <h3 className="product-heading">Quantity: </h3>
+                      <div className="">
+                        <input
+                          type="number"
+                          className="form-control"
+                          min={1}
+                          max={10}
+                          style={{ width: "70px" }}
+                          name=""
+                          id=""
+                          value={quantity}
+                          onChange={(e) => setQuantity(e.target.value)}
+                        />
+                      </div>
                     </>
-                  }
+                  )}
 
                   <div className="d-flex align-items-center gap-30 ms-5">
                     <button
@@ -237,28 +249,23 @@ function SingleProduct() {
                       // data-bs-target="#staticBackdrop"
                       type="button"
                       onClick={() => {
-                        alreadyAdded ? navigate("/cart") : uploadCart()
+                        alreadyAdded ? navigate("/cart") : uploadCart();
                       }}
                     >
-                     {
-                      alreadyAdded ? "Go To Cart":" Add To Cart"
-                     }
+                      {alreadyAdded ? "Go To Cart" : " Add To Cart"}
                     </button>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-10">
                   <div>
-                    <a href="">
-                      <TbGitCompare className="fs-5 me-2" /> Add To Compare
-                    </a>
-                  </div>
-                  <div>
-                    <a href="">
+                    <Link onClick={(e) => {
+                            addtowish(getproductId);
+                          }}>
                       <CiHeart className="fs-5 me-2" /> Add To Wishlist
-                    </a>
+                    </Link>
                   </div>
                 </div>
-                
+
                 <div className="d-flex gap-10 flex-column my-3">
                   <h3 className="product-heading">Shipping & Returns: </h3>
                   <p className="product-data">
@@ -324,58 +331,60 @@ function SingleProduct() {
               </div>
               <div className="review-form py-4">
                 <h4> Write a review</h4>
-               
-                  <div>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={3}
-                      edit={true}
-                      activeColor="#ffd700"
-                      onChange={(e)=>{
-                        setStar(e);
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <textarea
-                      name=""
-                      id=""
-                      className="w-100 form-control"
-                      cols="30"
-                      rows="4"
-                      placeholder="Comments"
-                      onChange={(e)=>{
-                        setComment(e.target.value);
-                      }}
-                    ></textarea>
-                  </div>
-                  <div className="d-flex justify-content-end mt-3">
-                    <button onClick={addRatingProduct} className="button border-0" type="button">Submit Review</button>
-                  </div>
-               
+
+                <div>
+                  <ReactStars
+                    count={5}
+                    size={24}
+                    value={3}
+                    edit={true}
+                    activeColor="#ffd700"
+                    onChange={(e) => {
+                      setStar(e);
+                    }}
+                  />
+                </div>
+                <div>
+                  <textarea
+                    name=""
+                    id=""
+                    className="w-100 form-control"
+                    cols="30"
+                    rows="4"
+                    placeholder="Comments"
+                    onChange={(e) => {
+                      setComment(e.target.value);
+                    }}
+                  ></textarea>
+                </div>
+                <div className="d-flex justify-content-end mt-3">
+                  <button
+                    onClick={addRatingProduct}
+                    className="button border-0"
+                    type="button"
+                  >
+                    Submit Review
+                  </button>
+                </div>
               </div>
               <div className="reviews mt-4">
-                {
-                  productState && productState?.ratings?.map((item,index)=>{
+                {productState &&
+                  productState?.ratings?.map((item, index) => {
                     return (
                       <div key={index} className="review">
-                  <div className="d-flex gap-10 align-items-center">
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={item?.star}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                  </div>
-                  <p className="mt-3">
-                    {item?.comment}
-                  </p>
-                </div>
-                    )
-                  })
-                }
+                        <div className="d-flex gap-10 align-items-center">
+                          <ReactStars
+                            count={5}
+                            size={24}
+                            value={item?.star}
+                            edit={false}
+                            activeColor="#ffd700"
+                          />
+                        </div>
+                        <p className="mt-3">{item?.comment}</p>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -388,7 +397,7 @@ function SingleProduct() {
           </div>
         </div>
         <div className="row">
-          <ProductCard data={popularProduct}/>
+          <ProductCard data={popularProduct} />
         </div>
       </Container>
     </>

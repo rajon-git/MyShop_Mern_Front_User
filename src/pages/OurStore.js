@@ -197,59 +197,6 @@ function OurStore() {
                 </div>
               </div>
             </div>
-
-            {/* <div className="filter-card mb-3">
-              <h3 className="filter-title">Random Product</h3>
-              <div>
-                <div className="random-products d-flex mb-3">
-                  <div className="w-50">
-                    <img
-                      src="images/watch.jpg"
-                      className="img-fluid"
-                      alt="watch"
-                    />
-                  </div>
-                  <div className="w-50">
-                    <h5>
-                      Kids headphone bulk 10 pack multi colored for students
-                    </h5>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={4}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                    <b>$ 100</b>
-                  </div>
-                </div>
-                <div className="random-products d-flex ">
-                  <div className="w-50">
-                    <img
-                      src="images/watch.jpg"
-                      className="img-fluid"
-                      alt="watch"
-                    />
-                  </div>
-                  <div className="w-50">
-                    <h5>
-                      Kids headphone bulk 10 pack multi colored for students
-                    </h5>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={4}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                    <b>$ 100</b>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-
-
-
           </div>
           <div className="col-9">
             <div className="filter-sort-grid mb-4">

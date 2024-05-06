@@ -7,7 +7,6 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import OurStore from './pages/OurStore';
 import Blog from './pages/Blog';
-import CompareProduct from './pages/CompareProduct';
 import Wishlist from './pages/Wishlist';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
@@ -46,7 +45,6 @@ function App() {
           <Route path='my-orders' element={<PrivateRoutes><Orders/></PrivateRoutes>}/>
           <Route path='my-profile' element={<PrivateRoutes><Profile/></PrivateRoutes>}/>
           <Route path='checkout' element={<Checkout/>}/>
-          <Route path='compare-product' element={<CompareProduct/>}/>
           <Route path='wishlist' element={<Wishlist/>}/>
           <Route path='login' element={<OpenRoutes><Login/></OpenRoutes>}/>
           <Route path='forgot-password' element={<ForgotPassword/>}/>

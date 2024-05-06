@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../components/BlogCard";
@@ -21,6 +21,7 @@ import view from "../images/view.svg";
 function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const addtowish = (id) => {
     dispatch(addWishlist(id));
@@ -28,6 +29,48 @@ function Home() {
 
   const blogState = useSelector((state) => state?.blog?.blog);
   const productState = useSelector((state) => state?.product?.product);
+
+  // Sort the productState array based on sales count or any other relevant metric
+  const sortedProducts = [...productState].sort((a, b) => b.sold - a.sold);
+
+  // Get the top 4 products
+  const top4Products = sortedProducts.slice(0, 4);
+
+  const tshirtCount = Array.isArray(productState)
+    ? productState.reduce((count, item) => {
+        if (item?.category === "Tshirt") {
+          return count + 1;
+        }
+        return count;
+      }, 0)
+    : 0;
+
+  const watchCount = Array.isArray(productState)
+    ? productState.reduce((count, item) => {
+        if (item?.category === "Watch") {
+          return count + 1;
+        }
+        return count;
+      }, 0)
+    : 0;
+
+  const laptopCount = Array.isArray(productState)
+    ? productState.reduce((count, item) => {
+        if (item?.category === "Laptop") {
+          return count + 1;
+        }
+        return count;
+      }, 0)
+    : 0;
+
+  const mobileCount = Array.isArray(productState)
+    ? productState.reduce((count, item) => {
+        if (item?.category === "Mobile") {
+          return count + 1;
+        }
+        return count;
+      }, 0)
+    : 0;
 
   useEffect(() => {
     getBlogs();
@@ -43,59 +86,6 @@ function Home() {
   };
   return (
     <>
-      {/* <Container class1='home-wrapper-1 py-5'>
-        <div className='row'>
-          <div className='col-6'>
-            <div className='main-banner position-relative'>
-              <img src='images/main-banner-1.jpg' className='img-fluid rounded-3' alt='main banner' />
-              <div className='main-banner-content position-absolute'>
-                <h4>Super chraged for pros</h4>
-                <h5>ipad s13+ pro</h5>
-                <p>From $999.0o or $41.62/mo.</p>
-                <Link className='button'>Buy now</Link>
-              </div>
-            </div>
-          </div>
-          <div className='col-6'>
-            <div className='d-flex flex-wrap justify-content-between align-items-center gap-10'>
-              <div className='small-banner position-relative'>
-                <img src='images/catbanner-01.jpg' className='img-fluid rounded-3' alt='main banner' />
-                <div className='small-banner-content position-absolute'>
-                  <h4>Best</h4>
-                  <h5>ipad s13+ pro</h5>
-                  <p>From $999.0o <br /> or $41.62/mo.</p>
-                </div>
-              </div>
-              <div className='small-banner position-relative'>
-                <img src='images/catbanner-02.jpg' className='img-fluid rounded-3' alt='main banner' />
-                <div className='small-banner-content position-absolute'>
-                  <h4>New Arraival</h4>
-                  <h5>ipad air</h5>
-                  <p>From $999.0o <br /> or $41.62/mo.</p>
-                </div>
-              </div>
-              <div className='small-banner position-relative '>
-                <img src='images/catbanner-03.jpg' className='img-fluid rounded-3' alt='main banner' />
-                <div className='small-banner-content position-absolute'>
-                  <h4>New Arraival</h4>
-                  <h5>ipad air</h5>
-                  <p>From $999.0o <br /> or $41.62/mo.</p>
-                </div>
-              </div>
-
-              <div className='small-banner position-relative '>
-                <img src='images/catbanner-04.jpg' className='img-fluid rounded-3' alt='main banner' />
-                <div className='small-banner-content position-absolute'>
-                  <h4>New Arraival</h4>
-                  <h5>ipad air</h5>
-                  <p>From $999.0o <br /> or $41.62/mo.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Container> */}
-
       <Container className="home-wrapper-1 py-5">
         <div className="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1">
           <div className="col-lg-6 col-md-12 col-sm-12 mt-4 mb-0 mb-lg-4">
@@ -109,7 +99,9 @@ function Home() {
                 <h4>Super chraged for pros</h4>
                 <h5>ipad s13+ pro</h5>
                 <p>From $999.0o or $41.62/mo.</p>
-                <Link className="button">Buy now</Link>
+                <Link to={"/product"} className="button">
+                  Buy now
+                </Link>
               </div>
             </div>
           </div>
@@ -202,16 +194,16 @@ function Home() {
             <div className="categories d-flex justify-content-between flex-wrap align-items-center">
               <div className="d-flex gap-30 align-items-center">
                 <div>
-                  <h6>Cameras</h6>
-                  <p>10 items</p>
+                  <h6>Tshirts</h6>
+                  <p>{tshirtCount} Items</p>
                 </div>
                 <img src="images/camera.jpg" alt="camera" />
               </div>
 
               <div className="d-flex gap-30 align-items-center">
                 <div>
-                  <h6>Smart TV</h6>
-                  <p>10 items</p>
+                  <h6>Laptop</h6>
+                  <p>{laptopCount} Items</p>
                 </div>
                 <img src="images/tv.jpg" alt="camera" />
               </div>
@@ -219,47 +211,15 @@ function Home() {
               <div className="d-flex gap-30 align-items-center">
                 <div>
                   <h6>Smart Watches</h6>
-                  <p>10 items</p>
+                  <p>{watchCount} Items</p>
                 </div>
                 <img src="images/headphone.jpg" alt="camera" />
               </div>
 
               <div className="d-flex gap-30 align-items-center">
                 <div>
-                  <h6>Music & Gaming</h6>
-                  <p>10 items</p>
-                </div>
-                <img src="images/headphone.jpg" alt="camera" />
-              </div>
-
-              <div className="d-flex gap-30 align-items-center">
-                <div>
-                  <h6>Cameras</h6>
-                  <p>10 items</p>
-                </div>
-                <img src="images/camera.jpg" alt="camera" />
-              </div>
-
-              <div className="d-flex gap-30 align-items-center">
-                <div>
-                  <h6>Smart TV</h6>
-                  <p>10 items</p>
-                </div>
-                <img src="images/tv.jpg" alt="camera" />
-              </div>
-
-              <div className="d-flex gap-30 align-items-center">
-                <div>
-                  <h6>Smart Watches</h6>
-                  <p>10 items</p>
-                </div>
-                <img src="images/headphone.jpg" alt="camera" />
-              </div>
-
-              <div className="d-flex gap-30 align-items-center">
-                <div>
-                  <h6>Music & Gaming</h6>
-                  <p>10 items</p>
+                  <h6>Mobile</h6>
+                  <p>{mobileCount} Items</p>
                 </div>
                 <img src="images/headphone.jpg" alt="camera" />
               </div>
@@ -293,7 +253,7 @@ function Home() {
                         <img
                           src={item?.images[0].url}
                           alt="product image"
-                          className="img-fluid  mx-auto"
+                          className="img-fluid mx-auto"
                           width={160}
                         />
                         <img
@@ -319,9 +279,6 @@ function Home() {
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column gap-15">
                           <button className="border-0 bg-transparent">
-                            <img src={prodcompare} alt="prodcompare" />
-                          </button>
-                          <button className="border-0 bg-transparent">
                             <img
                               onClick={() => navigate("/product/" + item?._id)}
                               src={view}
@@ -341,70 +298,39 @@ function Home() {
         </div>
       </Container>
 
-      <Container class1="famous-wrapper py-5 home-wrapper-2">
+      <Container class1="famous-wrapper py-2 home-wrapper-2">
         <div className="row">
-          <div className="col-3">
-            <div className="famous-card position-relative">
-              <img
-                src="images/famous-01.jpg"
-                className="img-fluid"
-                alt="famous"
-              />
-              <div className="famous-content position-absolute">
-                <h5>Big Screen</h5>
-                <h6>Smart Watch Series 7</h6>
-                <p>From $399 or $16.62/mo. for 24 mo.*</p>
+          <div className="col-12">
+            <h3 className="section-heading mb-4">Best Selling Products</h3>
+          </div>
+          {top4Products.map((product, index) => (
+            <div className="col-lg-3 col-md-6 mb-4" key={index}>
+              <div
+                className={`card h-100 border-0 shadow${
+                  hoveredIndex === index ? " hovered" : ""
+                }`}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                <img
+                  src={product?.images[0]?.url}
+                  className="card-img-top img-fluid rounded mx-auto mt-4"
+                  alt={product?.title}
+                  style={{ width: "200px", height: "250px" }}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{product?.title}</h5>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    {product?.brand}
+                  </h6>
+                  <p className="card-text">
+                    ${product?.price} or ${product?.monthlyPrice}/mo. for 24
+                    mo.*
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-3">
-            <div className="famous-card position-relative">
-              <img
-                src="images/famous-02.jpg"
-                className="img-fluid"
-                alt="famous"
-              />
-              <div className="famous-content position-absolute">
-                <h5 className="text-dark">Studio Display</h5>
-                <h6 className="text-dark">600 nits of brightness</h6>
-                <p className="text-dark">27 inch 5k retina Display</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-3">
-            <div className="famous-card position-relative">
-              <img
-                src="images/famous-03.jpg"
-                className="img-fluid"
-                alt="famous"
-              />
-              <div className="famous-content position-absolute">
-                <h5 className="text-dark">Smart Phone</h5>
-                <h6 className="text-dark">Smartphone 13 pro</h6>
-                <p className="text-dark">
-                  Now in purple. From $399 or $16.62/mo. for 24 mo.*
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-3">
-            <div className="famous-card position-relative">
-              <img
-                src="images/famous-04.jpg"
-                className="img-fluid"
-                alt="famous"
-              />
-              <div className="famous-content position-absolute">
-                <h5 className="text-dark">Home Speakers</h5>
-                <h6 className="text-dark">Room Filling Sound</h6>
-                <p className="text-dark">
-                  Now in purple. From $399 or $16.62/mo. for 24 mo.*
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </Container>
 
@@ -489,9 +415,6 @@ function Home() {
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column gap-15">
                           <button className="border-0 bg-transparent">
-                            <img src={prodcompare} alt="prodcompare" />
-                          </button>
-                          <button className="border-0 bg-transparent">
                             <img
                               onClick={() => navigate("/product/" + item?._id)}
                               src={view}
@@ -547,32 +470,31 @@ function Home() {
       </Container>
 
       <Container class1="blog-wrapper py-5 home-wrapper-2">
-        <div className="row">
-          <div className="col-12">
-            <h3 className="section-heading">Our latest blogs</h3>
-          </div>
-        </div>
-        <div className="row">
-          {blogState &&
-            blogState?.map((item, index) => {
-              if (index < 3) {
-                return (
-                  <div className="col-3" key={index}>
-                    <BlogCard
-                      id={item?._id}
-                      title={item?.title}
-                      description={item?.description}
-                      image={item?.images[0]?.url}
-                      date={moment(item?.createdAt).format(
-                        "MMMM Do YYYY, h:mm a"
-                      )}
-                    />
-                  </div>
-                );
-              }
-            })}
-        </div>
-      </Container>
+  <div className="row">
+    <div className="col-12">
+      <h3 className="section-heading">Our latest blogs</h3>
+    </div>
+  </div>
+  <div className="row">
+    {blogState &&
+      blogState?.map((item, index) => {
+        if (index < 3) {
+          return (
+            <div className="col-lg-4 col-md-6 col-sm-12" key={index}>
+              <BlogCard
+                id={item?._id}
+                title={item?.title}
+                description={item?.description}
+                image={item?.images[0]?.url}
+                date={moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
+              />
+            </div>
+          );
+        }
+      })}
+  </div>
+</Container>
+
     </>
   );
 }

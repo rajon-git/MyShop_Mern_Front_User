@@ -1,5 +1,6 @@
 import axios from "axios"
 import { base_url, getConfig } from "../../utils/axiosConfig";
+import { useSelector } from "react-redux";
 
 const register = async(userData)=>{
     const response = await axios.post(`${base_url}user/register`, userData);
@@ -12,7 +13,6 @@ const register = async(userData)=>{
 
 const login = async(userData)=>{
     const response = await axios.post(`${base_url}user/login`, userData);
-
     if(response.data)
     {
         return response.data;
