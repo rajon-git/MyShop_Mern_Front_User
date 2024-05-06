@@ -237,7 +237,10 @@ function Home() {
             productState?.map((item, index) => {
               if (item?.tags === "featured") {
                 return (
-                  <div key={index} className={`${"col-3"}`}>
+                  <div
+                    key={index}
+                    className={`${"col-lg-3 col-md-6 col-sm-6 col-12 mb-4"}`}
+                  >
                     <div className="product-card position-relative">
                       <div className="wishlist-icon position-absolute">
                         <button
@@ -363,74 +366,76 @@ function Home() {
       </Container>
 
       <Container class1="popular-wrapper py-5 home-wrapper-2">
-  <div className="row">
-    <div className="col-12">
-      <h3 className="section-heading">Our popular products</h3>
-    </div>
-  </div>
-  <div className="row">
-    {productState &&
-      productState.map((item, index) => {
-        if (item.tags === "popular") {
-          return (
-            <div key={index} className="col-lg-3 col-md-4 col-sm-6 col-12 g-3">
-              <div className="product-card position-relative">
-                <div className="wishlist-icon position-absolute">
-                  <button
-                    className="border-0 bg-transparent"
-                    onClick={(e) => {
-                      addtowish(item?._id);
-                    }}
+        <div className="row">
+          <div className="col-12">
+            <h3 className="section-heading">Our popular products</h3>
+          </div>
+        </div>
+        <div className="row">
+          {productState &&
+            productState.map((item, index) => {
+              if (item.tags === "popular") {
+                return (
+                  <div
+                    key={index}
+                    className="col-lg-3 col-md-4 col-sm-6 col-12 g-3"
                   >
-                    <img src={wish} alt="wish" />
-                  </button>
-                </div>
-                <div className="product-image">
-                  <img
-                    src={item?.images[0].url}
-                    alt="product image"
-                    className="img-fluid mx-auto"
-                    width={160}
-                  />
-                  <img
-                    src={tab1}
-                    alt="product image"
-                    className="img-fluid mx-auto"
-                    width={160}
-                  />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">{item?.brand}</h6>
-                  <h5 className="product-title">{item?.title}</h5>
-                  <ReactStars
-                    count={5}
-                    size={24}
-                    value={item?.totalrating.toString()}
-                    edit={false}
-                    activeColor="#ffd700"
-                  />
-                  <p className="price">{item?.price}</p>
-                </div>
-                <div className="action-bar position-absolute">
-                  <div className="d-flex flex-column gap-15">
-                    <button className="border-0 bg-transparent">
-                      <img
-                        onClick={() => navigate("/product/" + item?._id)}
-                        src={view}
-                        alt="view"
-                      />
-                    </button>
+                    <div className="product-card position-relative">
+                      <div className="wishlist-icon position-absolute">
+                        <button
+                          className="border-0 bg-transparent"
+                          onClick={(e) => {
+                            addtowish(item?._id);
+                          }}
+                        >
+                          <img src={wish} alt="wish" />
+                        </button>
+                      </div>
+                      <div className="product-image">
+                        <img
+                          src={item?.images[0].url}
+                          alt="product image"
+                          className="img-fluid mx-auto"
+                          width={160}
+                        />
+                        <img
+                          src={tab1}
+                          alt="product image"
+                          className="img-fluid mx-auto"
+                          width={160}
+                        />
+                      </div>
+                      <div className="product-details">
+                        <h6 className="brand">{item?.brand}</h6>
+                        <h5 className="product-title">{item?.title}</h5>
+                        <ReactStars
+                          count={5}
+                          size={24}
+                          value={item?.totalrating.toString()}
+                          edit={false}
+                          activeColor="#ffd700"
+                        />
+                        <p className="price">{item?.price}</p>
+                      </div>
+                      <div className="action-bar position-absolute">
+                        <div className="d-flex flex-column gap-15">
+                          <button className="border-0 bg-transparent">
+                            <img
+                              onClick={() => navigate("/product/" + item?._id)}
+                              src={view}
+                              alt="view"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          );
-        }
-        return null; // Ensure all code paths return a value
-      })}
-  </div>
-</Container>
-
+                );
+              }
+              return null; // Ensure all code paths return a value
+            })}
+        </div>
+      </Container>
 
       <Container class1="marque-wrapper py-5">
         <div className="row">
@@ -468,31 +473,32 @@ function Home() {
       </Container>
 
       <Container class1="blog-wrapper py-5 home-wrapper-2">
-  <div className="row">
-    <div className="col-12">
-      <h3 className="section-heading">Our latest blogs</h3>
-    </div>
-  </div>
-  <div className="row">
-    {blogState &&
-      blogState?.map((item, index) => {
-        if (index < 3) {
-          return (
-            <div className="col-lg-4 col-md-6 col-sm-12" key={index}>
-              <BlogCard
-                id={item?._id}
-                title={item?.title}
-                description={item?.description}
-                image={item?.images[0]?.url}
-                date={moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
-              />
-            </div>
-          );
-        }
-      })}
-  </div>
-</Container>
-
+        <div className="row">
+          <div className="col-12">
+            <h3 className="section-heading">Our latest blogs</h3>
+          </div>
+        </div>
+        <div className="row">
+          {blogState &&
+            blogState?.map((item, index) => {
+              if (index < 3) {
+                return (
+                  <div className="col-lg-4 col-md-6 col-sm-12 g-3" key={index}>
+                    <BlogCard
+                      id={item?._id}
+                      title={item?.title}
+                      description={item?.description}
+                      image={item?.images[0]?.url}
+                      date={moment(item?.createdAt).format(
+                        "MMMM Do YYYY, h:mm a"
+                      )}
+                    />
+                  </div>
+                );
+              }
+            })}
+        </div>
+      </Container>
     </>
   );
 }
