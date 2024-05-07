@@ -264,7 +264,7 @@ footer .input-group-text{
   }
 
   .small-banner {
-    width: 100%;
+    width: 48%;
   }
 }
 /*Homewrapper-1 end*/
@@ -278,37 +278,56 @@ footer .input-group-text{
 
 /*categories section start*/
 
-.categories{
+.categories {
   background-color: white;
   box-shadow: 0 0 10px #0000001a;
   padding: 15px;
-}
-.categories > div{
-  width: 24%;
-}
-.categories>div>div{
-  width: 60%;
-}
-.categories > div:nth-child(1),
-.categories > div:nth-child(2),
-.categories > div:nth-child(3),
-.categories > div:nth-child(4){
-  border-bottom: 1px solid var(--color-ededed);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
+.categories > div {
+  width: 24%; /* Adjust the width of each category item */
+  padding: 0 10px; /* Add padding to each category item */
+}
+
+.categories > div > div {
+  width: 60%; /* Adjust the width of the text container within each category item */
+}
+
+/* Apply border to the bottom and right of certain category items */
 .categories > div:nth-child(1),
 .categories > div:nth-child(2),
 .categories > div:nth-child(3),
-.categories > div:nth-child(4){
+.categories > div:nth-child(4) {
+  border-bottom: 1px solid var(--color-ededed);
   border-right: 1px solid var(--color-ededed);
 }
 
+/* Apply border to the right of certain category items */
 .categories > div:nth-child(5),
 .categories > div:nth-child(6),
 .categories > div:nth-child(7),
-.categories > div:nth-child(8){
+.categories > div:nth-child(8) {
   border-right: 1px solid var(--color-ededed);
 }
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+  .categories > div {
+    width: 48%; /* Adjust the width of each category item for smaller screens */
+    margin-bottom: 20px; /* Add margin to create space between items */
+  }
+
+  .categories > div:nth-child(2),
+  .categories > div:nth-child(4),
+  .categories > div:nth-child(6),
+  .categories > div:nth-child(8) {
+    border-right: none; /* Remove right border for every second item */
+  }
+}
+
 
 
 /*categories section end*/
