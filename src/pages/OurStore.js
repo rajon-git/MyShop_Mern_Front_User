@@ -56,14 +56,13 @@ function OurStore() {
     );
   };
 
-
   return (
     <>
       <Meta title={"Our Shop"} />
       <BreadCrumb title="Our Store" />
       <Container class1="store-wrapper home-wrapper-2 py-5">
         <div className="row">
-          <div className="col-3">
+          <div className="col-lg-3">
             <div className="filter-card mb-3">
               <h3 className="filter-title">Shop By Categories</h3>
               <div>
@@ -79,7 +78,7 @@ function OurStore() {
                 </ul>
               </div>
             </div>
-            <div className="filter-card mb-3">
+            <div className="filter-card mb-3 d-none d-lg-block">
               <h3 className="filter-title">Filter By</h3>
               <div>
                 <h5 className="sub-title">Availability</h5>
@@ -198,11 +197,12 @@ function OurStore() {
               </div>
             </div>
           </div>
-          <div className="col-9">
+          <div className="col-lg-9">
             <div className="filter-sort-grid mb-4">
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3 gap-lg-0">
+                
                 <div className="d-flex align-items-center gap-10">
-                  <p className="mb-0 d-block" style={{ width: "100px" }}>
+                <p className="mb-0 d-block" style={{ width: "100px" }}>
                     Sort By:
                   </p>
                   <select
@@ -222,7 +222,9 @@ function OurStore() {
                   </select>
                 </div>
                 <div className="d-flex align-items-center gap-10">
-                  <p className="totalproducts mb-0">{productState?.length} Products</p>
+                  <p className="totalproducts mb-0">
+                    {productState?.length} Products
+                  </p>
                   <div className="d-flex gap-10 align-items-center grid">
                     <img
                       onClick={() => {
