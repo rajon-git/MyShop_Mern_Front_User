@@ -1,6 +1,5 @@
 import axios from "axios"
 import { base_url, getConfig } from "../../utils/axiosConfig";
-import { useSelector } from "react-redux";
 
 const register = async(userData)=>{
     const response = await axios.post(`${base_url}user/register`, userData);
@@ -19,13 +18,27 @@ const login = async(userData)=>{
     }
 }
 
-const getUserWishlist = async()=>{
-    const response = await axios.get(`${base_url}user/wishlist`, getConfig)
-    if(response.data)
-    {
-        return response.data;
+const getUserWishlist = async () => {
+    try {
+        const response = await axios.get(`${base_url}user/wishlist`, {
+            headers: {
+                Authorization: `Bearer ${
+                    localStorage.getItem("customer") !== null ? JSON.parse(localStorage.getItem("customer")).token
+                    : ""
+                }`,
+                Accept: "application/json",
+            }
+        });
+        if (response.data) {
+            return response.data;
+        }
+    } catch (error) {
+        // Handle errors here
+        console.error("Error fetching user wishlist:", error);
+        return null;
     }
-}
+};
+
 
 const addToCart = async(cartData)=>{
     const response = await axios.post(`${base_url}user/cart`,cartData, getConfig)
@@ -36,7 +49,15 @@ const addToCart = async(cartData)=>{
 }
 
 const getCart = async()=>{
-    const response = await axios.get(`${base_url}user/cart`, getConfig)
+    const response = await axios.get(`${base_url}user/cart`, {
+        headers: {
+            Authorization: `Bearer ${
+                localStorage.getItem("customer") !== null ? JSON.parse(localStorage.getItem("customer")).token
+                : ""
+            }`,
+            Accept: "application/json",
+        }
+    })
     if(response.data)
     {
         return response.data;
