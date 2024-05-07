@@ -42,6 +42,7 @@ function Wishlist() {
                       src="images/cross.svg"
                       alt="cross"
                       className="position-absolute cross img-fluid"
+                      
                   />
                   <div className="wishlist-card-image bg-white">
                       <img

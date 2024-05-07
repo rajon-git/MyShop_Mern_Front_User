@@ -19,21 +19,21 @@ function Orders() {
       <Container class1="cart-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
-          <div className="cartCard mb-4">
+            <div className="cartCard mb-4">
               <h4>Total Order Items : {orderState?.length}</h4>
             </div>
             <div className="row">
-              <div className="col-3">
-                <h5>Order Id</h5>
+              <div className="col-3 d-none d-md-block">
+                <h5 className="font-size-sm">Order Id</h5>
               </div>
               <div className="col-3">
-                <h5>Total Amount</h5>
+                <h5 className="font-size-sm">Total Amount</h5>
               </div>
               <div className="col-3">
-                <h5>Total Amount After Discount</h5>
+                <h5 className="font-size-sm">Total Amount After Discount</h5>
               </div>
               <div className="col-3">
-                <h5>Status</h5>
+                <h5 className="font-size-sm">Status</h5>
               </div>
             </div>
           </div>
@@ -41,21 +41,28 @@ function Orders() {
             {orderState &&
               orderState?.map((item, index) => {
                 return (
-                  <div style={{backgroundColor: "#febd69"}} className="row pt-3 my-3" key={index}>
-                    <div className="col-3">
+                  <div
+                    style={{ backgroundColor: "#febd69" }}
+                    className="row pt-3 my-3"
+                    key={index}
+                  >
+                    <div className="col-3 d-none d-md-block">
                       <p>{item?._id}</p>
                     </div>
                     <div className="col-3">
-                      <p>{item?.totalPrice + 100}</p>
+                      <p>{item?.totalPrice + 100} BDT</p>
                     </div>
                     <div className="col-3">
-                      <p>{item?.totalPriceAfterDiscount + 100}</p>
+                      <p>{item?.totalPriceAfterDiscount + 100} BDT</p>
                     </div>
                     <div className="col-3">
                       <p>{item?.orderStatus}</p>
                     </div>
                     <div className="col-12">
-                      <div className="row py-3" style={{backgroundColor: "#232f3e"}}>
+                      <div
+                        className="row py-3"
+                        style={{ backgroundColor: "#232f3e" }}
+                      >
                         <div className="col-3">
                           <h6 className="text-white">Product Name</h6>
                         </div>
@@ -73,13 +80,15 @@ function Orders() {
                             <div className="col-12">
                               <div className="row p-3">
                                 <div className="col-3">
-                                  <p className="text-white">{`${index + 1}. ${ i.product.title}`}</p>
+                                  <p className="text-white">{`${index + 1}. ${
+                                    i.product.title
+                                  }`}</p>
                                 </div>
                                 <div className="col-3">
                                   <p className="text-white">{i?.quantity}</p>
                                 </div>
                                 <div className="col-3">
-                                  <p className="text-white">{i?.price}</p>
+                                  <p className="text-white">{i?.price} BDT</p>
                                 </div>
                                 <div className="col-3">
                                   <ul className="colors ps-0">
