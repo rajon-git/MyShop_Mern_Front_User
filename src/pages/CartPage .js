@@ -156,7 +156,7 @@ function CartPage() {
     dispatch(couponApply({ coupon: couponCode }));
     // Clear the input field after applying the coupon
     setCouponCode("");
-    console.log(couponApply)
+    console.log(couponApply);
   };
 
   useEffect(() => {
@@ -254,15 +254,15 @@ function CartPage() {
                   </div>
                 );
               })}
-              <div className="d-none d-lg-flex justify-content-between cartCard mt-3"> {/* Display only on extra small to medium screens */}
-           
+            <div className="d-none d-lg-flex justify-content-between cartCard mt-3">
+              {" "}
+              {/* Display only on extra small to medium screens */}
               <Link to="/product" className="button">
                 Continue to shopping
               </Link>
               <button className="button" onClick={handlePlaceOrder}>
                 Place Order
               </button>
-           
             </div>
           </div>
           <div className="col-md-4 ms-md-4">
@@ -465,8 +465,7 @@ function CartPage() {
 
               {couponState && couponState ? (
                 <p style={{ color: "red", fontWeight: "bold" }}>
-                  Total After Discount:{" "}
-                  {totalPriceAfterDiscount}
+                  Total After Discount: {totalPriceAfterDiscount}
                 </p>
               ) : (
                 ""
@@ -514,33 +513,34 @@ function CartPage() {
             </div>
           </div>
           {/* Buttons for Continue shopping and Place Order */}
-  <div className="d-md-none"> {/* Display only on extra small to medium screens */}
-    <div className="d-flex justify-content-between cartCard mt-3">
-      <Link to="/product" className="button">
-        Continue to shopping
-      </Link>
-      <button className="button" onClick={handlePlaceOrder}>
-        Place Order
-      </button>
-    </div>
-  </div>
+          <div className="d-md-none">
+            {" "}
+            {/* Display only on extra small to medium screens */}
+            <div className="d-flex justify-content-between cartCard mt-3">
+              <Link to="/product" className="button">
+                Continue to shopping
+              </Link>
+              <button className="button" onClick={handlePlaceOrder}>
+                Place Order
+              </button>
+            </div>
+          </div>
         </div>
       </Container>
       <Modal show={confirmOrder} onHide={() => setConfirmOrder(false)} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>Confirm Order</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>Are you sure you want to place this order?</Modal.Body>
-  <Modal.Footer className="d-flex justify-content-center">
-    <Button variant="secondary" onClick={() => setConfirmOrder(false)}>
-      Cancel
-    </Button>
-    <Button variant="primary" onClick={confirmOrderAndDispatch}>
-      Confirm
-    </Button>
-  </Modal.Footer>
-</Modal>
-
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Order</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to place this order?</Modal.Body>
+        <Modal.Footer className="d-flex justify-content-center">
+          <Button variant="secondary" onClick={() => setConfirmOrder(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={confirmOrderAndDispatch}>
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

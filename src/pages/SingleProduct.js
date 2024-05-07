@@ -120,17 +120,18 @@ function SingleProduct() {
 
   const addtowish = (id) => {
     dispatch(addWishlist(id));
-    setTimeout(()=>{
-      navigate("/wishlist")
-    },300);
+    setTimeout(() => {
+      navigate("/wishlist");
+    }, 300);
   };
   return (
     <>
       <Meta title={"Product Name"} />
       <BreadCrumb title={productState?.title} />
-      <Container class1="main-product-wrapper home-wrapper-2 py-5">
+
+      <Container className="main-product-wrapper home-wrapper-2 py-5">
         <div className="row">
-          <div className="col-6">
+          <div className="col-lg-6">
             <div className="main-product-image">
               <div>
                 <ReactImageZoom {...props} />
@@ -139,7 +140,7 @@ function SingleProduct() {
             <div className="other-product-images d-flex flex-wrap gap-15">
               {productState?.images.map((item, index) => {
                 return (
-                  <div>
+                  <div key={index}>
                     <img
                       src={item?.url}
                       className="img-fluid"
@@ -150,7 +151,7 @@ function SingleProduct() {
               })}
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-lg-6">
             <div className="main-product-details">
               <div className="border-bottom">
                 <h3 className="title">{productState?.title}</h3>
@@ -258,9 +259,11 @@ function SingleProduct() {
                 </div>
                 <div className="d-flex align-items-center gap-10">
                   <div>
-                    <Link onClick={(e) => {
-                            addtowish(getproductId);
-                          }}>
+                    <Link
+                      onClick={(e) => {
+                        addtowish(getproductId);
+                      }}
+                    >
                       <CiHeart className="fs-5 me-2" /> Add To Wishlist
                     </Link>
                   </div>
@@ -290,6 +293,7 @@ function SingleProduct() {
           </div>
         </div>
       </Container>
+
       <Container class1="description-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
