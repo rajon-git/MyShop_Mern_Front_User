@@ -40,6 +40,7 @@ function CartPage() {
   const [confirmOrder, setConfirmOrder] = useState(false); // State to track confirmation of order
   const [couponCode, setCouponCode] = useState("");
   const [totalPriceAfterDiscount, setTotalPriceAfterDiscount] = useState(0);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -115,9 +116,6 @@ function CartPage() {
   const confirmOrderAndDispatch = () => {
     if (userCartState?.length > 0) {
       if (shippingInfo) {
-        // const totalPriceAfterDiscount = couponState
-        //   ? couponState.totalAfterDiscount
-        //   : totalAmount;
         dispatch(
           createAnOrder({
             shippingInfo: shippingInfo,
@@ -178,7 +176,7 @@ function CartPage() {
       <BreadCrumb title="Cart" />
       <Container class1="cart-wrapper home-wrapper-2 py-5">
         <div className="row">
-          <div className="col-7">
+          <div className="col-md-7">
             <div className="cartCard mb-2">
               Total Cart Items : {userCartState?.length} <br /> Please provide
               your shipping address, If you have a Voucher then apply or do
@@ -256,16 +254,18 @@ function CartPage() {
                   </div>
                 );
               })}
-            <div className="d-flex justify-content-between cartCard">
+              <div className="d-none d-lg-flex justify-content-between cartCard mt-3"> {/* Display only on extra small to medium screens */}
+           
               <Link to="/product" className="button">
                 Continue to shopping
               </Link>
               <button className="button" onClick={handlePlaceOrder}>
                 Place Order
               </button>
+           
             </div>
           </div>
-          <div className="col-4 ms-4">
+          <div className="col-md-4 ms-md-4">
             <div className="cartCard">
               <h4>Shipping Address</h4>
               <hr />
@@ -513,23 +513,34 @@ function CartPage() {
               </div>
             </div>
           </div>
+          {/* Buttons for Continue shopping and Place Order */}
+  <div className="d-md-none"> {/* Display only on extra small to medium screens */}
+    <div className="d-flex justify-content-between cartCard mt-3">
+      <Link to="/product" className="button">
+        Continue to shopping
+      </Link>
+      <button className="button" onClick={handlePlaceOrder}>
+        Place Order
+      </button>
+    </div>
+  </div>
         </div>
       </Container>
-      {/* Confirmation Modal */}
-      <Modal show={confirmOrder} onHide={() => setConfirmOrder(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Order</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to place this order?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setConfirmOrder(false)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={confirmOrderAndDispatch}>
-            Confirm
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <Modal show={confirmOrder} onHide={() => setConfirmOrder(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Confirm Order</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>Are you sure you want to place this order?</Modal.Body>
+  <Modal.Footer className="d-flex justify-content-center">
+    <Button variant="secondary" onClick={() => setConfirmOrder(false)}>
+      Cancel
+    </Button>
+    <Button variant="primary" onClick={confirmOrderAndDispatch}>
+      Confirm
+    </Button>
+  </Modal.Footer>
+</Modal>
+
     </>
   );
 }
