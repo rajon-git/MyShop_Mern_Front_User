@@ -230,15 +230,15 @@ function Home() {
                       </div>
                       <div className="product-image">
                         <img
-                          src={item?.images[0].url}
+                          src={item?.images[0]?.url}
                           alt="product image"
-                          className="img-fluid mx-auto"
+                          className="img-fluid mt-4 product-image-card"
                           width={160}
                         />
                         <img
-                          src={tab1}
+                          src={item?.images[1]?.url}
                           alt="product image"
-                          className="img-fluid  mx-auto"
+                          className="img-fluid mt-4 product-image-card"
                           width={160}
                         />
                       </div>
@@ -371,13 +371,13 @@ function Home() {
                         <img
                           src={item?.images[0].url}
                           alt="product image"
-                          className="img-fluid mx-auto"
+                          className="img-fluid mt-4 product-image-card"
                           width={160}
                         />
                         <img
-                          src={tab1}
+                          src={item?.images[1]?.url}
                           alt="product image"
-                          className="img-fluid mx-auto"
+                          className="img-fluid mt-4 product-image-card"
                           width={160}
                         />
                       </div>
