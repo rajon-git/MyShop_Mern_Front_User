@@ -200,9 +200,8 @@ function OurStore() {
           <div className="col-lg-9">
             <div className="filter-sort-grid mb-4">
               <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3 gap-lg-0">
-                
                 <div className="d-flex align-items-center gap-10">
-                <p className="mb-0 d-block" style={{ width: "100px" }}>
+                  <p className="mb-0 d-block" style={{ width: "100px" }}>
                     Sort By:
                   </p>
                   <select
@@ -225,7 +224,7 @@ function OurStore() {
                   <p className="totalproducts mb-0">
                     {productState?.length} Products
                   </p>
-                  <div className="d-flex gap-10 align-items-center grid">
+                  <div className="d-none d-sm-flex gap-10 align-items-center grid">
                     <img
                       onClick={() => {
                         setGrid(3);
@@ -261,6 +260,19 @@ function OurStore() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="d-lg-none d-flex justify-content-center mb-3 align-items-center">
+              <p className="mb-0 text-danger me-2">Click Here --> </p>
+              <img
+                onClick={() => {
+                  setGrid(12);
+                }}
+                src="images/gr.svg"
+                className="d-block img-fluid floating-image"
+                alt="grid"
+                width={25}
+                style={{ alignItems: "center" }}
+              />
             </div>
             <div className="products-list pb-5">
               <div className="d-flex flex-wrap gap-10">
