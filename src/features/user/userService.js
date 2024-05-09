@@ -81,7 +81,15 @@ const updateProductFromCart = async(cartDetail)=>{
 }
 
 const createOrder = async(orderDetail)=>{
-    const response = await axios.post(`${base_url}user/cart/cash-order`,orderDetail, getConfig)
+    const response = await axios.post(`${base_url}user/cart/cash-order`,orderDetail, {
+        headers: {
+            Authorization: `Bearer ${
+                localStorage.getItem("customer") !== null ? JSON.parse(localStorage.getItem("customer")).token
+                : ""
+            }`,
+            Accept: "application/json",
+        }
+    })
     if(response.data)
     {
         return response.data;
@@ -89,7 +97,15 @@ const createOrder = async(orderDetail)=>{
 }
 
 const getUserOrders = async()=>{
-    const response = await axios.get(`${base_url}user/getmyorders`, getConfig)
+    const response = await axios.get(`${base_url}user/getmyorders`, {
+        headers: {
+            Authorization: `Bearer ${
+                localStorage.getItem("customer") !== null ? JSON.parse(localStorage.getItem("customer")).token
+                : ""
+            }`,
+            Accept: "application/json",
+        }
+    })
     if(response.data)
     {
         return response.data;
@@ -97,7 +113,15 @@ const getUserOrders = async()=>{
 }
 
 const updateUser = async(data)=>{
-    const response = await axios.put(`${base_url}user/edit-user`,data, getConfig)
+    const response = await axios.put(`${base_url}user/edit-user`,data, {
+        headers: {
+            Authorization: `Bearer ${
+                localStorage.getItem("customer") !== null ? JSON.parse(localStorage.getItem("customer")).token
+                : ""
+            }`,
+            Accept: "application/json",
+        }
+    })
     if(response.data)
     {
         return response.data;
@@ -113,7 +137,15 @@ const forgotPassToken = async(data)=>{
 }
 
 const applyCoupon = async(data)=>{
-    const response = await axios.post(`${base_url}user/cart/applycoupon`,data,getConfig)
+    const response = await axios.post(`${base_url}user/cart/applycoupon`,data,{
+        headers: {
+            Authorization: `Bearer ${
+                localStorage.getItem("customer") !== null ? JSON.parse(localStorage.getItem("customer")).token
+                : ""
+            }`,
+            Accept: "application/json",
+        }
+    })
     if(response.data)
     {
         return response.data;

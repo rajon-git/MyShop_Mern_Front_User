@@ -943,3 +943,13 @@ footer .input-group-text{
     font-size: 14px; /* Adjust the font size as needed */
   }
 }
+
+.products-image {
+  width: 300px;
+  height: 205px;
+  object-fit: cover; /* This property ensures the image covers the entire container */
+  opacity: 0.4;
+}
+
+
+

@@ -17,6 +17,11 @@ import wish from "../images/wish.svg";
 import tab1 from "../images/tab1.jpg";
 import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
+import { Card } from "react-bootstrap";
+import tshirtImg from "../images/tshirt.png";
+import laptopImg from "../images/laptop-open-icon.png";
+import mobileImg from "../images/545194.png";
+import watchImg from "../images/icons8-smart-watch-96.png";
 
 function Home() {
   const dispatch = useDispatch();
@@ -105,64 +110,32 @@ function Home() {
               </div>
             </div>
           </div>
+
           <div className="col-lg-6 col-md-12 col-sm-12 mt-4 mb-4 mb-lg-4">
             <div className="d-flex flex-wrap justify-content-between align-items-center gap-10">
-              <div className="small-banner position-relative">
-                <img
-                  src="images/catbanner-01.jpg"
-                  className="img-fluid rounded-3"
-                  alt="main banner"
-                />
-                <div className="small-banner-content position-absolute">
-                  <h4>Best</h4>
-                  <h5>ipad s13+ pro</h5>
-                  <p>
-                    From $999.0o <br /> or $41.62/mo.
-                  </p>
-                </div>
-              </div>
-              <div className="small-banner position-relative">
-                <img
-                  src="images/catbanner-02.jpg"
-                  className="img-fluid rounded-3"
-                  alt="main banner"
-                />
-                <div className="small-banner-content position-absolute">
-                  <h4>New Arrival</h4>
-                  <h5>ipad air</h5>
-                  <p>
-                    From $999.0o <br /> or $41.62/mo.
-                  </p>
-                </div>
-              </div>
-              <div className="small-banner position-relative">
-                <img
-                  src="images/catbanner-03.jpg"
-                  className="img-fluid rounded-3"
-                  alt="main banner"
-                />
-                <div className="small-banner-content position-absolute">
-                  <h4>New Arrival</h4>
-                  <h5>ipad air</h5>
-                  <p>
-                    From $999.0o <br /> or $41.62/mo.
-                  </p>
-                </div>
-              </div>
-              <div className="small-banner position-relative">
-                <img
-                  src="images/catbanner-04.jpg"
-                  className="img-fluid rounded-3"
-                  alt="main banner"
-                />
-                <div className="small-banner-content position-absolute">
-                  <h4>New Arrival</h4>
-                  <h5>ipad air</h5>
-                  <p>
-                    From $999.0o <br /> or $41.62/mo.
-                  </p>
-                </div>
-              </div>
+              {Array.isArray(productState) &&
+                productState.slice(0, 4).map((product, index) => (
+                  <div className="small-banner position-relative" key={index}>
+                    <img
+                      src={product?.images[0]?.url}
+                      className="img-fluid rounded-3 products-image"
+                      alt={product?.title}
+                    />
+                    <div className="small-banner-content position-absolute text-light">
+                      <h5
+                        className="m-0 font-weight-bold"
+                        style={{ color: "#0D1865" }}
+                      >
+                        New Arraival
+                      </h5>
+                      <h6 className=" text-dark">{product?.category}</h6>
+                      <p className="m-0">
+                        From {product?.price} BDT <br /> or{" "}
+                        {product?.monthlyPayment}/mo.
+                      </p>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
@@ -200,7 +173,7 @@ function Home() {
                   <h6>Tshirts</h6>
                   <p>{tshirtCount} Items</p>
                 </div>
-                <img src="images/camera.jpg" alt="camera" />
+                <img src={tshirtImg} alt="tshirt" width={70} />
               </div>
 
               <div className="d-flex gap-30 align-items-center">
@@ -208,7 +181,7 @@ function Home() {
                   <h6>Laptop</h6>
                   <p>{laptopCount} Items</p>
                 </div>
-                <img src="images/tv.jpg" alt="camera" />
+                <img src={laptopImg} alt="camera" width={70} />
               </div>
 
               <div className="d-flex gap-30 align-items-center">
@@ -216,7 +189,7 @@ function Home() {
                   <h6>Smart Watches</h6>
                   <p>{watchCount} Items</p>
                 </div>
-                <img src="images/headphone.jpg" alt="camera" />
+                <img src={watchImg} alt="camera" width={70} />
               </div>
 
               <div className="d-flex gap-30 align-items-center">
@@ -224,14 +197,14 @@ function Home() {
                   <h6>Mobile</h6>
                   <p>{mobileCount} Items</p>
                 </div>
-                <img src="images/headphone.jpg" alt="camera" />
+                <img src={mobileImg} alt="camera" width={70} />
               </div>
             </div>
           </div>
         </div>
       </Container>
 
-      <Container class1="featured-wrapper py-5 home-wrapper-2">
+      <Container class1="featured-wrapper py-2 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Featured Collection</h3>
