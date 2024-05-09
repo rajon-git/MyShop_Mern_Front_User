@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
-import ReactStars from "react-rating-stars-component";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
 import Color from "../components/Color";
@@ -91,7 +90,15 @@ function OurStore() {
                       id=""
                     />
                     <label className="form-check-label" htmlFor="">
-                      In Stock (1)
+                      In Stock (
+                      {productState && productState.length > 0
+                        ? productState.reduce(
+                            (total, product) =>
+                              total + (product.quantity > 0 ? 1 : 0),
+                            0
+                          )
+                        : 0}
+                      )
                     </label>
                   </div>
                   <div className="form-check">
@@ -102,7 +109,15 @@ function OurStore() {
                       id=""
                     />
                     <label className="form-check-label" htmlFor="">
-                      Out Of Stock (0)
+                      In Stock (
+                      {productState && productState.length > 0
+                        ? productState.reduce(
+                            (total, product) =>
+                              total + (product.quantity < 0 ? 1 : 0),
+                            0
+                          )
+                        : 0}
+                      )
                     </label>
                   </div>
                 </div>

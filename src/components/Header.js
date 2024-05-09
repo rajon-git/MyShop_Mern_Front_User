@@ -91,7 +91,7 @@ function Header() {
                 </span>
               </div>
             </div>
-            <div className="col-lg-5 col-md-3 col-12 mt-3 mt-md-0">
+            <div className="col-lg-4 col-md-3 col-12 mt-3 mt-md-0">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
                 <div>
                   <Link

@@ -27,7 +27,16 @@ const addToWishlist = async (prodId) => {
   const response = await axios.put(
     `${base_url}product/wishlist`,
     { prodId },
-    getConfig
+    {
+      headers: {
+        Authorization: `Bearer ${
+          localStorage.getItem("customer") !== null
+            ? JSON.parse(localStorage.getItem("customer")).token
+            : ""
+        }`,
+        Accept: "application/json",
+      },
+    }
   );
   if (response.data) {
     return response.data;
@@ -35,7 +44,11 @@ const addToWishlist = async (prodId) => {
 };
 
 const rateProduct = async (data) => {
-  const response = await axios.put(`${base_url}product/rating`, data, getConfig);
+  const response = await axios.put(
+    `${base_url}product/rating`,
+    data,
+    getConfig
+  );
   if (response.data) {
     return response.data;
   }

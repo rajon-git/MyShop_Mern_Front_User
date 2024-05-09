@@ -43,15 +43,15 @@ function ProductCard(props) {
                 </div>
                 <div className="product-image">
                   <img
-                    src={item?.images[0].url}
+                    src={item?.images[0]?.url}
                     alt="product image"
-                    className="img-fluid  mx-auto"
-                    width={160}
+                    className="img-fluid  mt-4 product-image-card"
+                    
                   />
                   <img
-                    src={tab1}
+                    src={item?.images[1]?.url}
                     alt="product image"
-                    className="img-fluid  mx-auto"
+                    className="img-fluid  mt-4 product-image-card"
                     width={160}
                   />
                 </div>

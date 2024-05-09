@@ -951,6 +951,31 @@ footer .input-group-text{
   opacity: 0.4;
 }
 
+.blog-image {
+  width: 473px;
+  height: 250px;
+  object-fit: cover; /* This property ensures the image covers the entire container */
+  
+}
+
+.product-image-card {
+  width: 90%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.blog-image1 {
+  width: 50%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.blog-image1-container {
+  display: flex;
+  justify-content: center; /* Horizontally center the content */
+}
+
+
 
 .floating-image {
   animation: float .7s ease-in-out infinite alternate;
