@@ -248,70 +248,69 @@ function Home() {
             <h3 className="section-heading">Featured Collection</h3>
           </div>
           {productState &&
-            productState?.map((item, index) => {
-              if (item?.tags === "featured") {
-                return (
-                  <div
-                    key={index}
-                    className={`${"col-lg-3 col-md-6 col-sm-6 col-12 mb-4"}`}
-                  >
-                    <div className="product-card position-relative">
-                      <div className="wishlist-icon position-absolute">
-                        <button
-                          className="border-0 bg-transparent"
-                          onClick={(e) => {
-                            addtowish(item?._id);
-                          }}
-                        >
-                          <img src={wish} alt="wish" />
-                        </button>
-                      </div>
-                      <div className="product-image">
-                        <img
-                          src={item?.images[0]?.url}
-                          alt="product image"
-                          className="img-fluid mt-4 product-image-card"
-                          width={160}
-                        />
-                        <img
-                          src={item?.images[1]?.url}
-                          alt="product image"
-                          className="img-fluid mt-4 product-image-card"
-                          width={160}
-                        />
-                      </div>
-                      <div className="product-details">
-                        <h6 className="brand">{item?.brand}</h6>
-                        <h5 className="product-title">{item?.title}</h5>
-                        <ReactStars
-                          count={5}
-                          size={24}
-                          value={item?.totalrating.toString()}
-                          edit={false}
-                          activeColor="#ffd700"
-                        />
+            productState
+              .filter((item) => item.tags === "featured") // Filter the array to include only items with the "featured" tag
+              .slice(0, 4) // Take the first four items
+              .map((item, index) => (
+                <div
+                  key={index}
+                  className={`${"col-lg-3 col-md-6 col-sm-6 col-12 mb-4"}`}
+                >
+                  <div className="product-card position-relative">
+                    <div className="wishlist-icon position-absolute">
+                      <button
+                        className="border-0 bg-transparent"
+                        onClick={(e) => {
+                          addtowish(item?._id);
+                        }}
+                      >
+                        <img src={wish} alt="wish" />
+                      </button>
+                    </div>
+                    <div className="product-image">
+                      <img
+                        src={item?.images[0]?.url}
+                        alt="product image"
+                        className="img-fluid mt-4 product-image-card"
+                        width={160}
+                      />
+                      <img
+                        src={item?.images[1]?.url}
+                        alt="product image"
+                        className="img-fluid mt-4 product-image-card"
+                        width={160}
+                      />
+                    </div>
+                    <div className="product-details">
+                      <h6 className="brand">{item?.brand}</h6>
+                      <h5 className="product-title">{item?.title}</h5>
+                      <ReactStars
+                        count={5}
+                        size={24}
+                        value={item?.totalrating.toString()}
+                        edit={false}
+                        activeColor="#ffd700"
+                      />
 
-                        <p className="price">{item?.price}</p>
-                      </div>
-                      <div className="action-bar position-absolute">
-                        <div className="d-flex flex-column gap-15">
-                          <button className="border-0 bg-transparent">
-                            <img
-                              onClick={() => navigate("/product/" + item?._id)}
-                              src={view}
-                              alt="view"
-                            />
-                          </button>
-                          {/* <button className="border-0 bg-transparent">
-                            <img src={addcart} alt="add-cart" />
-                          </button> */}
-                        </div>
+                      <p className="price">{item?.price}</p>
+                    </div>
+                    <div className="action-bar position-absolute">
+                      <div className="d-flex flex-column gap-15">
+                        <button className="border-0 bg-transparent">
+                          <img
+                            onClick={() => navigate("/product/" + item?._id)}
+                            src={view}
+                            alt="view"
+                          />
+                        </button>
+                        {/* <button className="border-0 bg-transparent">
+                <img src={addcart} alt="add-cart" />
+              </button> */}
                       </div>
                     </div>
                   </div>
-                );
-              }
-            })}
+                </div>
+              ))}
         </div>
       </Container>
 
@@ -351,35 +350,34 @@ function Home() {
         </div>
       </Container>
 
-      <Container class1="special-wrapper py-5 home-wrapper-2">
+      <Container class1="special-wrapper py-2 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Special Products</h3>
           </div>
           <div className="row">
             {productState &&
-              productState?.map((item, index) => {
-                if (item?.tags === "special") {
-                  return (
-                    <SpecialProduct
-                      key={index}
-                      id={item?._id}
-                      brand={item?.brand}
-                      image={item?.images[0]?.url}
-                      title={item?.title}
-                      totalrating={item?.totalrating.toString()}
-                      price={item?.price}
-                      quantity={item?.quantity}
-                      sold={item?.sold}
-                    />
-                  );
-                }
-              })}
+              productState
+                .filter((item) => item?.tags === "special") // Filter the array to include only items with the "special" tag
+                .slice(0, 2)
+                .map((item, index) => (
+                  <SpecialProduct
+                    key={index}
+                    id={item?._id}
+                    brand={item?.brand}
+                    image={item?.images[0]?.url} // Use optional chaining to avoid errors if the images array is empty
+                    title={item?.title}
+                    totalrating={item?.totalrating?.toString()} // Ensure totalrating is converted to a string
+                    price={item?.price}
+                    quantity={item?.quantity}
+                    sold={item?.sold}
+                  />
+                ))}
           </div>
         </div>
       </Container>
 
-      <Container class1="popular-wrapper py-5 home-wrapper-2">
+      <Container class1="popular-wrapper py-2 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Our popular products</h3>
@@ -387,67 +385,67 @@ function Home() {
         </div>
         <div className="row">
           {productState &&
-            productState.map((item, index) => {
-              if (item.tags === "popular") {
-                return (
-                  <div
-                    key={index}
-                    className="col-lg-3 col-md-4 col-sm-6 col-12 g-3"
-                  >
-                    <div className="product-card position-relative">
-                      <div className="wishlist-icon position-absolute">
-                        <button
-                          className="border-0 bg-transparent"
-                          onClick={(e) => {
-                            addtowish(item?._id);
-                          }}
-                        >
-                          <img src={wish} alt="wish" />
-                        </button>
-                      </div>
-                      <div className="product-image">
-                        <img
-                          src={item?.images[0].url}
-                          alt="product image"
-                          className="img-fluid mt-4 product-image-card"
-                          width={160}
-                        />
+            productState
+              .filter((item) => item.tags === "popular") // Filter the array to include only items with the "popular" tag
+              .slice(0, 4)
+              .map((item, index) => (
+                <div
+                  key={index}
+                  className="col-lg-3 col-md-4 col-sm-6 col-12 g-3"
+                >
+                  <div className="product-card position-relative">
+                    <div className="wishlist-icon position-absolute">
+                      <button
+                        className="border-0 bg-transparent"
+                        onClick={(e) => {
+                          addtowish(item?._id);
+                        }}
+                      >
+                        <img src={wish} alt="wish" />
+                      </button>
+                    </div>
+                    <div className="product-image">
+                      <img
+                        src={item?.images[0]?.url} // Use optional chaining to avoid errors if the images array is empty
+                        alt="product image"
+                        className="img-fluid mt-4 product-image-card"
+                        width={160}
+                      />
+                      {item?.images[1] && ( // Check if the second image exists before rendering it
                         <img
                           src={item?.images[1]?.url}
                           alt="product image"
                           className="img-fluid mt-4 product-image-card"
                           width={160}
                         />
-                      </div>
-                      <div className="product-details">
-                        <h6 className="brand">{item?.brand}</h6>
-                        <h5 className="product-title">{item?.title}</h5>
-                        <ReactStars
-                          count={5}
-                          size={24}
-                          value={item?.totalrating.toString()}
-                          edit={false}
-                          activeColor="#ffd700"
-                        />
-                        <p className="price">{item?.price}</p>
-                      </div>
-                      <div className="action-bar position-absolute">
-                        <div className="d-flex flex-column gap-15">
-                          <button className="border-0 bg-transparent">
-                            <img
-                              onClick={() => navigate("/product/" + item?._id)}
-                              src={view}
-                              alt="view"
-                            />
-                          </button>
-                        </div>
+                      )}
+                    </div>
+                    <div className="product-details">
+                      <h6 className="brand">{item?.brand}</h6>
+                      <h5 className="product-title">{item?.title}</h5>
+                      <ReactStars
+                        count={5}
+                        size={24}
+                        value={item?.totalrating?.toString()} // Ensure totalrating is converted to a string
+                        edit={false}
+                        activeColor="#ffd700"
+                      />
+                      <p className="price">{item?.price}</p>
+                    </div>
+                    <div className="action-bar position-absolute">
+                      <div className="d-flex flex-column gap-15">
+                        <button className="border-0 bg-transparent">
+                          <img
+                            onClick={() => navigate("/product/" + item?._id)}
+                            src={view}
+                            alt="view"
+                          />
+                        </button>
                       </div>
                     </div>
                   </div>
-                );
-              }
-              return null; // Ensure all code paths return a value
-            })}
+                </div>
+              ))}
         </div>
       </Container>
 

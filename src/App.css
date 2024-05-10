@@ -776,27 +776,47 @@ footer .input-group-text{
   color: var(--color-777777);
 }
 .main-product-image{
-  padding: 20px;
+  padding: 10px;
   background-color: white;
   border-radius: 10px;
 }
 .main-product-image > div {
-  border: 1px solid rgba(0, 0, 0, 0.25);
+  border: 1px solid #F8C8DC;
 }
 .main-product-image img{
+  padding: 10px;
+  background-color: #F8C8DC;
   width: 100% !important;
-  height: 600px !important;
+  height: 300px !important;
   object-fit: cover;
 }
-.other-product-images{
-  background-color: white;
-  padding: 20px;
+.other-product-images {
+  background-color: #F8C8DC;
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  flex-direction: row;
+  justify-content: space-around;
 }
-.other-product-images > div{
-  padding: 20px;
-  width: 48%;
-  border: 1px solid rgba(0, 0, 0, 0.25);
+
+.other-product-images > div {
+  padding: 5px; /* Adjusted padding */
+  width: 48%; /* Adjusted width */
+  /* Added margin for spacing */
+  background-color: white; /* Added background color */
+  border-radius: 10px; /* Added border radius */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Added box shadow */
 }
+
+.other-product-images img {
+  width: 100%; /* Adjusted image width */
+  height: 170px; /* Adjusted image height */
+  object-fit: cover;
+  border-radius: 10px; /* Added border radius for image */
+}
+
+
 .main-product-image .js-image-zoom__zoomed-image{
   left: 50px !important;
   padding: 10px;

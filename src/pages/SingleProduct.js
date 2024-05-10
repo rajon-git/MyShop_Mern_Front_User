@@ -113,6 +113,9 @@ function SingleProduct() {
       const element = productsState[index];
       if (element.tags === "popular") {
         data.push(element);
+        if (data.length === 4) { // Limit the number of popular products to 4
+          break;
+        }
       }
       setPopularProduct(data);
     }
@@ -137,7 +140,7 @@ function SingleProduct() {
                 <ReactImageZoom {...props} />
               </div>
             </div>
-            <div className="other-product-images d-flex flex-wrap gap-15">
+            <div className="other-product-images">
               {productState?.images.map((item, index) => {
                 return (
                   <div key={index}>
@@ -394,16 +397,7 @@ function SingleProduct() {
           </div>
         </div>
       </Container>
-      <Container class1="popular-wrapper py-5 home-wrapper-2">
-        <div className="row">
-          <div className="col-12">
-            <h3 className="section-heading">Our popular products</h3>
-          </div>
-        </div>
-        <div className="row">
-          <ProductCard data={popularProduct} />
-        </div>
-      </Container>
+      
     </>
   );
 }
