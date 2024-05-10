@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Typeahead } from "react-bootstrap-typeahead"; // ES2015
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { getAProduct } from "../features/products/productSlice";
+import { FaCartPlus } from "react-icons/fa6";
+import { FcBusinessman } from "react-icons/fc";
+import { FcLike } from "react-icons/fc";
 
 function Header() {
   const [paginate, setPaginate] = useState(true);
@@ -68,7 +71,7 @@ function Header() {
           <div className="row align-items-center">
             <div className="col-lg-2 col-md-3 col-6">
               <h2>
-                <Link className="text-white">Developers</Link>
+                <Link className="text-white">MyShop</Link>
               </h2>
             </div>
             <div className="col-lg-5 col-md-6 col-6 mt-3 mt-md-0">
@@ -98,7 +101,7 @@ function Header() {
                     to="/wishlist"
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                    <img src="images/wishlist.svg" alt="wishlist" />
+                    <FcLike style={{ fontSize: "1.5rem" }} />
                     <p className="mb-0">Wishlist</p>
                   </Link>
                 </div>
@@ -107,7 +110,7 @@ function Header() {
                     to={authState?.user === null ? "/login" : "/my-profile"}
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                    <img src="images/user.svg" alt="user" />
+                    <FcBusinessman style={{ fontSize: "1.5rem" }} />
                     {authState?.user === null ? (
                       <p className="mb-0">Login</p>
                     ) : (
@@ -122,14 +125,14 @@ function Header() {
                     to="/cartpage"
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                    <img src="images/cart.svg" alt="cart" />
+                    <FaCartPlus style={{ fontSize: "1.5rem" }} />
                     <div className="d-flex flex-column gap-10">
                       <span className="badge bg-white text-dark">
                         {userCartState && userCartState?.length
                           ? userCartState?.length
                           : 0}
                       </span>
-                      <p className="mb-0">$ {total && total ? total : 0}</p>
+                      <p className="mb-0">{total && total ? total : 0} BDT</p>
                     </div>
                   </Link>
                 </div>
@@ -143,7 +146,7 @@ function Header() {
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <div className="menu-bottom "> 
+              <div className="menu-bottom ">
                 <div className="menu-links mt-3 mt-md-0">
                   <div className="d-flex flex-wrap align-items-center gap-15">
                     <NavLink to="/">Home</NavLink>

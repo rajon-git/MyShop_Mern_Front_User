@@ -90,9 +90,22 @@ function Home() {
     dispatch(getAllProducts());
   };
 
-  const topSellingProduct = productState?.reduce((prev, current) =>
-    prev?.sold > current?.sold ? prev : current
-  );
+  let topSellingProduct = null;
+  let maxSales = -1;
+
+  if (Array.isArray(productState) && productState.length > 0) {
+    // Iterate through the productState array to find the top selling product
+    productState.forEach((product) => {
+      if (product.sold > maxSales) {
+        topSellingProduct = product;
+        maxSales = product.sold;
+      }
+    });
+  } else {
+    // If productState is empty, assign the last product in the array as topSellingProduct
+    topSellingProduct = productState[productState.length - 1];
+  }
+
   // Define custom width and height for the images
   const customImageWidth = "100%";
   const customImageHeight = "400px";
