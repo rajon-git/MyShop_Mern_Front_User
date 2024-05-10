@@ -43,7 +43,7 @@ function Home() {
 
   const tshirtCount = Array.isArray(productState)
     ? productState.reduce((count, item) => {
-        if (item?.category === "Tshirt") {
+        if (item?.category === "Tshirts") {
           return count + 1;
         }
         return count;
@@ -89,24 +89,61 @@ function Home() {
   const getProducts = () => {
     dispatch(getAllProducts());
   };
+
+  const topSellingProduct = productState?.reduce((prev, current) =>
+    prev?.sold > current?.sold ? prev : current
+  );
+  // Define custom width and height for the images
+  const customImageWidth = "100%";
+  const customImageHeight = "400px";
   return (
     <>
       <Container className="home-wrapper-1 py-5">
         <div className="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1">
-          <div className="col-lg-6 col-md-12 col-sm-12 mt-4 mb-0 mb-lg-4">
-            <div className="main-banner position-relative">
-              <img
-                src="images/main-banner-1.jpg"
-                className="img-fluid rounded-3"
-                alt="main banner"
-              />
-              <div className="main-banner-content position-absolute">
-                <h4>Super chraged for pros</h4>
-                <h5>ipad s13+ pro</h5>
-                <p>From $999.0o or $41.62/mo.</p>
-                <Link to={"/product"} className="button">
-                  Buy now
-                </Link>
+          <div
+            className="col-lg-6 col-md-12 col-sm-12 p-2 mt-4 mb-4"
+            style={{ backgroundColor: "#F8C8DC", borderRadius: "15px" }}
+          >
+            <div className="card border-0">
+              <div className="row g-0">
+                <div className="col-md-6">
+                  <div className="card-body mt-0 ml-0 m-lg-4 mt-lg-5">
+                    {topSellingProduct && (
+                      <>
+                        <h4 className="card-title">
+                          {topSellingProduct.title}
+                        </h4>
+                        <h5 className="card-subtitle mb-2 text-muted">
+                          {topSellingProduct.category}
+                        </h5>
+                        <p className="card-text">
+                          From {topSellingProduct.price} BDT <br /> or{" "}
+                          {topSellingProduct.monthlyPayment}/mo.
+                        </p>
+                        <Link
+                          to={`/product/${topSellingProduct._id}`}
+                          className="btn btn-primary"
+                        >
+                          Buy now
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div
+                  className="col-md-6"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <img
+                    src={topSellingProduct?.images[0]?.url}
+                    className="img-fluid rounded-end"
+                    alt={topSellingProduct?.title}
+                    style={{
+                      width: customImageWidth,
+                      height: customImageHeight,
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -118,8 +155,9 @@ function Home() {
                   <div className="small-banner position-relative" key={index}>
                     <img
                       src={product?.images[0]?.url}
-                      className="img-fluid rounded-3 products-image"
+                      className="img-fluid rounded-3 products-image p-2"
                       alt={product?.title}
+                      style={{ backgroundColor: "#F8C8DC" }}
                     />
                     <div className="small-banner-content position-absolute text-light">
                       <h5
@@ -457,13 +495,13 @@ function Home() {
         <div className="row">
           {blogState &&
             blogState?.map((item, index) => {
-              if (index < 3) {
+              if (index < 4) {
                 return (
-                  <div className="col-lg-4 col-md-6 col-sm-12 g-3" key={index}>
+                  <div className="col-lg-3 col-md-6 col-sm-12 g-3" key={index}>
                     <BlogCard
                       id={item?._id}
                       title={item?.title}
-                      description={item?.description}
+                      description={item?.description.slice(0, 100)}
                       image={item?.images[0]?.url}
                       date={moment(item?.createdAt).format(
                         "MMMM Do YYYY, h:mm a"

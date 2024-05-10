@@ -55,7 +55,7 @@ function Blog() {
                       <BlogCard
                         id={item?._id}
                         title={item?.title}
-                        description={item?.description}
+                        description={item?.description.slice(0, 100)}
                         image={item?.images[0]?.url}
                         date={moment(item?.createdAt).format(
                           "MMMM Do YYYY, h:mm a"
