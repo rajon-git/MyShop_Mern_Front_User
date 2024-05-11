@@ -385,24 +385,28 @@ function SingleProduct() {
                 </div>
               </div>
               <div className="reviews mt-4">
-                {productState &&
-                  productState?.ratings?.map((item, index) => {
-                    return (
-                      <div key={index} className="review">
-                        <div className="d-flex gap-10 align-items-center">
-                          <ReactStars
-                            count={5}
-                            size={24}
-                            value={item?.star}
-                            edit={false}
-                            activeColor="#ffd700"
-                          />
-                        </div>
-                        <p className="mt-3">{item?.comment}</p>
-                      </div>
-                    );
-                  })}
-              </div>
+  {productState &&
+    productState?.ratings
+      .slice(0, 5) // Get the first 5 ratings
+      .map((item, index) => {
+        return (
+          <div key={index} className="review">
+            <div className="d-flex gap-10 align-items-center">
+              <ReactStars
+                count={5}
+                size={24}
+                value={item?.star}
+                edit={false}
+                activeColor="#ffd700"
+              />
+            </div>
+            <p className="mt-0">{item?.comment}</p>
+            {/* <p className="mt-0">{item?.postedby?.firstName} {item?.postedby?.lastName}: {item?.comment}</p> */}
+          </div>
+        );
+      })}
+</div>
+
             </div>
           </div>
         </div>
