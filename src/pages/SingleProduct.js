@@ -97,7 +97,6 @@ function SingleProduct() {
   };
   const [orderedProduct, setOrderedProduct] = useState(true);
   const copyToClipboard = (text) => {
-    console.log("text", text);
     var textField = document.createElement("textarea");
     textField.innerText = text;
     document.body.appendChild(textField);
@@ -113,7 +112,8 @@ function SingleProduct() {
       const element = productsState[index];
       if (element.tags === "popular") {
         data.push(element);
-        if (data.length === 4) { // Limit the number of popular products to 4
+        if (data.length === 4) {
+          // Limit the number of popular products to 4
           break;
         }
       }
@@ -127,6 +127,14 @@ function SingleProduct() {
       navigate("/wishlist");
     }, 300);
   };
+
+  const calculateAverageRating = (ratings) => {
+    if (!ratings || ratings.length === 0) return 0;
+
+    const totalStars = ratings.reduce((acc, rating) => acc + rating.star, 0);
+    return totalStars / ratings.length;
+  };
+
   return (
     <>
       <Meta title={"Product Name"} />
@@ -321,11 +329,13 @@ function SingleProduct() {
                     <ReactStars
                       count={5}
                       size={24}
-                      value={4}
+                      value={calculateAverageRating(productState?.ratings)}
                       edit={false}
                       activeColor="#ffd700"
                     />
-                    <p className="mb-0">Based on 2 reviews</p>
+                    <p className="mb-0">
+                      Based on {productState?.ratings?.length} reviews
+                    </p>
                   </div>
                 </div>
                 {orderedProduct && (
@@ -397,7 +407,6 @@ function SingleProduct() {
           </div>
         </div>
       </Container>
-      
     </>
   );
 }
