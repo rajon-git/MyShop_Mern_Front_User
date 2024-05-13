@@ -115,7 +115,7 @@ function Header() {
                       <p className="mb-0">Login</p>
                     ) : (
                       <p className="mb-0">
-                        Wellcome {authState?.user?.firstName}
+                        {authState?.user?.firstName}
                       </p>
                     )}
                   </Link>

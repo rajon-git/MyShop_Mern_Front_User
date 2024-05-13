@@ -47,7 +47,16 @@ const rateProduct = async (data) => {
   const response = await axios.put(
     `${base_url}product/rating`,
     data,
-    getConfig
+    {
+      headers: {
+        Authorization: `Bearer ${
+          localStorage.getItem("customer") !== null
+            ? JSON.parse(localStorage.getItem("customer")).token
+            : ""
+        }`,
+        Accept: "application/json",
+      },
+    }
   );
   if (response.data) {
     return response.data;
