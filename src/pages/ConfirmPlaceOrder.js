@@ -4,17 +4,21 @@ import BreadCrumb from '../components/BreadCrumb';
 import Container from '../components/Container';
 import { FaCheckCircle } from 'react-icons/fa'; // Import FontAwesome icon
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch and useSelector
 
 function ConfirmPlaceOrder() {
     const navigate = useNavigate();
+
     useEffect(() => {
         const timer = setTimeout(() => {
-            // Redirect to my-orders page after 30 seconds
+            // Redirect to my-orders page after 5 seconds
             navigate('/my-orders');
         }, 5000); // 5 seconds
 
         // Clear the timeout on component unmount
         return () => clearTimeout(timer);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

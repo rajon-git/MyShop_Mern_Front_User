@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice,createAction } from "@reduxjs/toolkit";
 import { authService } from "./userService";
 import { toast } from "react-toastify";
 
@@ -155,6 +155,8 @@ export const couponApply = createAsyncThunk(
     }
   }
 );
+
+export const resetState = createAction("auth/resetState");
 
 const getTokenFromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
@@ -439,10 +441,6 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.couponApplied = action.payload;
-        if(state.isSuccess)
-        {
-          toast("Coupon apply Successfully")
-        }
       })
       .addCase(couponApply.rejected, (state, action) => {
         state.isLoading = false;
@@ -469,8 +467,8 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
-        
       })
+      .addCase(resetState, ()=> initialState);
   },
 });
 

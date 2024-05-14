@@ -15,7 +15,8 @@ function Header() {
   const navigate = useNavigate();
   const [total, setTotal] = useState(null);
 
-  const userCartState = useSelector((state) => state?.auth?.cartProducts ?? []);
+  // const userCartState = useSelector((state) => state?.auth?.cartProducts ?? []);
+  const userCartState = useSelector((state) => state?.auth?.cartProducts);
   const authState = useSelector((state) => state?.auth);
   const productState = useSelector((state) => state?.product?.product);
   const [product, setProduct] = useState([]);

@@ -47,6 +47,7 @@ function CartPage() {
   const userCartState = useSelector((state) => state?.auth?.cartProducts);
   const authState = useSelector((state) => state?.auth?.user);
   const couponState = useSelector((state) => state?.auth?.couponApplied);
+  const orderState = useSelector((state)=>state?.auth?.orderProduct)
 
   const formik = useFormik({
     initialValues: {
@@ -134,15 +135,20 @@ function CartPage() {
               method: paymentMethod, // Include the selected payment method
             },
           })
-        );
-        setConfirmOrder(false);
-        dispatch(deleteUserCart());
-        navigate("/confirm-order");
-        setShippingInfo(null);
-        setTotalAmount(null);
-        setPaymentMethod("cash_on_delivery");
-        setCouponCode("");
-        setTotalPriceAfterDiscount(0);
+        ).then(() => {
+          // Dispatch an action directly to reset the coupon state after the order is created
+          dispatch({ type: 'RESET_COUPON_STATE' });
+          
+          // Reset other states
+          setConfirmOrder(false);
+          dispatch(deleteUserCart());
+          navigate("/confirm-order");
+          setShippingInfo(null);
+          setTotalAmount(0); 
+          setPaymentMethod("cash_on_delivery");
+          setCouponCode("");
+          setTotalPriceAfterDiscount(0);
+        });
       } else {
         toast("Please add shipping info & payment method");
       }
@@ -150,21 +156,64 @@ function CartPage() {
       navigate("/product");
     }
   };
+  
+
+  // const confirmOrderAndDispatch = () => {
+  //   if (userCartState?.length > 0) {
+  //     if (shippingInfo) {
+  //       dispatch(
+  //         createAnOrder({
+  //           shippingInfo: shippingInfo,
+  //           orderItems:
+  //             userCartState &&
+  //             userCartState?.map((item) => ({
+  //               product: item?.productId?._id,
+  //               color: item?.color?._id,
+  //               quantity: item?.quantity,
+  //               price: item?.price,
+  //             })),
+  //           totalPrice: totalAmount,
+  //           totalPriceAfterDiscount: totalPriceAfterDiscount, // You may adjust this as needed
+  //           paymentInfo: {
+  //             // Add payment details here if required
+  //             method: paymentMethod, // Include the selected payment method
+  //           },
+  //         })
+  //       );
+  //       setConfirmOrder(false);
+  //       dispatch(deleteUserCart());
+  //       navigate("/confirm-order");
+  //       setShippingInfo(null);
+  //       setTotalAmount(0); 
+  //       setPaymentMethod("cash_on_delivery");
+  //       setCouponCode("");
+  //       setTotalPriceAfterDiscount(0);
+  //     } else {
+  //       toast("Please add shipping info & payment method");
+  //     }
+  //   } else {
+  //     navigate("/product");
+  //   }
+  // };
 
   const handleApplyCoupon = () => {
     // Dispatch an action to apply the coupon
     dispatch(couponApply({ coupon: couponCode }));
     // Clear the input field after applying the coupon
     setCouponCode("");
-    console.log(couponApply);
   };
 
   useEffect(() => {
     // Check if couponState is available and if it has the totalAfterDiscount property
-    if (couponState && couponState.totalAfterDiscount) {
+    if (couponState && couponState?.totalAfterDiscount) {
       // Set totalPriceAfterDiscount to the totalAfterDiscount value from couponState
-      setTotalPriceAfterDiscount(couponState.totalAfterDiscount + 100);
-    } else {
+      setTotalPriceAfterDiscount(couponState?.totalAfterDiscount + 100);
+    } 
+    else if(orderState)
+      {
+        setTotalPriceAfterDiscount(0);
+      }
+    else {
       // If couponState or totalAfterDiscount is not available, set totalPriceAfterDiscount to totalAmount
       setTotalPriceAfterDiscount(totalAmount);
     }
