@@ -160,28 +160,38 @@ const updateUser = async (data) => {
   }
 };
 
-// const forgotPassToken = async (data) => {
-//   const response = await axios.post(
-//     `${base_url}user/forgot-password-token`,
-//     data
-//   );
-//   if (response.data) {
-//     return response.data;
-//   }
-// };
-
-const forgotPassToken = async (email) => {
-  try {
-    const response = await axios.get(
-      `${base_url}user/verifyEmail/${email}`
-    );
-    return response.data; // Assuming the response contains the token or relevant data
-  } catch (error) {
-    console.error("Error while sending verification request:", error);
-    // Handle error gracefully, such as logging or displaying a message to the user
-    throw error; // Rethrow the error to handle it in the calling code
+const forgotPassToken = async (data) => {
+  const response = await axios.post(
+    `${base_url}user/forgot-password-token`,
+    data
+  );
+  if (response.data) {
+    return response.data;
   }
 };
+
+const resetPass = async (data) => {
+  const response = await axios.put(
+    `${base_url}user/reset-password/${data.token}`,
+    {password:data?.password}
+  );
+  if (response.data) {
+    return response.data;
+  }
+};
+
+// const forgotPassToken = async (email) => {
+//   try {
+//     const response = await axios.get(
+//       `${base_url}user/verifyEmail/${email}`
+//     );
+//     return response.data; // Assuming the response contains the token or relevant data
+//   } catch (error) {
+//     console.error("Error while sending verification request:", error);
+//     // Handle error gracefully, such as logging or displaying a message to the user
+//     throw error; // Rethrow the error to handle it in the calling code
+//   }
+// };
 
 
 const applyCoupon = async (data) => {
@@ -230,4 +240,5 @@ export const authService = {
   forgotPassToken,
   applyCoupon,
   emptyCart,
+  resetPass
 };

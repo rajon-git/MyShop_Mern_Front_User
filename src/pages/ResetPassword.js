@@ -3,8 +3,19 @@ import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput"
+import { useLocation } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+
+const passwordSchema = yup.object({
+  password: yup.string().required("Password is required"),
+});
 
 function ResetPassword() {
+  const location = useLocation();
+  const getToken = location.pathname.split("/")[2];
+
   return (
     <>
       <Meta title={"Reset Password"} />
@@ -20,11 +31,6 @@ function ResetPassword() {
                   <CustomInput type="password"
                       placeholder="password"
                       name="password"
-                      className="form-control"/>
-                  
-                  <CustomInput type="password"
-                      placeholder="confirm password"
-                      name="confpassword"
                       className="form-control"/>
                   
                   <div>

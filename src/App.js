@@ -56,6 +56,10 @@ function App() {
           <Route path='terms-and-condition' element={<TermsandCondition/>}/>
           <Route path='cartpage' element={<CartPage/>}/>
           <Route path='confirm-order' element={<ConfirmPlaceOrder/>}/>
+
+          {/* <Route  path="/SendOTP" element={<SendOtpPage/>}/>
+          <Route  path="/VerifyOTP" element={<VerifyOtpPage/>}/>
+          <Route  path="/CreatePassword" element={<CreatePasswordPage/>}/> */}
          </Route>
        </Routes>
      </BrowserRouter>
