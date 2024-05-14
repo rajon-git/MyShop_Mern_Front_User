@@ -24,8 +24,9 @@ function ForgotPassword() {
       email: "",
     },
     validationSchema: emailSchema,
-    onSubmit: (values) => {
-      dispatch(forgotPasswordToken(values));
+    onSubmit: async (values, { resetForm }) => {
+      await dispatch(forgotPasswordToken(values));
+      resetForm(); 
     },
   });
   return (
