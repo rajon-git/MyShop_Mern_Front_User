@@ -109,6 +109,7 @@ function Home() {
   // Define custom width and height for the images
   const customImageWidth = "100%";
   const customImageHeight = "400px";
+
   return (
     <>
       <Container className="home-wrapper-1 py-5">
@@ -167,7 +168,7 @@ function Home() {
                 productState.slice(0, 4).map((product, index) => (
                   <div className="small-banner position-relative" key={index}>
                     <img
-                      src={product?.images[0]?.url}
+                      src={product?.images[2]?.url}
                       className="img-fluid rounded-3 products-image p-2"
                       alt={product?.title}
                       style={{ backgroundColor: "#F8C8DC" }}
@@ -202,10 +203,10 @@ function Home() {
                   key={index}
                 >
                   <div className="d-flex align-items-center gap-15">
-                    <img src={service.image} alt="services" />
+                    <img src={service?.image} alt="services" />
                     <div>
                       <h6>{service.title}</h6>
-                      <p className="mb-0">{service.tagline}</p>
+                      <p className="mb-0">{service?.tagline}</p>
                     </div>
                   </div>
                 </div>
@@ -282,7 +283,7 @@ function Home() {
                     </div>
                     <div className="product-image">
                       <img
-                        src={item?.images[0]?.url}
+                        src={item?.images[3]?.url}
                         alt="product image"
                         className="img-fluid mt-4 product-image-card"
                         width={160}
@@ -342,7 +343,7 @@ function Home() {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <img
-                  src={product?.images[0]?.url}
+                  src={product?.images[1]?.url}
                   className="card-img-top img-fluid rounded mx-auto mt-4"
                   alt={product?.title}
                   style={{ width: "200px", height: "250px" }}

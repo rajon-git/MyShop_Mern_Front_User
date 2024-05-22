@@ -46,7 +46,6 @@ function ProductCard(props) {
                     src={item?.images[0]?.url}
                     alt="product image"
                     className="img-fluid  mt-4 product-image-card"
-                    
                   />
                   <img
                     src={item?.images[1]?.url}
@@ -75,7 +74,6 @@ function ProductCard(props) {
                 </div>
                 <div className="action-bar position-absolute">
                   <div className="d-flex flex-column gap-15">
-                    
                     <Link
                       to={item && "/product/" + item?._id}
                       className="border-0 bg-transparent"

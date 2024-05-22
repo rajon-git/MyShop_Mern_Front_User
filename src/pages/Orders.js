@@ -50,10 +50,10 @@ function Orders() {
                       <p>{item?._id}</p>
                     </div>
                     <div className="col-3">
-                      <p>{item?.totalPrice + 100} BDT</p>
+                      <p>{item?.totalPrice} BDT</p>
                     </div>
                     <div className="col-3">
-                      <p>{item?.totalPriceAfterDiscount + 100} BDT</p>
+                      <p>{item?.totalPriceAfterDiscount} BDT</p>
                     </div>
                     <div className="col-3">
                       <p>{item?.orderStatus}</p>
@@ -93,7 +93,9 @@ function Orders() {
                                 <div className="col-3">
                                   <ul className="colors ps-0">
                                     <li
-                                      style={{ backgroundColor: i?.color }}
+                                      style={{
+                                        backgroundColor: i?.color?.title,
+                                      }}
                                     ></li>
                                   </ul>
                                 </div>

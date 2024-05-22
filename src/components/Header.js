@@ -72,7 +72,7 @@ function Header() {
           <div className="row align-items-center">
             <div className="col-lg-2 col-md-3 col-6">
               <h2>
-                <Link className="text-white">MyShop</Link>
+                <Link to="/" className="text-white">MyShop</Link>
               </h2>
             </div>
             <div className="col-lg-5 col-md-6 col-6 mt-3 mt-md-0">
