@@ -399,8 +399,8 @@ function SingleProduct() {
                               activeColor="#ffd700"
                             />
                           </div>
-                          <p className="mt-0">{item?.comment}</p>
-                          {/* <p className="mt-0">{item?.postedby?.firstName} {item?.postedby?.lastName}: {item?.comment}</p> */}
+                          <p className="mt-0"><b>{item?.postedby?.firstName} {item?.postedby?.lastName}: </b>{item?.comment}</p>
+                          
                         </div>
                       );
                     })}
