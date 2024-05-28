@@ -167,13 +167,14 @@ function Home() {
               {Array.isArray(productState) &&
                 productState.slice(0, 4).map((product, index) => (
                   <div className="small-banner position-relative" key={index}>
+                    <Link to={`/product/${product?._id}`}>
                     <img
                       src={product?.images[2]?.url}
                       className="img-fluid rounded-3 products-image p-2"
                       alt={product?.title}
                       style={{ backgroundColor: "#F8C8DC" }}
-                    />
-                    <div className="small-banner-content position-absolute text-light">
+                    /></Link>
+                    {/* <div className="small-banner-content position-absolute text-light">
                       <h5
                         className="m-0 font-weight-bold"
                         style={{ color: "#0D1865" }}
@@ -181,11 +182,8 @@ function Home() {
                         New Arraival
                       </h5>
                       <h6 className=" text-dark">{product?.category}</h6>
-                      <p className="m-0">
-                        From {product?.price} BDT <br /> or{" "}
-                        {product?.monthlyPayment}/mo.
-                      </p>
-                    </div>
+                      
+                    </div> */}
                   </div>
                 ))}
             </div>

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateAUser } from "../features/user/userSlice";
 import { MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import Meta from "../components/Meta";
 
 const profileSchema = yup.object({
   firstName: yup.string().required("First Name is required"),
@@ -41,6 +42,7 @@ function Profile() {
 
   return (
     <>
+     <Meta title={"Profile"} />
       <BreadCrumb title="My Profile" />
       <Container class1="cart-wrapper home-wrapper-2 py-5">
         <div className="row">

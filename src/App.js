@@ -45,7 +45,7 @@ function App() {
           <Route path='my-orders' element={<PrivateRoutes><Orders/></PrivateRoutes>}/>
           <Route path='my-profile' element={<PrivateRoutes><Profile/></PrivateRoutes>}/>
           <Route path='checkout' element={<Checkout/>}/>
-          <Route path='wishlist' element={<Wishlist/>}/>
+          <Route path='wishlist' element={<PrivateRoutes><Wishlist/></PrivateRoutes>}/>
           <Route path='login' element={<OpenRoutes><Login/></OpenRoutes>}/>
           <Route path='forgot-password' element={<ForgotPassword/>}/>
           <Route path='sign-up' element={<OpenRoutes><Signup/></OpenRoutes>}/>
@@ -54,7 +54,7 @@ function App() {
           <Route path='refund-policy' element={<RefundPolicy/>}/>
           <Route path='privacy-policy' element={<PrivacyPolicy/>}/>
           <Route path='terms-and-condition' element={<TermsandCondition/>}/>
-          <Route path='cartpage' element={<CartPage/>}/>
+          <Route path='cartpage' element={<PrivateRoutes><CartPage/></PrivateRoutes>}/>
           <Route path='confirm-order' element={<ConfirmPlaceOrder/>}/>
 
           {/* <Route  path="/SendOTP" element={<SendOtpPage/>}/>

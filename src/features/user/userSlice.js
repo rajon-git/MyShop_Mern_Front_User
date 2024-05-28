@@ -669,7 +669,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.createdUser = action.payload;
         if (state.isSuccess === true) {
-          toast.info("User created successfully");
+          toast.info("Registration success");
         }
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -692,7 +692,9 @@ export const authSlice = createSlice({
         state.message = "success";
         if (state.isSuccess === true) {
           localStorage.setItem("customer", JSON.stringify(action.payload));
-          toast.info("User logged in");
+          const { firstName, lastName } = action.payload;
+          const fullName = `${firstName} ${lastName}`;
+          toast(`Welcome ${fullName}`);
         }
       })
       .addCase(loginUser.rejected, (state, action) => {

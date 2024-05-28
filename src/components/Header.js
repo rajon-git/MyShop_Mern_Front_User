@@ -155,13 +155,15 @@ function Header() {
                     <NavLink to="/my-orders">My Orders</NavLink>
                     <NavLink to="/blogs">Blogs</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
+                    {authState?.user !== null &&
                     <button
-                      onClick={handleLogout}
-                      type="button"
-                      className="border border-0 bg-transparent text-white"
-                    >
-                      Logout
-                    </button>
+                    onClick={handleLogout}
+                    type="button"
+                    className="border border-0 bg-transparent text-white"
+                  >
+                    Logout
+                  </button>
+}
                   </div>
                 </div>
               </div>

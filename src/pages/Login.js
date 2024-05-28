@@ -32,7 +32,7 @@ function Login() {
     },
   });
   useEffect(() => {
-    if (authState.user !== null && authState.isSuccess === true) {
+    if (authState?.user !== null && authState?.isSuccess === true) {
       navigate("/");
     }
   }, [authState, navigate]);
